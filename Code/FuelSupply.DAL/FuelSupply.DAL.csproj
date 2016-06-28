@@ -64,21 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="Database Entity\Customer.cs">
-      <DependentUpon>FuelSupply.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database Entity\CustomerType.cs">
-      <DependentUpon>FuelSupply.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database Entity\FuelHistory.cs">
-      <DependentUpon>FuelSupply.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database Entity\FuelLimitType.cs">
-      <DependentUpon>FuelSupply.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database Entity\FuelStation.cs">
-      <DependentUpon>FuelSupply.tt</DependentUpon>
-    </Compile>
     <Compile Include="Database Entity\FuelSupply.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -94,18 +79,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FuelSupply.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Database Entity\FuelType.cs">
-      <DependentUpon>FuelSupply.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database Entity\PaymentType.cs">
-      <DependentUpon>FuelSupply.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database Entity\User.cs">
-      <DependentUpon>FuelSupply.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database Entity\UserType.cs">
-      <DependentUpon>FuelSupply.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Entity\CustomerEntity\Customer.cs" />
+    <Compile Include="Entity\CustomerEntity\CustomerType.cs" />
+    <Compile Include="Entity\FuelEntity\FuelHistory.cs" />
+    <Compile Include="Entity\FuelEntity\FuelLimitType.cs" />
+    <Compile Include="Entity\FuelEntity\FuelStation.cs" />
+    <Compile Include="Entity\FuelEntity\FuelType.cs" />
+    <Compile Include="Entity\UserEntity\PaymentType.cs" />
+    <Compile Include="Entity\UserEntity\User.cs" />
+    <Compile Include="Entity\UserEntity\UserType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +146,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Manager\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

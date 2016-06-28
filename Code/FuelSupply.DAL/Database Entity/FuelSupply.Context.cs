@@ -9,6 +9,9 @@
 
 namespace FuelSupply.DAL.Database_Entity
 {
+    using FuelSupply.DAL.Entity.CustomerEntity;
+    using FuelSupply.DAL.Entity.FuelEntity;
+    using FuelSupply.DAL.Entity.UserEntity;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
@@ -24,7 +27,7 @@ namespace FuelSupply.DAL.Database_Entity
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<CustomerType> CustomerTypes { get; set; }
         public virtual DbSet<FuelHistory> FuelHistories { get; set; }
