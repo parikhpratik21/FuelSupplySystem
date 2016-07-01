@@ -40,6 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Manager\Common\LogManager.cs" />
+    <Compile Include="Manager\Customer\CustomerManager.cs" />
+    <Compile Include="Manager\Fuel\FuelManager.cs" />
+    <Compile Include="Manager\User\UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

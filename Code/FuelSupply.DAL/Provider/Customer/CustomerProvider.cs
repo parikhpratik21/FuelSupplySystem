@@ -84,6 +84,46 @@ namespace FuelSupply.DAL.Provider
             return false;
         }
 
+        public static bool IncreaseCredit(int pCustomerId, decimal amount)
+        {
+            Customer oCustomer = customerDbObject.Customers.Where(x => x.Id == pCustomerId).FirstOrDefault();
+            if (oCustomer != null)
+            {
+                oCustomer.PaymentLimit = oCustomer.PaymentLimit + amount;
+                customerDbObject.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public static bool DeductAmount(int pCustomerId, decimal amount)
+        {
+            Customer oCustomer = customerDbObject.Customers.Where(x => x.Id == pCustomerId).FirstOrDefault();
+            if (oCustomer != null)
+            {
+                if ((oCustomer.AvailablePay - amount) < 0)
+                    return false;
+
+                oCustomer.AvailablePay = oCustomer.AvailablePay - amount;
+                customerDbObject.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public static bool CheckDeductionAvailibility(int pCustomerId, decimal amount)
+        {
+            Customer oCustomer = customerDbObject.Customers.Where(x => x.Id == pCustomerId).FirstOrDefault();
+            if (oCustomer != null)
+            {
+                if (oCustomer.AvailablePay >= amount)
+                    return true;
+                else
+                    return false;                
+            }
+            return false;
+        }
+
         #endregion
     }
 }
