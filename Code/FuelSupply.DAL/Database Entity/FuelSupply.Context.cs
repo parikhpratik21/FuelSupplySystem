@@ -16,10 +16,10 @@ namespace FuelSupply.DAL.Database_Entity
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class FuelSupplySystemEntities : DbContext
+    public partial class FuelSupplySystemEntities1 : DbContext
     {
-        public FuelSupplySystemEntities()
-            : base("name=FuelSupplySystemEntities")
+        public FuelSupplySystemEntities1()
+            : base("name=FuelSupplySystemEntities1")
         {
         }
     

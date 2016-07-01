@@ -24,6 +24,8 @@ namespace FuelSupply.DAL.Entity.UserEntity
         public string State { get; set; }
         public string Country { get; set; }
         public string ContactNo { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
 
         public virtual ICollection<FuelHistory> FuelHistories { get; set; }
         public virtual UserType UserType1 { get; set; }

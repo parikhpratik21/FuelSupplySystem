@@ -92,6 +92,8 @@
           <Property Name="State" Type="nvarchar" MaxLength="50" />
           <Property Name="Country" Type="nvarchar" MaxLength="50" />
           <Property Name="ContactNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -344,6 +346,8 @@
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ContactNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="FuelHistories" Relationship="Self.FK_FuelHistory_User" FromRole="User" ToRole="FuelHistory" />
           <NavigationProperty Name="UserType1" Relationship="Self.FK_User_UserType" FromRole="User" ToRole="UserType" />
         </EntityType>
@@ -451,7 +455,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="FuelSupplySystemEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="FuelSupplySystemEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="CustomerTypes" EntityType="Self.CustomerType" />
           <EntitySet Name="FuelHistories" EntityType="Self.FuelHistory" />
@@ -499,7 +503,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="FuelSupplySystemModelStoreContainer" CdmEntityContainer="FuelSupplySystemEntities">
+        <EntityContainerMapping StorageEntityContainer="FuelSupplySystemModelStoreContainer" CdmEntityContainer="FuelSupplySystemEntities1">
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="FuelSupplySystemModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
@@ -593,6 +597,8 @@
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

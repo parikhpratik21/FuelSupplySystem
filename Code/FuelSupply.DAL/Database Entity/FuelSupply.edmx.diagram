@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="10131af8e56a43458701ff4b4eda9dc2" Name="Diagram1">
+      <Diagram DiagramId="042fb6d670fc4dfc8a61eab2159cd419" Name="Diagram1">
         <EntityTypeShape EntityType="FuelSupplySystemModel.Customer" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="FuelSupplySystemModel.CustomerType" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="FuelSupplySystemModel.FuelHistory" Width="1.5" PointX="5.25" PointY="3" IsExpanded="true" />
@@ -13,7 +13,7 @@
         <EntityTypeShape EntityType="FuelSupplySystemModel.FuelType" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FuelSupplySystemModel.PaymentType" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
         <EntityTypeShape EntityType="FuelSupplySystemModel.User" Width="1.5" PointX="3" PointY="14.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="FuelSupplySystemModel.UserType" Width="1.5" PointX="0.75" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FuelSupplySystemModel.UserType" Width="1.5" PointX="0.75" PointY="15.125" IsExpanded="true" />
         <AssociationConnector Association="FuelSupplySystemModel.FK_Customer_CustomerType" ManuallyRouted="false" />
         <AssociationConnector Association="FuelSupplySystemModel.FK_Customer_FuelLimitType" ManuallyRouted="false" />
         <AssociationConnector Association="FuelSupplySystemModel.FK_Customer_PaymentType" ManuallyRouted="false" />
