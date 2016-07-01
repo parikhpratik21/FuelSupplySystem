@@ -11,6 +11,7 @@
     <AssemblyName>FuelSupply.DAL</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -23,7 +24,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -45,11 +45,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -63,21 +65,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="Database Entity\FuelSupply.Context.cs">
+    <Compile Include="Database Entity\FuelSupplySystem.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FuelSupply.Context.tt</DependentUpon>
+      <DependentUpon>FuelSupplySystem.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database Entity\FuelSupply.cs">
+    <Compile Include="Database Entity\FuelSupplySystem.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FuelSupply.tt</DependentUpon>
+      <DependentUpon>FuelSupplySystem.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database Entity\FuelSupply.Designer.cs">
+    <Compile Include="Database Entity\FuelSupplySystem.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FuelSupply.edmx</DependentUpon>
+      <DependentUpon>FuelSupplySystem.edmx</DependentUpon>
     </Compile>
     <Compile Include="Entity\CustomerEntity\Customer.cs" />
     <Compile Include="Entity\CustomerEntity\CustomerType.cs" />
@@ -88,44 +89,31 @@
     <Compile Include="Entity\UserEntity\PaymentType.cs" />
     <Compile Include="Entity\UserEntity\User.cs" />
     <Compile Include="Entity\UserEntity\UserType.cs" />
+    <Compile Include="Provider\Customer\CustomerProvider.cs" />
+    <Compile Include="Provider\Fuel\FuelProvider.cs" />
+    <Compile Include="Provider\User\UserProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="Database Entity\FuelSupply.edmx">
+    <EntityDeploy Include="Database Entity\FuelSupplySystem.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>FuelSupply.Designer.cs</LastGenOutput>
+      <LastGenOutput>FuelSupplySystem.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Database Entity\FuelSupply.Context.tt">
+    <None Include="Database Entity\FuelSupplySystem.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FuelSupply.edmx</DependentUpon>
-      <LastGenOutput>FuelSupply.Context.cs</LastGenOutput>
+      <DependentUpon>FuelSupplySystem.edmx</DependentUpon>
+      <LastGenOutput>FuelSupplySystem.Context.cs</LastGenOutput>
     </None>
-    <None Include="Database Entity\FuelSupply.edmx.diagram">
-      <DependentUpon>FuelSupply.edmx</DependentUpon>
+    <None Include="Database Entity\FuelSupplySystem.edmx.diagram">
+      <DependentUpon>FuelSupplySystem.edmx</DependentUpon>
     </None>
-    <None Include="Database Entity\FuelSupply.tt">
+    <None Include="Database Entity\FuelSupplySystem.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FuelSupply.edmx</DependentUpon>
-      <LastGenOutput>FuelSupply.cs</LastGenOutput>
+      <DependentUpon>FuelSupplySystem.edmx</DependentUpon>
+      <LastGenOutput>FuelSupplySystem.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Database\FuelSupply.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Database\FuelSupply_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>FuelSupply.mdf</DependentUpon>
-    </Content>
-    <Content Include="FuelSupply.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="FuelSupply_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>FuelSupply.mdf</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -148,7 +136,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Manager\" />
+    <Folder Include="Database\" />
+    <Folder Include="Entity\Customer\" />
+    <Folder Include="Entity\Fuel\" />
+    <Folder Include="Entity\User\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

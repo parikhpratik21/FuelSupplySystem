@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FuelSupply.DAL.Database_Entity;
+using FuelSupply.DAL.Entity.UserEntity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,12 @@ namespace FuelSupply.APP
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void btnTest_Click(object sender, RoutedEventArgs e)
+        {
+            List<User> UserList = FuelSupply.BAL.Class1.GetAllUser();
+            MessageBox.Show("Fetch Successfully");
         }
     }
 }

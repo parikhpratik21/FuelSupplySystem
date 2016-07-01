@@ -21,6 +21,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{2FA995A4-2B8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APP", "APP", "{3D60B34C-0715-4F5E-A751-ADAA9263E343}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{CE3E15DC-ED14-41B5-99A5-CBB46B879450}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Smaple Project\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\EntityFramework.dll = ..\..\Smaple Project\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\EntityFramework.dll
+		..\..\Smaple Project\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\EntityFramework.SqlServer.dll = ..\..\Smaple Project\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\EntityFramework.SqlServer.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
