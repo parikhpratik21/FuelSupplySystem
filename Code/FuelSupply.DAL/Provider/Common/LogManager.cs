@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FuelSupply.BAL.Manager.Common
+namespace FuelSupply.DAL.Provider.Common
 {
     public class LogManager
     {
@@ -141,7 +141,7 @@ namespace FuelSupply.BAL.Manager.Common
                     string fullFilePath = path + "\\Log" + folderName + ".log";
                     integrationLog = new System.IO.StreamWriter(fullFilePath, true);
 
-                    string writelogmessage = "# T: [ " + currentTime.ToString("hh:mm:ss:fff tt") + " ] ::  C: " + pClassname + " ::  M: " + pMethodname;
+                    string writelogmessage = "# T: [ " + currentTime.ToString("hh:mm:ss:fff tt") + " ] ::  C: " + pclassname + " ::  M: " + pmethodname;
 
                     if (pex != null)
                     {

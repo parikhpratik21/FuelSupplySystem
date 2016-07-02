@@ -84,39 +84,39 @@ namespace FuelSupply.DAL.Provider
             return false;
         }
 
-        public static bool IncreaseCredit(int pCustomerId, decimal amount)
+        public static bool IncreaseCredit(int pCustomerId, decimal pAmount)
         {
             Customer oCustomer = customerDbObject.Customers.Where(x => x.Id == pCustomerId).FirstOrDefault();
             if (oCustomer != null)
             {
-                oCustomer.PaymentLimit = oCustomer.PaymentLimit + amount;
+                oCustomer.PaymentLimit = oCustomer.PaymentLimit + pAmount;
                 customerDbObject.SaveChanges();
                 return true;
             }
             return false;
         }
 
-        public static bool DeductAmount(int pCustomerId, decimal amount)
+        public static bool DeductAmount(int pCustomerId, decimal pAmount)
         {
             Customer oCustomer = customerDbObject.Customers.Where(x => x.Id == pCustomerId).FirstOrDefault();
             if (oCustomer != null)
             {
-                if ((oCustomer.AvailablePay - amount) < 0)
+                if ((oCustomer.AvailablePay - pAmount) < 0)
                     return false;
 
-                oCustomer.AvailablePay = oCustomer.AvailablePay - amount;
+                oCustomer.AvailablePay = oCustomer.AvailablePay - pAmount;
                 customerDbObject.SaveChanges();
                 return true;
             }
             return false;
         }
 
-        public static bool CheckDeductionAvailibility(int pCustomerId, decimal amount)
+        public static bool CheckDeductionAvailibility(int pCustomerId, decimal pAmount)
         {
             Customer oCustomer = customerDbObject.Customers.Where(x => x.Id == pCustomerId).FirstOrDefault();
             if (oCustomer != null)
             {
-                if (oCustomer.AvailablePay >= amount)
+                if (oCustomer.AvailablePay >= pAmount)
                     return true;
                 else
                     return false;                

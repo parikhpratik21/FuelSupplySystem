@@ -18,6 +18,10 @@ namespace FuelSupply.DAL.Entity.FuelEntity
         public Nullable<int> FuelType { get; set; }
         public Nullable<decimal> FuelVolume { get; set; }
         public Nullable<decimal> FuelAmount { get; set; }
+        public Nullable<int> KeyCustomerId { get; set; }
+        public string KeyCustomerName { get; set; }
+        public string CustomerName { get; set; }
+        public string UserName { get; set; }
 
         public virtual Customer Customer { get; set; }
         public virtual FuelStation FuelStation { get; set; }

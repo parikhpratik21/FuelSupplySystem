@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FuelSupplySystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FuelSupplySystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="Id" />
@@ -43,6 +43,10 @@
           <Property Name="FuelType" Type="int" />
           <Property Name="FuelVolume" Type="decimal" Precision="18" Scale="2" />
           <Property Name="FuelAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="KeyCustomerId" Type="int" />
+          <Property Name="KeyCustomerName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="FuelLimitType">
           <Key>
@@ -241,8 +245,7 @@
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FuelSupplySystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -293,6 +296,10 @@
           <NavigationProperty Name="FuelStation" Relationship="Self.FK_FuelHistory_FuelStation" FromRole="FuelHistory" ToRole="FuelStation" />
           <NavigationProperty Name="FuelType1" Relationship="Self.FK_FuelHistory_FuelType" FromRole="FuelHistory" ToRole="FuelType" />
           <NavigationProperty Name="User" Relationship="Self.FK_FuelHistory_User" FromRole="FuelHistory" ToRole="User" />
+          <Property Name="KeyCustomerId" Type="Int32" />
+          <Property Name="KeyCustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="FuelLimitType">
           <Key>
@@ -535,6 +542,10 @@
           <EntitySetMapping Name="FuelHistories">
             <EntityTypeMapping TypeName="FuelSupplySystemModel.FuelHistory">
               <MappingFragment StoreEntitySet="FuelHistory">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="KeyCustomerName" ColumnName="KeyCustomerName" />
+                <ScalarProperty Name="KeyCustomerId" ColumnName="KeyCustomerId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="FuelStationId" ColumnName="FuelStationId" />

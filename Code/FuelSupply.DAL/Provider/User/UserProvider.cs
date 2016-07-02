@@ -59,9 +59,15 @@ namespace FuelSupply.DAL.Provider
 
         public static bool AddUser(User pUser)
         {
-            userDbObject.Users.Add(pUser);
-            userDbObject.SaveChanges();
-            return true;
+            User oUser = userDbObject.Users.Where(x => x.Code == pUser.Code || x.UserName == pUser.UserName).FirstOrDefault();
+            if (oUser == null)
+            {
+                userDbObject.Users.Add(pUser);
+                userDbObject.SaveChanges();
+                return true;
+            }
+            else
+                return false;
         }
 
         public static bool UpdateUser(User pUser)
