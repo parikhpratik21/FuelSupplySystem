@@ -4,8 +4,11 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform" 
-        Title="Fuel System" Height="550" Width="600">
-    <Grid>
+        xmlns:resx="clr-namespace:FuelSupply.APP.Properties" WindowTitleBrush="{StaticResource JioShareColor}" TitleCaps="False" TitleForeground="White" BorderThickness="2.0" 
+        BorderBrush="{StaticResource JioShareColor}" Title="Fuel Supply System" ShowMaxRestoreButton="True" 
+        Loaded="MetroWindow_Loaded" ShowIconOnTitleBar="True" IconTemplate="{StaticResource WindowIconTemplate}"  
+        Closing="MetroWindow_Closing" MinHeight="500" MinWidth="700">
+    <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="0.3*"/>
             <RowDefinition Height="1*"/>
@@ -30,25 +33,25 @@
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <Button Name="btnProfile" Margin="0" Grid.Column="1">
+            <Button Name="btnProfile" Margin="0" Grid.Column="1" Click="btnProfile_Click">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="..\Images\profile.png" HorizontalAlignment="Left"></Image>
-                    <TextBlock Text="Profile" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
+                    <Image Source="..\Images\profile.png"></Image>
+                    <TextBlock Text="Profile" VerticalAlignment="Center"></TextBlock>
                 </StackPanel>
             </Button>
-            <Button Name="btnUser" Grid.Column="3">
+            <Button Name="btnUser" Grid.Column="3"  Click="btnUser_Click">
                 <StackPanel Orientation="Horizontal" >
                     <Image Source="..\Images\user.png"></Image>
                     <TextBlock Text="User" VerticalAlignment="Center"></TextBlock>
                 </StackPanel>
             </Button>
-            <Button Name="btnCustomer" Grid.Column="5">
+            <Button Name="btnCustomer" Grid.Column="5" Click="btnCustomer_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="..\Images\customer.png"></Image>
                     <TextBlock Text="Customer" VerticalAlignment="Center"></TextBlock>
                 </StackPanel>
             </Button>
-            <Button Name="btnHistory" Grid.Column="7">
+            <Button Name="btnHistory" Grid.Column="7" Click="btnHistory_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="..\Images\history.png"></Image>
                     <TextBlock Text="History" VerticalAlignment="Center"></TextBlock>
@@ -57,7 +60,7 @@
         </Grid>
 
         <Grid Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2,10,2,2">
-            <ContentControl Name="ServerContent" Content="{Binding ContentWindow}">
+            <ContentControl Name="ServerContent" Content="{Binding ContentWindow}" >
                 
             </ContentControl>
         </Grid>

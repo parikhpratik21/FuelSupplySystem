@@ -1,4 +1,8 @@
+using FuelSupply.APP.View;
 using GalaSoft.MvvmLight;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace FuelSupply.APP.ViewModel
 {
@@ -14,12 +18,28 @@ namespace FuelSupply.APP.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase, INotifyPropertyChanged
     {
+        #region "Declaration"
+        private UserControl _content;
+        private Profile oProfile;
+        #endregion
+
+        #region EventHandlers (1)
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
+        }
+        #endregion
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel()
+        public MainViewModel(Window pOwnerForm)
         {
             ////if (IsInDesignMode)
             ////{
@@ -29,6 +49,18 @@ namespace FuelSupply.APP.ViewModel
             ////{
             ////    // Code runs "for real"
             ////}
+            oProfile = new Profile(pOwnerForm);
+            this.ContentWindow = oProfile;
+        }
+
+        public UserControl ContentWindow
+        {
+            get { return _content; }
+            set
+            {
+                _content = value;                
+                OnPropertyChanged("ContentWindow");                
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FuelSupply.APP.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +18,18 @@ namespace FuelSupply.APP.View
     /// <summary>
     /// Interaction logic for User.xaml
     /// </summary>
-    public partial class User : Window
+    public partial class UserDisplay : UserControl
     {
-        public User()
+        #region "Declaration"
+        private UserDisplayViewModel userDisplayModel;
+        #endregion
+
+        public UserDisplay(Window pOwnerWindow)
         {
             InitializeComponent();
+
+            userDisplayModel = new UserDisplayViewModel(pOwnerWindow);
+            this.DataContext = userDisplayModel;
         }
     }
 }

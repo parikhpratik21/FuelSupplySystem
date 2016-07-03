@@ -17,7 +17,7 @@ namespace FuelSupply.APP.View
     /// <summary>
     /// Interaction logic for Customer.xaml
     /// </summary>
-    public partial class Customer : Window
+    public partial class Customer : UserControl
     {
         public Customer()
         {

@@ -17,7 +17,7 @@ namespace FuelSupply.APP.View
     /// <summary>
     /// Interaction logic for History.xaml
     /// </summary>
-    public partial class History : Window
+    public partial class History : UserControl
     {
         public History()
         {

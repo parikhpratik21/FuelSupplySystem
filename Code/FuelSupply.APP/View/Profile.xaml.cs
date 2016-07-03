@@ -11,17 +11,25 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using FuelSupply.APP.ViewModel;
 
 namespace FuelSupply.APP.View
 {
     /// <summary>
     /// Interaction logic for Profile.xaml
     /// </summary>
-    public partial class Profile : Window
+    public partial class Profile : UserControl
     {
-        public Profile()
+        #region "Declaration"
+        private ProfileViewModel profileModel;       
+        #endregion
+
+        public Profile(Window pOwnerWindow)
         {
             InitializeComponent();
+
+            profileModel = new ProfileViewModel(pOwnerWindow);
+            this.DataContext = profileModel;
         }
     }
 }
