@@ -31,5 +31,25 @@ namespace FuelSupply.APP.View
             userDisplayModel = new UserDisplayViewModel(pOwnerWindow);
             this.DataContext = userDisplayModel;
         }
+
+        private void btnAddUser_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnEditUser_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnDeleteUser_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnChangePassword_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

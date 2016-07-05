@@ -7,7 +7,13 @@
         xmlns:resx="clr-namespace:FuelSupply.APP.Properties" WindowTitleBrush="{StaticResource JioShareColor}" TitleCaps="False" TitleForeground="White" BorderThickness="2.0" 
         BorderBrush="{StaticResource JioShareColor}" Title="Fuel Supply System" ShowMaxRestoreButton="True" 
         Loaded="MetroWindow_Loaded" ShowIconOnTitleBar="True" IconTemplate="{StaticResource WindowIconTemplate}"  
-        Closing="MetroWindow_Closing" MinHeight="500" MinWidth="700">
+        Closing="MetroWindow_Closing" MinHeight="500" MinWidth="700" WindowState="Maximized">
+    <Controls:MetroWindow.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button" >
+            <Setter Property="Foreground" Value="#ffffff"/>            
+            <Setter Property="FontSize" Value="15"/>
+        </Style>     
+    </Controls:MetroWindow.Resources>
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="0.3*"/>
@@ -17,49 +23,57 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-
+        
         <Grid Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <Button Name="btnProfile" Margin="0" Grid.Column="1" Click="btnProfile_Click">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="..\Images\profile.png"></Image>
-                    <TextBlock Text="Profile" VerticalAlignment="Center"></TextBlock>
+            
+            <Button Name="btnProfile" Grid.Column="1" Click="btnProfile_Click" Background="#00879c" Style="{StaticResource ButtonStyle}" >
+                <Grid Background="Red" HorizontalAlignment="Stretch" Margin="0">
+                    <Grid.RowDefinitions>                        
+                        <RowDefinition Height="*"/>                       
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="..\Images\profile.png" Grid.Column="0" Grid.Row="0"></Image>
+                    <TextBlock Text="Profile" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0"></TextBlock>
+                </Grid>
+            </Button>
+            <Button Name="btnUser" Grid.Column="3"  Click="btnUser_Click" Background="#cc6d00" Style="{StaticResource ButtonStyle}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" >
+                    <Image Source="..\Images\user.png" HorizontalAlignment="Stretch" ></Image>
+                    <TextBlock Text="User" VerticalAlignment="Center" HorizontalAlignment="Stretch" ></TextBlock>
                 </StackPanel>
             </Button>
-            <Button Name="btnUser" Grid.Column="3"  Click="btnUser_Click">
-                <StackPanel Orientation="Horizontal" >
-                    <Image Source="..\Images\user.png"></Image>
-                    <TextBlock Text="User" VerticalAlignment="Center"></TextBlock>
-                </StackPanel>
-            </Button>
-            <Button Name="btnCustomer" Grid.Column="5" Click="btnCustomer_Click">
+            <Button Name="btnCustomer" Grid.Column="5" Click="btnCustomer_Click" Background="#3e7038" Style="{StaticResource ButtonStyle}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="..\Images\customer.png"></Image>
                     <TextBlock Text="Customer" VerticalAlignment="Center"></TextBlock>
                 </StackPanel>
             </Button>
-            <Button Name="btnHistory" Grid.Column="7" Click="btnHistory_Click">
+            <Button Name="btnHistory" Grid.Column="7" Click="btnHistory_Click" Background="#0073c4" Style="{StaticResource ButtonStyle}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="..\Images\history.png"></Image>
-                    <TextBlock Text="History" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock Text="History" VerticalAlignment="Center" ></TextBlock>
                 </StackPanel>
             </Button>
         </Grid>
 
-        <Grid Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2,10,2,2">
+        <Grid Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" Margin="20,0,20,2">
             <ContentControl Name="ServerContent" Content="{Binding ContentWindow}" >
                 
             </ContentControl>
