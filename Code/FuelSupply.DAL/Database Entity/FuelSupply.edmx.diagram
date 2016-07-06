@@ -22,6 +22,7 @@
         <AssociationConnector Association="FuelSupplySystemModel.FK_FuelHistory_FuelType" ManuallyRouted="false" />
         <AssociationConnector Association="FuelSupplySystemModel.FK_FuelHistory_User" ManuallyRouted="false" />
         <AssociationConnector Association="FuelSupplySystemModel.FK_User_UserType" ManuallyRouted="false" />
+        <AssociationConnector Association="FuelSupplySystemModel.FK_Customer_Customer" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

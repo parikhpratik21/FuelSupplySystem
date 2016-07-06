@@ -9,6 +9,13 @@
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="IsEnabled" Value="False" />
         </Style>
+        <Style x:Key="LabelHeaderStyle" TargetType="Label" BasedOn="{StaticResource MetroLabel}">            
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Margin" Value="0,0,0,-10" />
+        </Style>
         <Style x:Key="LableStyle" TargetType="Label">
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -18,16 +25,15 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="0.3*"/>
+        <Grid.RowDefinitions>        
             <RowDefinition Height="1*"/>
             <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Name="txtTitle" Text="Profile" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center"></TextBlock>
-        <Grid Grid.Column="0" Grid.Row="2" Background="White">
+        <Label Name="txtTitle" Content="User Profile" Grid.Column="0" Grid.Row="0" Style="{StaticResource LabelHeaderStyle}"></Label>
+        <Grid Grid.Column="0" Grid.Row="1" Background="White" Margin="0,-5,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>

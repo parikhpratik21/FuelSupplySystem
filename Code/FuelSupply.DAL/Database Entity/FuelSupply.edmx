@@ -106,6 +106,18 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK_Customer_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Customer1" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customer1">
+              <PropertyRef Name="KeyCustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Customer_CustomerType">
           <End Role="CustomerType" Type="Self.CustomerType" Multiplicity="0..1" />
           <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
@@ -212,6 +224,10 @@
           <EntitySet Name="PaymentType" EntityType="Self.PaymentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Customer_Customer" Association="Self.FK_Customer_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Customer1" EntitySet="Customer" />
+          </AssociationSet>
           <AssociationSet Name="FK_Customer_CustomerType" Association="Self.FK_Customer_CustomerType">
             <End Role="CustomerType" EntitySet="CustomerType" />
             <End Role="Customer" EntitySet="Customer" />
@@ -271,6 +287,8 @@
           <NavigationProperty Name="FuelLimitType1" Relationship="Self.FK_Customer_FuelLimitType" FromRole="Customer" ToRole="FuelLimitType" />
           <NavigationProperty Name="PaymentType1" Relationship="Self.FK_Customer_PaymentType" FromRole="Customer" ToRole="PaymentType" />
           <NavigationProperty Name="FuelHistories" Relationship="Self.FK_FuelHistory_Customer" FromRole="Customer" ToRole="FuelHistory" />
+          <NavigationProperty Name="Customer1" Relationship="FuelSupplySystemModel.FK_Customer_Customer" FromRole="Customer" ToRole="Customer1" />
+          <NavigationProperty Name="Customer2" Relationship="FuelSupplySystemModel.FK_Customer_Customer" FromRole="Customer1" ToRole="Customer" />
         </EntityType>
         <EntityType Name="CustomerType">
           <Key>
@@ -504,7 +522,23 @@
             <End Role="UserType" EntitySet="UserTypes" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK_Customer_Customer" Association="FuelSupplySystemModel.FK_Customer_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Customer1" EntitySet="Customers" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Customer_Customer">
+          <End Type="FuelSupplySystemModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="FuelSupplySystemModel.Customer" Role="Customer1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customer1">
+              <PropertyRef Name="KeyCustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

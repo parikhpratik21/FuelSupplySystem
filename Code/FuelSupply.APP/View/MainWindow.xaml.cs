@@ -125,7 +125,7 @@ namespace FuelSupply.APP
 
         private void btnCustomer_Click(object sender, RoutedEventArgs e)
         {
-            Customer oCustomer = new Customer();
+            CustomerDisplay oCustomer = new CustomerDisplay(this);
             mainModel.ContentWindow = oCustomer;
         }
 

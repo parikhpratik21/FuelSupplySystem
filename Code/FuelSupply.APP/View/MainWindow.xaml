@@ -12,6 +12,12 @@
         <Style x:Key="ButtonStyle" TargetType="Button" >
             <Setter Property="Foreground" Value="#ffffff"/>            
             <Setter Property="FontSize" Value="15"/>
+            
+            <Style.Triggers>
+                <Trigger Property ="IsMouseOver" Value="True">
+                    <Setter Property= "Background" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>     
     </Controls:MetroWindow.Resources>
     <Grid Name="MainGrid">
@@ -40,36 +46,45 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             
-            <Button Name="btnProfile" Grid.Column="1" Click="btnProfile_Click" Background="#00879c" Style="{StaticResource ButtonStyle}" >
-                <Grid Background="Red" HorizontalAlignment="Stretch" Margin="0">
-                    <Grid.RowDefinitions>                        
-                        <RowDefinition Height="*"/>                       
-                    </Grid.RowDefinitions>
+            <Button Name="btnProfile" Grid.Column="1" Click="btnProfile_Click" Background="#00879c" Style="{StaticResource ButtonStyle}" HorizontalContentAlignment="Stretch">
+                <Grid  HorizontalAlignment="Stretch" >                   
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
-                    <Image Source="..\Images\profile.png" Grid.Column="0" Grid.Row="0"></Image>
-                    <TextBlock Text="Profile" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0"></TextBlock>
+                    <Image Source="..\Images\profile.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
+                    <TextBlock Text="Profile"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>
-            <Button Name="btnUser" Grid.Column="3"  Click="btnUser_Click" Background="#cc6d00" Style="{StaticResource ButtonStyle}">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" >
-                    <Image Source="..\Images\user.png" HorizontalAlignment="Stretch" ></Image>
-                    <TextBlock Text="User" VerticalAlignment="Center" HorizontalAlignment="Stretch" ></TextBlock>
-                </StackPanel>
+            <Button Name="btnUser" Grid.Column="3"  Click="btnUser_Click" Background="#cc6d00" Style="{StaticResource ButtonStyle}" HorizontalContentAlignment="Stretch">
+                <Grid  HorizontalAlignment="Stretch" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="..\Images\user.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
+                    <TextBlock Text="User"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                </Grid>               
             </Button>
-            <Button Name="btnCustomer" Grid.Column="5" Click="btnCustomer_Click" Background="#3e7038" Style="{StaticResource ButtonStyle}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="..\Images\customer.png"></Image>
-                    <TextBlock Text="Customer" VerticalAlignment="Center"></TextBlock>
-                </StackPanel>
+            <Button Name="btnCustomer" Grid.Column="5" Click="btnCustomer_Click" Background="#3e7038" Style="{StaticResource ButtonStyle}" HorizontalContentAlignment="Stretch">
+                <Grid  HorizontalAlignment="Stretch" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="..\Images\customer.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
+                    <TextBlock Text="Customer"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                </Grid>              
             </Button>
-            <Button Name="btnHistory" Grid.Column="7" Click="btnHistory_Click" Background="#0073c4" Style="{StaticResource ButtonStyle}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="..\Images\history.png"></Image>
-                    <TextBlock Text="History" VerticalAlignment="Center" ></TextBlock>
-                </StackPanel>
+            <Button Name="btnHistory" Grid.Column="7" Click="btnHistory_Click" Background="#0073c4" Style="{StaticResource ButtonStyle}" HorizontalContentAlignment="Stretch">
+                <Grid  HorizontalAlignment="Stretch" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="..\Images\history.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
+                    <TextBlock Text="History"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                </Grid>              
             </Button>
         </Grid>
 

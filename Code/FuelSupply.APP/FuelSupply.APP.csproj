@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>FuelSystem1.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -84,6 +87,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModel\AddEditUserViewModel.cs" />
+    <Compile Include="ViewModel\CustomerDisplayViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ProfileViewModel.cs" />
     <Compile Include="ViewModel\UserDisplayViewModel.cs" />
@@ -91,8 +95,8 @@
     <Compile Include="View\AddEditUser.xaml.cs">
       <DependentUpon>AddEditUser.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Customer.xaml.cs">
-      <DependentUpon>Customer.xaml</DependentUpon>
+    <Compile Include="View\CustomerDisplay.xaml.cs">
+      <DependentUpon>CustomerDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\History.xaml.cs">
       <DependentUpon>History.xaml</DependentUpon>
@@ -110,7 +114,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Customer.xaml">
+    <Page Include="View\CustomerDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -198,6 +202,15 @@
     <Resource Include="Images\ChangePassword.png" />
     <Resource Include="Images\Delete.png" />
     <Resource Include="Images\Edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Credit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\FuelSystem1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="FuelSystem1.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -13,6 +13,7 @@ namespace FuelSupply.DAL.Entity.CustomerEntity
         public Customer()
         {
             this.FuelHistories = new HashSet<FuelHistory>();
+            this.Customer1 = new HashSet<Customer>();
         }
 
         public int Id { get; set; }
@@ -34,5 +35,7 @@ namespace FuelSupply.DAL.Entity.CustomerEntity
         public virtual FuelLimitType FuelLimitType1 { get; set; }
         public virtual PaymentType PaymentType1 { get; set; }
         public virtual ICollection<FuelHistory> FuelHistories { get; set; }
+        public virtual ICollection<Customer> Customer1 { get; set; }
+        public virtual Customer Customer2 { get; set; }
     }
 }
