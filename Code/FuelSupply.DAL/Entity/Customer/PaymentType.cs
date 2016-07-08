@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FuelSupply.DAL.Entity.CustomerEntity;
 
-namespace FuelSupply.DAL.Entity.UserEntity
+namespace FuelSupply.DAL.Entity.CustomerEntity
 {
     public class PaymentType
     {

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="FuelSupply.APP.View.AddEditUser"
+﻿<UserControl x:Class="FuelSupply.APP.View.AddEditCustomer"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -46,51 +46,55 @@
         <ScrollViewer Grid.Column="0" Grid.Row="1"  VerticalScrollBarVisibility="Auto">
             <Grid Background="White" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible">
             <Grid.RowDefinitions>
-                <RowDefinition Height="45"/>
-                <RowDefinition Height="45"/>
-                <RowDefinition Height="45"/>
-                <RowDefinition Height="45"/>
-                <RowDefinition Height="45"/>
+                <RowDefinition Height="43"/>
+                <RowDefinition Height="43"/>
+                <RowDefinition Height="43"/>
+                <RowDefinition Height="43"/>
+                <RowDefinition Height="43"/>
+                <RowDefinition Height="43"/>
                 <RowDefinition Height="80"/>
-                <RowDefinition Height="45"/>
-                <RowDefinition Height="45"/>
-                <RowDefinition Height="45"/>
-                <RowDefinition Height="45"/>
-            </Grid.RowDefinitions>
+                <RowDefinition Height="43"/>
+                <RowDefinition Height="43"/>
+                <RowDefinition Height="43"/>
+                <RowDefinition Height="43"/>
+                </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
-            <Label Name="lblUserCode" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="0" Content="User Code: "></Label>
-            <TextBox Name="txtUserCode" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="0" Text="{Binding SelectedUser.Code}"></TextBox>
+            <Label Name="lblCustomerCode" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="0" Content="Customer Code: "></Label>
+            <TextBox Name="txtUserCode" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="0" Text="{Binding SelectedCustomer.Code}"></TextBox>
 
             <Label Name="lblName" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="1" Content="Name: "></Label>
-            <TextBox Name="txtName" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="1" Text="{Binding SelectedUser.Name}"></TextBox>
+            <TextBox Name="txtName" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="1" Text="{Binding SelectedCustomer.Name}"></TextBox>
 
-            <Label Name="lblUserName" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="2" Content="User Name: "></Label>
-            <TextBox Name="txtUserName" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="2" IsEnabled="False" Text="{Binding SelectedUser.UserName}"></TextBox>
+            <Label Name="lblCustomerType" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="2" Content="Customer Type: "></Label>
+            <ComboBox ItemsSource="{Binding CustomerTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedCustomer.CustomerType}" Name="txtCustomerType" Style="{StaticResource ComboBoxStyle}" Grid.Column="1" Grid.Row="2"></ComboBox>
 
-            <Label Name="lblUserType" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="3" Content="User Type: "></Label>
-            <ComboBox Name="txtUserType" ItemsSource="{Binding UserTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" Style="{StaticResource ComboBoxStyle}" Grid.Column="1" Grid.Row="3" SelectedValue="{Binding SelectedUser.UserType}" ></ComboBox>
+            <Label Name="lblKeyCustomerName" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="3" Content="Key Customer Name: "></Label>
+                <TextBox Name="txtKeyCustomerName" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="3" Text="{Binding SelectedCustomer.Customer2.Name}"></TextBox>
 
-            <Label Name="lblContactNo" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="4" Content="Contact No: "></Label>
-            <TextBox Name="txtContactNo" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="4" Text="{Binding SelectedUser.ContactNo}"></TextBox>
+            <Label Name="lblPaymentType" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="4" Content="Payment Type: "></Label>
+                <ComboBox Name="txtPaymentType" ItemsSource="{Binding PaymentTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedCustomer.PaymentType}" Style="{StaticResource ComboBoxStyle}" Grid.Column="1" Grid.Row="4" ></ComboBox>
 
-            <Label Name="lblAddress" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="5" Content="Address: "></Label>
-            <TextBox Name="txtAddress" Height="70"  Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="5" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Text="{Binding SelectedUser.Address}"></TextBox>
+            <Label Name="lblPaymentLimit" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="5" Content="Payment Limit: "></Label>
+                <TextBox Name="txtpaymentLimit" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="5" Text="{Binding SelectedCustomer.PaymentLimit}"></TextBox>
 
-            <Label Name="lblPinCode" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="6" Content="PinCode: "></Label>
-            <TextBox Name="txtPinCode" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="6" Text="{Binding SelectedUser.Pincode}"></TextBox>
+                <Label Name="lblAddress" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="6" Content="Address: "></Label>
+            <TextBox Name="txtAddress" Height="70"  Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="6" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Text="{Binding SelectedCustomer.Address}"></TextBox>
 
-            <Label Name="lblCity" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="7" Content="City: "></Label>
-            <TextBox Name="txtCity" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="7" Text="{Binding SelectedUser.City}"></TextBox>
+            <Label Name="lblPinCode" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="7" Content="PinCode: "></Label>
+            <TextBox Name="txtPinCode" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="7" Text="{Binding SelectedCustomer.Pincode}"></TextBox>
 
-            <Label Name="lblState" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="8" Content="State: "></Label>
-            <TextBox Name="txtState" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="8" Text="{Binding SelectedUser.State}"></TextBox>
+            <Label Name="lblCity" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="8" Content="City: "></Label>
+            <TextBox Name="txtCity" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="8" Text="{Binding SelectedCustomer.City}"></TextBox>
 
-            <Label Name="lblCountry" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="9" Content="Country: "></Label>
-            <TextBox Name="txtCountry" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="9" Text="{Binding SelectedUser.Country}"></TextBox>
+            <Label Name="lblState" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="9" Content="State: "></Label>
+            <TextBox Name="txtState" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="9" Text="{Binding SelectedCustomer.State}"></TextBox>
+
+            <Label Name="lblCountry" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="10" Content="Country: "></Label>
+            <TextBox Name="txtCountry" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="10" Text="{Binding SelectedCustomer.Country}"></TextBox>
         </Grid>
         </ScrollViewer>
         

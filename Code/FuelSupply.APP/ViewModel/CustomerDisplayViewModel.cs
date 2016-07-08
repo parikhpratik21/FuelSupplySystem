@@ -12,13 +12,18 @@ namespace FuelSupply.APP.ViewModel
 {
     public class CustomerDisplayViewModel : INotifyPropertyChanged
     {
-          private List<Customer> _CustomerList;
-          public CustomerDisplayViewModel(Window pOwnerWindow)
+        #region "Declaration"
+        private List<Customer> _CustomerList;
+        private Customer _selectedCustomer;
+        #endregion
+          
+        public CustomerDisplayViewModel(Window pOwnerWindow)
         {
-            _CustomerList = CustomerManager.GetAllCustomer();
+            _CustomerList = CustomerManager.GetAllCustomers();
         }
 
-          public List<Customer> CustomerList
+        #region "Property"
+        public List<Customer> CustomerList
         {
             get { 
                 return _CustomerList; 
@@ -29,6 +34,20 @@ namespace FuelSupply.APP.ViewModel
                 OnPropertyChanged("CustomerList");
             }
         }
+
+        public Customer SelectedCustomer
+        {
+            get
+            {
+                return _selectedCustomer;
+            }
+            set
+            {
+                _selectedCustomer = value;
+                OnPropertyChanged("SelectedCustomer");
+            }
+        }
+        #endregion
 
         #region EventHandlers (1)
         public event PropertyChangedEventHandler PropertyChanged;

@@ -20,6 +20,11 @@ namespace FuelSupply.BAL.Manager
             return UserProvider.GetAllUser();
         }
 
+        public static List<UserType> GetAllUserType()
+        {
+            return UserProvider.GetAllUserType();
+        }
+
         public static User GetUserById(int pUserId)
         {
             return UserProvider.GetUserById(pUserId);

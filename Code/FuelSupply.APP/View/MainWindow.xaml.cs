@@ -27,7 +27,7 @@ namespace FuelSupply.APP
     public partial class MainWindow : MetroWindow
     {
         #region "Declaration"
-        private MainViewModel mainModel;
+        public MainViewModel mainModel;
         private static LoadingWindow objLoadingForm;
 
         private delegate void ShowMessageDelegate();
@@ -40,13 +40,7 @@ namespace FuelSupply.APP
 
             mainModel = new MainViewModel(this);
             this.DataContext = mainModel;
-        }
-
-        private void btnTest_Click(object sender, RoutedEventArgs e)
-        {
-            List<User> UserList = FuelSupply.BAL.Class1.GetAllUser();
-            MessageBox.Show("Fetch Successfully");
-        }
+        }       
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -117,13 +111,13 @@ namespace FuelSupply.APP
             mainModel.ContentWindow = oProfile;
         }
 
-        private void btnUser_Click(object sender, RoutedEventArgs e)
+        public void btnUser_Click(object sender, RoutedEventArgs e)
         {
             UserDisplay oUserDisplay = new UserDisplay(this);
             mainModel.ContentWindow = oUserDisplay;
         }
 
-        private void btnCustomer_Click(object sender, RoutedEventArgs e)
+        public void btnCustomer_Click(object sender, RoutedEventArgs e)
         {
             CustomerDisplay oCustomer = new CustomerDisplay(this);
             mainModel.ContentWindow = oCustomer;

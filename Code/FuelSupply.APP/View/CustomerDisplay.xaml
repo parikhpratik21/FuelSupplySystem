@@ -24,8 +24,8 @@
         </Grid.ColumnDefinitions>
 
         <Label Name="txtTitle" Content="Customer List" Grid.Column="0" Grid.Row="1" Style="{StaticResource LabelHeaderStyle}"></Label>
-        <Grid Grid.Column="0" Grid.Row="2" Background="White">
-            <DataGrid ItemsSource="{Binding CustomerList}" AutoGenerateColumns="False" >
+        <Grid Grid.Column="0" Grid.Row="2" Background="White" >
+            <DataGrid Name="dgCustomerList" ItemsSource="{Binding CustomerList}" AutoGenerateColumns="False" SelectionChanged="DataGrid_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="0.5*" />
                     <DataGridTextColumn Header="Code" Binding="{Binding Code}" Width="1*"/>

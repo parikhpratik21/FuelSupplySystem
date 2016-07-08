@@ -22,10 +22,22 @@ namespace FuelSupply.DAL.Provider
         #endregion
 
         #region "Methods"
-        public static List<Customer> GetAllCustomer()
+        public static List<Customer> GetAllCustomers()
         {
             List<Customer> CustomerList = customerDbObject.Customers.ToList();
             return CustomerList;
+        }
+
+        public static List<CustomerType> GetAllCustomerTypes()
+        {
+            List<CustomerType> CustomerTypeList = customerDbObject.CustomerTypes.ToList();
+            return CustomerTypeList;
+        }        
+
+        public static List<PaymentType> GetAllPaymentTypes()
+        {
+            List<PaymentType> PaymentTypeList = customerDbObject.PaymentTypes.ToList();
+            return PaymentTypeList;
         }
 
         public static Customer GetCustomerById(int pCustomerId)

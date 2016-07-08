@@ -28,6 +28,12 @@ namespace FuelSupply.DAL.Provider
             return userList;
         }
 
+        public static List<UserType> GetAllUserType()
+        {
+            List<UserType> userTypeList = userDbObject.UserTypes.ToList();
+            return userTypeList;
+        }
+
         public static User GetUserById(int pUserId)
         {
             return userDbObject.Users.Where(x=> x.Id == pUserId).FirstOrDefault();

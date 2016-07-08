@@ -11,9 +11,19 @@ namespace FuelSupply.BAL.Manager
     public class CustomerManager
     {
         #region "Methods"
-        public static List<Customer> GetAllCustomer()
+        public static List<Customer> GetAllCustomers()
         {
-            return CustomerProvider.GetAllCustomer();
+            return CustomerProvider.GetAllCustomers();
+        }
+
+        public static List<CustomerType> GetAllCustomerTypes()
+        {
+            return CustomerProvider.GetAllCustomerTypes();
+        }
+
+        public static List<PaymentType> GetAllPaymentTypes()
+        {
+            return CustomerProvider.GetAllPaymentTypes();
         }
 
         public static Customer GetCustomerById(int pCustomerId)

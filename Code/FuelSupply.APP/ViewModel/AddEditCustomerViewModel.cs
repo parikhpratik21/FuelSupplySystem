@@ -1,5 +1,5 @@
 ﻿using FuelSupply.BAL.Manager;
-using FuelSupply.DAL.Entity.UserEntity;
+using FuelSupply.DAL.Entity.CustomerEntity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,36 +10,50 @@ using System.Windows;
 
 namespace FuelSupply.APP.ViewModel
 {
-    public class AddEditUserViewModel : INotifyPropertyChanged
+    public class AddEditCustomerViewModel : INotifyPropertyChanged
     {
         #region "Declaration"
-        private User _SelectedUser;
+        private Customer _SelectedCustomer;
         private string _Title;
-        private List<UserType> _UserTypeList;
+        private List<PaymentType> _PaymentTypeList;
+        private List<CustomerType> _CustomerTypeList;
         #endregion
 
         #region "Property"
-        public User SelectedUser
+        public Customer SelectedCustomer
         {
             get {
-                return _SelectedUser; 
+                return _SelectedCustomer; 
             }
             set{
-                _SelectedUser = value;
-                OnPropertyChanged("SelectedUser");
+                _SelectedCustomer = value;
+                OnPropertyChanged("SelectedCustomer");
             }
         }
 
-        public List<UserType> UserTypeList
+        public List<CustomerType> CustomerTypeList
         {
             get
             {
-                return _UserTypeList;
+                return _CustomerTypeList;
             }
             set
             {
-                _UserTypeList = value;
-                OnPropertyChanged("UserTypeList");
+                _CustomerTypeList = value;
+                OnPropertyChanged("CustomerTypeList");
+            }
+        }
+
+        public List<PaymentType> PaymentTypeList
+        {
+            get
+            {
+                return _PaymentTypeList;
+            }
+            set
+            {
+                _PaymentTypeList = value;
+                OnPropertyChanged("PaymentTypeList");
             }
         }
 
@@ -54,9 +68,10 @@ namespace FuelSupply.APP.ViewModel
             }
         }
         #endregion
-        public AddEditUserViewModel(Window pOwnerWindow)
+        public AddEditCustomerViewModel(Window pOwnerWindow)
         {
-            _UserTypeList = UserManager.GetAllUserType();
+            _CustomerTypeList = CustomerManager.GetAllCustomerTypes();
+            _PaymentTypeList = CustomerManager.GetAllPaymentTypes();
         }
 
         #region EventHandlers (1)

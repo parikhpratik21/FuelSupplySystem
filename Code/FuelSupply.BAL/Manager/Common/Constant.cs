@@ -9,5 +9,11 @@ namespace FuelSupply.BAL.Manager.Common
     public class Constant
     {
         public const string MSG_GLOBAL_EXCEPTION = "Error in proccesing, Please try again.";
+
+        #region "MessageManager"
+
+        public const string MESSAGE_TITLE = "Fuel Supply System";
+
+        #endregion
     }
 }

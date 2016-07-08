@@ -21,19 +21,19 @@ namespace FuelSupply.APP.View
     /// <summary>
     /// Interaction logic for AddEditUser.xaml
     /// </summary>
-    public partial class AddEditUser : UserControl, INotifyPropertyChanged
+    public partial class AddEditCustomer : UserControl, INotifyPropertyChanged
     {
         #region "Declaration"
-        private AddEditUserViewModel viewModel;
+        private AddEditCustomerViewModel viewModel;
         private MainWindow oMainWindow;
         #endregion      
 
-        public AddEditUser(Window pOwnerWindow)
+        public AddEditCustomer(Window pOwnerWindow)
         {
             InitializeComponent();
 
             oMainWindow = (MainWindow)pOwnerWindow;
-            viewModel = new AddEditUserViewModel(pOwnerWindow);
+            viewModel = new AddEditCustomerViewModel(pOwnerWindow);
             this.DataContext = viewModel;
         }
 
@@ -55,7 +55,7 @@ namespace FuelSupply.APP.View
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            oMainWindow.btnUser_Click(null, null);
+            oMainWindow.btnCustomer_Click(null, null);
         }
     }
 }

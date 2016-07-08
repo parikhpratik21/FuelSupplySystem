@@ -1,4 +1,5 @@
 ﻿using FuelSupply.APP.ViewModel;
+using FuelSupply.DAL.Entity.UserEntity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,25 +22,41 @@ namespace FuelSupply.APP.View
     public partial class UserDisplay : UserControl
     {
         #region "Declaration"
-        private UserDisplayViewModel userDisplayModel;
+        private UserDisplayViewModel userDisplayViewModel;
+        private MainWindow oMainWindow;
         #endregion
 
         public UserDisplay(Window pOwnerWindow)
         {
             InitializeComponent();
 
-            userDisplayModel = new UserDisplayViewModel(pOwnerWindow);
-            this.DataContext = userDisplayModel;
+            oMainWindow = (MainWindow)pOwnerWindow;
+            userDisplayViewModel = new UserDisplayViewModel(pOwnerWindow);
+            this.DataContext = userDisplayViewModel;
         }
 
         private void btnAddUser_Click(object sender, RoutedEventArgs e)
         {
+            AddEditUserViewModel oAddUserViewModel = new AddEditUserViewModel(oMainWindow);
+            oAddUserViewModel.SelectedUser = new User();
+            oAddUserViewModel.Title = "Add User";
 
+            AddEditUser oAddEditForm = new AddEditUser(oMainWindow);
+            oAddEditForm.DataContext = oAddUserViewModel;            
+
+            oMainWindow.mainModel.ContentWindow = oAddEditForm;
         }
 
         private void btnEditUser_Click(object sender, RoutedEventArgs e)
         {
+            AddEditUserViewModel oAddUserViewModel = new AddEditUserViewModel(oMainWindow);
+            oAddUserViewModel.SelectedUser = userDisplayViewModel.SelectedUser;
+            oAddUserViewModel.Title = "Edit User";
 
+            AddEditUser oAddEditForm = new AddEditUser(oMainWindow);
+            oAddEditForm.DataContext = oAddUserViewModel;            
+
+            oMainWindow.mainModel.ContentWindow = oAddEditForm;
         }
 
         private void btnDeleteUser_Click(object sender, RoutedEventArgs e)
@@ -50,6 +67,11 @@ namespace FuelSupply.APP.View
         private void btnChangePassword_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            userDisplayViewModel.SelectedUser = (User)dgUserList.SelectedItem;
         }
     }
 }
