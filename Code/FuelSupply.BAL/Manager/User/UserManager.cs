@@ -37,7 +37,12 @@ namespace FuelSupply.BAL.Manager
 
         public static User Login(string pUserName, string pPassword, ref string pErrorMsg)
         {
-            return UserProvider.Login(pUserName,pPassword);           
+            User oUser = UserProvider.Login(pUserName,pPassword);   
+            if(oUser == null)
+            {
+                pErrorMsg="Please enter valid credentials";
+            }
+            return oUser;
         }
 
         public static bool ChangePassword(int pUserId, string pNewPassword)

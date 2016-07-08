@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using FuelSupply.APP.ViewModel;
+using FuelSupply.DAL.Entity.UserEntity;
 
 namespace FuelSupply.APP.View
 {
@@ -24,11 +25,12 @@ namespace FuelSupply.APP.View
         private ProfileViewModel profileModel;       
         #endregion
 
-        public Profile(Window pOwnerWindow)
+        public Profile(Window pOwnerWindow, User pUser)
         {
             InitializeComponent();
 
             profileModel = new ProfileViewModel(pOwnerWindow);
+            profileModel.SelectedUser = pUser;
             this.DataContext = profileModel;
         }
     }

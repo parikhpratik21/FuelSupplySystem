@@ -56,6 +56,8 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
             <Button Name="btnAddCustomer" Margin="0" Grid.Row="0" Grid.Column="1" Click="btnAddCustomer_Click" HorizontalContentAlignment="Stretch">
@@ -96,6 +98,16 @@
                     </Grid.ColumnDefinitions>
                     <Image Source="..\Images\credit.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
                     <TextBlock Text="Add Credit"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                </Grid>
+            </Button>
+            <Button Name="btnAddFuel" Grid.Row="0" Grid.Column="9" Click="btnAddCredit_Click" HorizontalContentAlignment="Stretch">
+                <Grid  HorizontalAlignment="Stretch" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="..\Images\AddFuel.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
+                    <TextBlock Text="Add Fuel"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>
         </Grid>

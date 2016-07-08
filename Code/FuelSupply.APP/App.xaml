@@ -3,11 +3,11 @@
     <ResourceDictionary>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:FuelSupply.APP.ViewModel" />
           
-            <SolidColorBrush x:Key="JioShareColor">#1076bb</SolidColorBrush>
+            <SolidColorBrush x:Key="AppTitleBarColor">#1076bb</SolidColorBrush>
             <SolidColorBrush x:Key="ItemMouseOverColor">#c8e6ff</SolidColorBrush>
             <SolidColorBrush x:Key="ItemSelectedColor">#7dc8ff</SolidColorBrush>
             <SolidColorBrush x:Key="TitleBorderColor">White</SolidColorBrush>
-            <SolidColorBrush x:Key="JioShareTextColor">#646464</SolidColorBrush>
+            <SolidColorBrush x:Key="AppTextColor">#646464</SolidColorBrush>
 
             <SolidColorBrush x:Key="BorderColor">#d5d5d5</SolidColorBrush>
             <SolidColorBrush x:Key="TitleFontColor">#ffffff</SolidColorBrush>
@@ -19,6 +19,11 @@
             <DataTemplate x:Key="WindowIconTemplate">
                 <Image Source="Images/FuelSystem1.ico" Stretch="Uniform" Margin="0,2,0,0" Height="25" Width="25" />
             </DataTemplate>
+
+            <DataTemplate x:Key="LoginIconTemplate">
+                <Image Source="Images/LogIn.png" Stretch="Uniform" Margin="0,2,0,0" Height="25" Width="25" />
+            </DataTemplate>
+        
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />

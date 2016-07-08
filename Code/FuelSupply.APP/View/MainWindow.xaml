@@ -4,10 +4,10 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform" 
-        xmlns:resx="clr-namespace:FuelSupply.APP.Properties" WindowTitleBrush="{StaticResource JioShareColor}" TitleCaps="False" TitleForeground="White" BorderThickness="2.0" 
-        BorderBrush="{StaticResource JioShareColor}" Title="Fuel Supply System" ShowMaxRestoreButton="True" 
+        xmlns:resx="clr-namespace:FuelSupply.APP.Properties" WindowTitleBrush="{StaticResource AppTitleBarColor}" TitleCaps="False" TitleForeground="White" BorderThickness="2.0" 
+        BorderBrush="{StaticResource AppTitleBarColor}" Title="Fuel Supply System" ShowMaxRestoreButton="True" 
         Loaded="MetroWindow_Loaded" ShowIconOnTitleBar="True" IconTemplate="{StaticResource WindowIconTemplate}"  
-        Closing="MetroWindow_Closing" MinHeight="500" MinWidth="700" WindowState="Maximized">
+        Closing="MetroWindow_Closing" MinHeight="300" MinWidth="500" WindowState="Maximized" Activated="MetroWindow_Activated" >
     <Controls:MetroWindow.Resources>
         <Style x:Key="ButtonStyle" TargetType="Button" >
             <Setter Property="Foreground" Value="#ffffff"/>            
@@ -18,7 +18,19 @@
                     <Setter Property= "Background" Value="Black"/>
                 </Trigger>
             </Style.Triggers>
-        </Style>     
+        </Style>
+        <Style x:Key="TextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource MetroTextBox}">
+            <Setter Property="Margin" Value="5,0,5,0"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
+        <Style x:Key="LableStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
     </Controls:MetroWindow.Resources>
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
@@ -35,6 +47,8 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="2*"/>
@@ -86,12 +100,22 @@
                     <TextBlock Text="History"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>              
             </Button>
+            <Button Name="btnLogOut" Grid.Column="9" Click="btnLogOut_Click" Background="#80838f" Style="{StaticResource ButtonStyle}" HorizontalContentAlignment="Stretch">
+                <Grid  HorizontalAlignment="Stretch" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="..\Images\logout.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
+                    <TextBlock Text="LogOut"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                </Grid>
+            </Button>
         </Grid>
 
         <Grid Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" Margin="20,0,20,2">
             <ContentControl Name="ServerContent" Content="{Binding ContentWindow}" >
                 
             </ContentControl>
-        </Grid>
-    </Grid>
+        </Grid>    
+    </Grid>    
 </Controls:MetroWindow>

@@ -40,17 +40,9 @@ namespace FuelSupply.APP.ViewModel
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         public MainViewModel(Window pOwnerForm)
-        {
-            ////if (IsInDesignMode)
-            ////{
-            ////    // Code runs in Blend --> create design time data.
-            ////}
-            ////else
-            ////{
-            ////    // Code runs "for real"
-            ////}
-            oProfile = new Profile(pOwnerForm);
-            this.ContentWindow = oProfile;
+        {         
+            //oProfile = new Profile(pOwnerForm);
+            //this.ContentWindow = oProfile;
         }
 
         public UserControl ContentWindow

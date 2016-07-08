@@ -19,7 +19,7 @@
         <Style x:Key="LableStyle" TargetType="Label">
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Foreground" Value="{StaticResource JioShareTextColor}"/>
+            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Right"/>
         </Style>

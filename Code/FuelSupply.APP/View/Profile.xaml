@@ -9,6 +9,12 @@
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="IsEnabled" Value="False" />
         </Style>
+        <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Margin" Value="10,0,10,0"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="IsEnabled" Value="False" />
+        </Style>
         <Style x:Key="LabelHeaderStyle" TargetType="Label" BasedOn="{StaticResource MetroLabel}">            
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -19,7 +25,7 @@
         <Style x:Key="LableStyle" TargetType="Label">
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Foreground" Value="{StaticResource JioShareTextColor}"/>
+            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Right"/>
         </Style>
@@ -53,34 +59,34 @@
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
                 <Label Name="lblUserCode" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="0" Content="User Code: "></Label>
-                <TextBox Name="txtUserCode" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="0"></TextBox>
+                <TextBox Name="txtUserCode" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="0" Text="{Binding SelectedUser.Code}"></TextBox>
 
                 <Label Name="lblName" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="1" Content="Name: "></Label>
-                <TextBox Name="txtName" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="1"></TextBox>
+                <TextBox Name="txtName" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="1" Text="{Binding SelectedUser.Name}"></TextBox>
 
                 <Label Name="lblUserName" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="2" Content="User Name: "></Label>
-                <TextBox Name="txtUserName" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="2" IsEnabled="False"></TextBox>
+                <TextBox Name="txtUserName" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="2" IsEnabled="False" Text="{Binding SelectedUser.UserName}"></TextBox>
 
                 <Label Name="lblUserType" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="3" Content="User Type: "></Label>
-                <TextBox Name="txtUserType" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="3"></TextBox>
-
+                <ComboBox Name="txtUserType" ItemsSource="{Binding UserTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" Style="{StaticResource ComboBoxStyle}" Grid.Column="1" Grid.Row="3" SelectedValue="{Binding SelectedUser.UserType}" ></ComboBox>
+                
                 <Label Name="lblContactNo" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="4" Content="Contact No: "></Label>
-                <TextBox Name="txtContactNo" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="4"></TextBox>
+                <TextBox Name="txtContactNo" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="4" Text="{Binding SelectedUser.ContactNo}"></TextBox>
 
                 <Label Name="lblAddress" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="5" Content="Address: "></Label>
-                <TextBox Name="txtAddress" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="5" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True"></TextBox>
+                <TextBox Name="txtAddress" Height="70"  Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="5" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Text="{Binding SelectedUser.Address}"></TextBox>
 
                 <Label Name="lblPinCode" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="6" Content="PinCode: "></Label>
-                <TextBox Name="txtPinCode" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="6"></TextBox>
+                <TextBox Name="txtPinCode" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="6" Text="{Binding SelectedUser.Pincode}"></TextBox>
 
                 <Label Name="lblCity" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="7" Content="City: "></Label>
-                <TextBox Name="txtCity" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="7"></TextBox>
+                <TextBox Name="txtCity" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="7" Text="{Binding SelectedUser.City}"></TextBox>
 
                 <Label Name="lblState" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="8" Content="State: "></Label>
-                <TextBox Name="txtState" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="8"></TextBox>
+                <TextBox Name="txtState" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="8" Text="{Binding SelectedUser.State}"></TextBox>
 
                 <Label Name="lblCountry" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="9" Content="Country: "></Label>
-                <TextBox Name="txtCountry" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="9"></TextBox>
+                <TextBox Name="txtCountry" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="9" Text="{Binding SelectedUser.Country}"></TextBox>
             </Grid>
         </ScrollViewer>
     </Grid>
