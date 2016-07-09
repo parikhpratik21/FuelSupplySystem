@@ -16,6 +16,11 @@ namespace FuelSupply.BAL.Manager
             return FuelProvider.GetAllFuelHistory();
         }
 
+        public static List<FuelType> GetAllFuelTypeList()
+        {
+            return FuelProvider.GetAllFuelTypeList();
+        }
+
         public static List<FuelHistory> GetFuelHistoryByKeyCustomerId(int pKeyCustomerId)
         {
             return FuelProvider.GetFuelHistoryByKeyCustomerId(pKeyCustomerId);

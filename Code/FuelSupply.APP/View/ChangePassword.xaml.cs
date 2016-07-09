@@ -1,4 +1,5 @@
 ﻿using FuelSupply.APP.ViewModel;
+using FuelSupply.DAL.Entity.UserEntity;
 using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -18,37 +18,36 @@ using System.Windows.Shapes;
 namespace FuelSupply.APP.View
 {
     /// <summary>
-    /// Interaction logic for LoginWindow.xaml
+    /// Interaction logic for ChangePassword.xaml
     /// </summary>
-    public partial class LoginWindow : MetroWindow
+    public partial class ChangePassword : MetroWindow
     {
         #region "Declaration"
-        MainWindow oMainWindows;
-        LoginViewModel oViewModel;
+        private MainWindow oMainWindow;
+        private ChangePasswordViewModel oViewModel;
         #endregion
-        public LoginWindow(Window pOwnerWindow, LoginViewModel pViewModel)
+        public ChangePassword(Window pOwner, User pSelectedUser)
         {
             InitializeComponent();
 
-            oMainWindows = (MainWindow)pOwnerWindow;
-            oViewModel = pViewModel;
+            oViewModel = new ChangePasswordViewModel(pOwner);
+            oViewModel.SelectedUser = pSelectedUser;
+            this.DataContext = oViewModel;
         }
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            oMainWindows.EnabledGrid();
+
         }
 
-        private void btnLogIn_Click(object sender, RoutedEventArgs e)
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            oMainWindows.startProcess("Loading...");
-            oViewModel.Login(txtPassword.Password);
-            oMainWindows.stopProcess();
+
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            Environment.Exit(0);
+
         }
     }
 }

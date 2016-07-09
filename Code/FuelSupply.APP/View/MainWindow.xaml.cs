@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -35,9 +36,18 @@ namespace FuelSupply.APP
         private delegate void ShowMessageDelegate();
         private delegate void StopLoader();
         private delegate void EnabledGridDelegate();
+        private delegate void StartLoader(object LoadingParam);
+        private delegate void StartProcessDelegate(string pIntializeText);
 
         LoginWindow oLoginWindow;
         LoginViewModel oLogInViewModel;
+
+        public struct LoadingParams
+        {
+            public string ContentText;
+            public double xPos;
+            public double yPos;
+        };
         #endregion
         public MainWindow()
         {
@@ -109,6 +119,89 @@ namespace FuelSupply.APP
                 MainGrid.Dispatcher.Invoke(new EnabledGridDelegate(EnabledGrid));
             }
         }
+
+        public void startProcess(string pIntializeText)
+        {
+            if (this.Dispatcher.CheckAccess())
+            {
+                double windowTop = this.Top;
+                double windowLeft = this.Left;
+
+                if (this.WindowState == System.Windows.WindowState.Maximized)
+                {
+                    windowTop = 0;
+                    windowLeft = 0;
+                }
+                double loadingWindowTop = (windowTop + (this.ActualHeight / 2));
+                double loadingWindowLeft = (windowLeft + (this.ActualWidth / 2));
+
+                MainGrid.IsEnabled = false;
+                LoadingParams oLoadingParams;
+                if (objLoadingForm != null)
+                {
+                    EnabledGrid();
+                    stopProcess();
+                    ////OwnerForm.IsEnabled = true;
+                }
+                objLoadingForm = new LoadingWindow(this);
+
+                oLoadingParams.ContentText = pIntializeText;
+                oLoadingParams.xPos = loadingWindowLeft;
+                oLoadingParams.yPos = loadingWindowTop;
+
+                System.Threading.Thread oLoaderThread = new Thread(new ParameterizedThreadStart(startLoader));
+                oLoaderThread.IsBackground = true;
+                oLoaderThread.SetApartmentState(ApartmentState.STA);
+                oLoaderThread.Priority = ThreadPriority.Highest;
+                oLoaderThread.Start(oLoadingParams);
+            }
+            else
+            {
+                MainGrid.Dispatcher.Invoke(new StartProcessDelegate(startProcess), pIntializeText);
+            }
+        }
+
+        #region "Method: startLoader(1)"
+        /// <summary>
+        /// Starts the loader.
+        /// </summary>
+        private static void startLoader(object pLoadingParams)
+        {
+            if (objLoadingForm == null)
+                return;
+
+            if (objLoadingForm.Dispatcher.CheckAccess())
+            {
+                LoadingParams oLodingParam = (LoadingParams)pLoadingParams;
+                objLoadingForm.lblLoadingtext.Content = oLodingParam.ContentText;
+                objLoadingForm.Owner = objLoadingForm.OwnerForm;
+
+                double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
+                double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
+
+                oLodingParam.xPos = oLodingParam.xPos - (objLoadingForm.Width / 2);
+                oLodingParam.yPos = oLodingParam.yPos - (objLoadingForm.Height / 2);
+
+                if ((screenWidth < (oLodingParam.xPos + objLoadingForm.Width)) || (screenHeight < (oLodingParam.yPos + objLoadingForm.Height)))
+                {
+                    objLoadingForm.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                }
+                else
+                {
+                    objLoadingForm.Left = oLodingParam.xPos;
+                    objLoadingForm.Top = oLodingParam.yPos;
+                }
+
+                objLoadingForm.Activate();
+                objLoadingForm.Show();
+
+            }
+            else
+            {
+                objLoadingForm.Dispatcher.Invoke(new StartLoader(startLoader), pLoadingParams);
+            }
+        }
+        #endregion
 
         public void stopProcess()
         {

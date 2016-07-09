@@ -28,6 +28,12 @@ namespace FuelSupply.DAL.Provider
             return FuelHostoryList;
         }
 
+        public static List<FuelType> GetAllFuelTypeList()
+        {
+            List<FuelType> FuelTypeList = fuelDbObject.FuelTypes.ToList();
+            return FuelTypeList;
+        }
+
         public static List<FuelHistory> GetFuelHistoryByKeyCustomerId(int pKeyCustomerId)
         {
             return fuelDbObject.FuelHistories.Where(x => x.KeyCustomerId == pKeyCustomerId).ToList();

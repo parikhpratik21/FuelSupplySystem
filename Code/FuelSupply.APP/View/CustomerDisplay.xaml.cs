@@ -65,12 +65,21 @@ namespace FuelSupply.APP.View
 
         private void btnAddCredit_Click(object sender, RoutedEventArgs e)
         {
-
+            AddCredit oAddCredit = new AddCredit(customerDisplayModel.SelectedCustomer);
+            oAddCredit.Owner = oMainWindow;
+            oAddCredit.ShowDialog();
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             customerDisplayModel.SelectedCustomer = (Customer)dgCustomerList.SelectedItem;
+        }
+
+        private void btnAddFuel_Click(object sender, RoutedEventArgs e)
+        {
+            Add_Fuel oAddFuel = new Add_Fuel(customerDisplayModel.SelectedCustomer);
+            oAddFuel.Owner = oMainWindow;
+            oAddFuel.ShowDialog();
         }
     }
 }

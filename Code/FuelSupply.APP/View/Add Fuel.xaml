@@ -1,0 +1,109 @@
+﻿<Controls:MetroWindow x:Class="FuelSupply.APP.View.Add_Fuel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform" 
+        WindowTitleBrush="{StaticResource AppTitleBarColor}" TitleCaps="False" TitleForeground="White" BorderThickness="2.0" 
+        BorderBrush="{StaticResource AppTitleBarColor}" ShowMaxRestoreButton="False" ShowCloseButton="True" ShowMinButton="False" Closing="MetroWindow_Closing" 
+        ShowIconOnTitleBar="True" IconTemplate="{StaticResource LoginIconTemplate}" WindowStartupLocation="CenterOwner" Title="Add Fuel" Height="300" Width="350">
+    <Window.CommandBindings>
+        <CommandBinding Command="Close" Executed="btnAdd_Click" />
+    </Window.CommandBindings>
+
+    <Window.InputBindings>
+        <KeyBinding Key="Enter" Command="Close" />
+    </Window.InputBindings>
+
+    <Controls:MetroWindow.Resources>
+        <Style x:Key="TextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource MetroTextBox}">
+            <Setter Property="Margin" Value="5,0,5,0"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Margin" Value="5,0,5,0"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style x:Key="LableStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="5,0,5,0"/>
+        </Style>
+        <Style x:Key="LabelHeaderStyle" TargetType="Label" BasedOn="{StaticResource MetroLabel}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontWeight" Value="Bold" />            
+        </Style>
+    </Controls:MetroWindow.Resources>
+    <Grid Name="CreditGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="6*" />
+            <RowDefinition Height="0.3*" />
+            <RowDefinition Height="0.8*" />
+            <RowDefinition Height="0.3*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.3*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="0.3*" />
+            </Grid.ColumnDefinitions>
+            <Label Name="lblCustomerCodeHeader" Content="Code:" Grid.Column="1" Grid.Row="0" Style="{StaticResource LabelHeaderStyle}"></Label>
+            <Label Name="lblCustomerCode" Grid.Column="2" Grid.Row="0" Style="{StaticResource LableStyle}" Content="{Binding SelectedCustomer.Code}"></Label>
+            <Label Name="lblCustomerNameHeader" Content="Name:" Grid.Column="1" Grid.Row="1" Style="{StaticResource LabelHeaderStyle}"></Label>
+            <Label Name="lblCustomerName" Grid.Column="2" Grid.Row="1" Style="{StaticResource LableStyle}"  Content="{Binding SelectedCustomer.Name}" ></Label>
+            <Label Name="lblKeyCustomerHeader" Content="Key Customer:" Grid.Column="1" Grid.Row="2" Style="{StaticResource LabelHeaderStyle}"></Label>
+            <Label Name="lblKeyCustomer" Grid.Column="2" Grid.Row="2" Style="{StaticResource LableStyle}"  Content="{Binding SelectedCustomer.Customer2.Name}" ></Label>
+
+            <Label Name="lblFuelType" Content="Credit:" Grid.Column="1" Grid.Row="3" Style="{StaticResource LabelHeaderStyle}"></Label>
+            <ComboBox Name="cmbFuelType" ItemsSource="{Binding FuelTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedCustomer.PaymentType, Mode=TwoWay}" Style="{StaticResource ComboBoxStyle}" Grid.Column="2" Grid.Row="3" ></ComboBox>
+
+            <Label Name="lblFuleInLiter" Content="Fuel:" Grid.Column="1" Grid.Row="4" Style="{StaticResource LabelHeaderStyle}"></Label>
+            <TextBox Name="txtFuelLiter" Grid.Column="2" Grid.Row="4" Style="{StaticResource TextBoxStyle}"  Text="{Binding FuelTaken, Mode=TwoWay}" Controls:TextBoxHelper.Watermark="In Liter"></TextBox>
+
+            <Label Name="lblFuleAmount" Content="Amount:" Grid.Column="1" Grid.Row="5" Style="{StaticResource LabelHeaderStyle}"></Label>
+            <TextBox Name="txtFuelAmount" Grid.Column="2" Grid.Row="5" Style="{StaticResource TextBoxStyle}"  Text="{Binding FuelAmount, Mode=TwoWay}" Controls:TextBoxHelper.Watermark="In Rupees"></TextBox>
+
+        </Grid>
+
+        <Grid Grid.Row="3" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Button Name="btnAdd" Content="Add" Grid.Column="1" Grid.Row="0" Click="btnAdd_Click"></Button>
+            <Button Name="btnCancel" Content="Cancel" Grid.Column="3" Grid.Row="0" Click="btnCancel_Click"></Button>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>

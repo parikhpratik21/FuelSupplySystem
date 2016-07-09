@@ -8,12 +8,14 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="IsEnabled" Value="False" />
+            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
         </Style>
         <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
             <Setter Property="Margin" Value="10,0,10,0"/>
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="IsEnabled" Value="False" />
+            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
         </Style>
         <Style x:Key="LabelHeaderStyle" TargetType="Label" BasedOn="{StaticResource MetroLabel}">            
             <Setter Property="VerticalAlignment" Value="Center" />
@@ -21,6 +23,7 @@
             <Setter Property="FontSize" Value="20" />
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Margin" Value="0,0,0,-10" />
+            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
         </Style>
         <Style x:Key="LableStyle" TargetType="Label">
             <Setter Property="FontSize" Value="12"/>

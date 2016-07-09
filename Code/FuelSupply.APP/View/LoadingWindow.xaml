@@ -29,7 +29,7 @@
                         </Style>
                     </hammer:SpinningWheel.Style>
                 </hammer:SpinningWheel>
-                <Label Name="lblLoadingtext" Content="Loading...." Margin="0,-10,0,0" HorizontalContentAlignment="Center"  Width="143"/>
+                <Label Name="lblLoadingtext" Content="Loading...." Margin="0,-10,0,0" HorizontalContentAlignment="Center"  Width="143" />
 
             </UniformGrid>
         </Border>

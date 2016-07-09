@@ -87,19 +87,31 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helper\RelayCommand.cs" />
+    <Compile Include="ViewModel\AddCreditViewModel.cs" />
     <Compile Include="ViewModel\AddEditCustomerViewModel.cs" />
     <Compile Include="ViewModel\AddEditUserViewModel.cs" />
+    <Compile Include="ViewModel\AddFuelViewModel.cs" />
+    <Compile Include="ViewModel\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModel\CustomerDisplayViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ProfileViewModel.cs" />
     <Compile Include="ViewModel\UserDisplayViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\Add Fuel.xaml.cs">
+      <DependentUpon>Add Fuel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddCredit.xaml.cs">
+      <DependentUpon>AddCredit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AddEditCustomer.xaml.cs">
       <DependentUpon>AddEditCustomer.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AddEditUser.xaml.cs">
       <DependentUpon>AddEditUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ChangePassword.xaml.cs">
+      <DependentUpon>ChangePassword.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CustomerDisplay.xaml.cs">
       <DependentUpon>CustomerDisplay.xaml</DependentUpon>
@@ -119,11 +131,23 @@
     <Compile Include="View\UserDisplay.xaml.cs">
       <DependentUpon>UserDisplay.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\Add Fuel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddCredit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AddEditCustomer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\AddEditUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ChangePassword.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

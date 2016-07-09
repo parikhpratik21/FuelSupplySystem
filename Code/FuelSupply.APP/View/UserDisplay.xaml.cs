@@ -66,7 +66,9 @@ namespace FuelSupply.APP.View
 
         private void btnChangePassword_Click(object sender, RoutedEventArgs e)
         {
-
+            ChangePassword oChangePassword = new ChangePassword(oMainWindow, userDisplayViewModel.SelectedUser);
+            oChangePassword.Owner = oMainWindow;
+            oChangePassword.ShowDialog();
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

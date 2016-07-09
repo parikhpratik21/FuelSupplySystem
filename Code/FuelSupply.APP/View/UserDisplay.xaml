@@ -9,6 +9,7 @@
             <Setter Property="FontSize" Value="20" />
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Margin" Value="0,0,0,0" />
+            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
         </Style>      
     </UserControl.Resources>
     <Grid>
