@@ -17,6 +17,7 @@ namespace FuelSupply.APP.ViewModel
         private List<FuelType> _FuelTypeList;
         private Decimal _FuelTaken;
         private Decimal _FuelAmount;
+        private List<Customer> _KeyCustomerList; 
         #endregion
 
         #region "Property"
@@ -71,6 +72,35 @@ namespace FuelSupply.APP.ViewModel
                 OnPropertyChanged("FuelAmount");
             }
         }
+
+        public List<Customer> KeyCustomerList
+        {
+            get
+            {
+                return _KeyCustomerList;
+            }
+            set
+            {
+                _KeyCustomerList = value;
+                OnPropertyChanged("KeyCustomerList");
+            }
+        }
+
+        public bool IsKeyCustomerListEnable
+        {
+            get
+            {
+                if (_KeyCustomerList == null || _KeyCustomerList.Count == 0)
+                    return false;
+                else
+                {
+                    if (_KeyCustomerList.Where(x => x.Id == _SelectedCustomer.KeyCustomerId).Count() > 0)
+                        return true;
+                    else
+                        return false;
+                }
+            }
+        }
         #endregion
 
         #region EventHandlers (1)
@@ -88,6 +118,7 @@ namespace FuelSupply.APP.ViewModel
         public AddFuelViewModel()
         {
             _FuelTypeList = FuelManager.GetAllFuelTypeList();
+            _KeyCustomerList = CustomerManager.GetAllKeyCustomer();
         }
         #endregion
     }

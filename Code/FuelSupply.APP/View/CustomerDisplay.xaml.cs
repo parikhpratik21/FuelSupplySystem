@@ -40,7 +40,7 @@ namespace FuelSupply.APP.View
             oAddCustomerViewModel.SelectedCustomer = new Customer();
             oAddCustomerViewModel.Title = "Add Customer";
 
-            AddEditCustomer oAddEditForm = new AddEditCustomer(oMainWindow);
+            AddEditCustomer oAddEditForm = new AddEditCustomer(oMainWindow, oAddCustomerViewModel);
             oAddEditForm.DataContext = oAddCustomerViewModel;
 
             oMainWindow.mainModel.ContentWindow = oAddEditForm;
@@ -52,7 +52,7 @@ namespace FuelSupply.APP.View
             oAddCustomerViewModel.SelectedCustomer = customerDisplayModel.SelectedCustomer;
             oAddCustomerViewModel.Title = "Edit Customer";
 
-            AddEditCustomer oAddEditForm = new AddEditCustomer(oMainWindow);
+            AddEditCustomer oAddEditForm = new AddEditCustomer(oMainWindow, oAddCustomerViewModel);
             oAddEditForm.DataContext = oAddCustomerViewModel;
 
             oMainWindow.mainModel.ContentWindow = oAddEditForm;
@@ -60,7 +60,7 @@ namespace FuelSupply.APP.View
 
         private void btnDeleteCustomer_Click(object sender, RoutedEventArgs e)
         {
-
+            customerDisplayModel.DeleteCustomer();
         }
 
         private void btnAddCredit_Click(object sender, RoutedEventArgs e)

@@ -14,7 +14,8 @@ namespace FuelSupply.APP.ViewModel
     {
         #region "Declaration"
         private Customer _SelectedCustomer;
-        private decimal _Credit;        
+        private decimal _Credit;
+        private List<PaymentType> _PaymentTypeList;
         #endregion
 
         #region "Property"
@@ -28,6 +29,19 @@ namespace FuelSupply.APP.ViewModel
             {
                 _SelectedCustomer = value;
                 OnPropertyChanged("SelectedCustomer");
+            }
+        }
+
+         public List<PaymentType> PaymentTypeList
+        {
+            get
+            {
+                return _PaymentTypeList;
+            }
+            set
+            {
+                _PaymentTypeList = value;
+                OnPropertyChanged("PaymentTypeList");
             }
         }
 
@@ -59,7 +73,7 @@ namespace FuelSupply.APP.ViewModel
         #region "Methods"
         public AddCreditViewModel()
         {
-            
+            _PaymentTypeList = CustomerManager.GetAllPaymentTypes();
         }
         #endregion
     }

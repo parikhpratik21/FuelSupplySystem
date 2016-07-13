@@ -1,4 +1,5 @@
 ﻿using FuelSupply.BAL.Manager;
+using FuelSupply.BAL.Manager.Common;
 using FuelSupply.DAL.Entity.CustomerEntity;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,13 @@ namespace FuelSupply.APP.ViewModel
         #region "Declaration"
         private List<Customer> _CustomerList;
         private Customer _selectedCustomer;
+        private MainWindow oMainWindow;
         #endregion
           
         public CustomerDisplayViewModel(Window pOwnerWindow)
         {
             _CustomerList = CustomerManager.GetAllCustomers();
+            oMainWindow = (MainWindow)pOwnerWindow;
         }
 
         #region "Property"
@@ -56,6 +59,25 @@ namespace FuelSupply.APP.ViewModel
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
+        }
+        #endregion
+
+        #region "Methods"
+        public void DeleteCustomer()
+        {
+            bool result = MessageManager.ShowConfirmationMessage("Are you sure you want to delete selected customer?", oMainWindow);
+            if (result == true)
+            {
+                bool deleteResult = CustomerManager.DeleteCustomer(_selectedCustomer.Id);
+                if (deleteResult == false)
+                {
+                    MessageManager.ShowErrorMessage("Error while deleting customer, Please try again.", oMainWindow);
+                }
+                else
+                {
+                    CustomerList = CustomerManager.GetAllCustomers();
+                }
             }
         }
         #endregion

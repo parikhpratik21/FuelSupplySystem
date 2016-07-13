@@ -1,4 +1,5 @@
 ﻿using FuelSupply.BAL.Manager;
+using FuelSupply.BAL.Manager.Common;
 using FuelSupply.DAL.Entity.UserEntity;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace FuelSupply.APP.ViewModel
         private User _SelectedUser;
         private string _Title;
         private List<UserType> _UserTypeList;
+        private MainWindow oMainWindows;
         #endregion
 
         #region "Property"
@@ -53,11 +55,84 @@ namespace FuelSupply.APP.ViewModel
                 OnPropertyChanged("Title");
             }
         }
+
+        public bool IsUserNameEnable
+        {
+            get
+            {
+                if(_SelectedUser == null || _SelectedUser.Id <= 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public int PasswordRowHeight
+        {
+            get
+            {
+                if (IsUserNameEnable == true)
+                    return 40;
+                else
+                    return 0;
+            }
+        }
+        public Visibility IsPasswordVisible
+        {
+            get
+            {
+                if (IsUserNameEnable == true)
+                    return Visibility.Visible;
+                else
+                    return Visibility.Hidden;
+            }
+        }
         #endregion
+
+        #region "Methods"
         public AddEditUserViewModel(Window pOwnerWindow)
         {
             _UserTypeList = UserManager.GetAllUserType();
+            oMainWindows = (MainWindow)pOwnerWindow;
         }
+
+        public bool AddEditUser(string pPassword)
+        {
+            if (_SelectedUser.Id <= 0)
+                return AddUser(pPassword);
+            else
+                return UpdateUser();
+        }
+        private bool AddUser(string pPassword)
+        {
+            _SelectedUser.Password = pPassword;
+            bool result = UserManager.AddUser(_SelectedUser);
+            if (result == false)
+            {
+                MessageManager.ShowErrorMessage("Error while adding user, Please try again.", oMainWindows);
+                return false;
+            }
+            else
+                return true;
+        }
+
+        private bool UpdateUser()
+        {
+            bool result = UserManager.UpdateUser(_SelectedUser);
+            if (result == false)
+            {
+                MessageManager.ShowErrorMessage("Error while updating user, Please try again.", oMainWindows);
+                return false;
+            }
+            else
+                return true;
+        }
+
+        #endregion
 
         #region EventHandlers (1)
         public event PropertyChangedEventHandler PropertyChanged;

@@ -41,7 +41,9 @@ namespace FuelSupply.APP.View
             oAddUserViewModel.SelectedUser = new User();
             oAddUserViewModel.Title = "Add User";
 
-            AddEditUser oAddEditForm = new AddEditUser(oMainWindow);
+            AddEditUserViewModel viewModel = new AddEditUserViewModel(oMainWindow);
+            viewModel.SelectedUser = oAddUserViewModel.SelectedUser;
+            AddEditUser oAddEditForm = new AddEditUser(oMainWindow, viewModel);
             oAddEditForm.DataContext = oAddUserViewModel;            
 
             oMainWindow.mainModel.ContentWindow = oAddEditForm;
@@ -53,7 +55,9 @@ namespace FuelSupply.APP.View
             oAddUserViewModel.SelectedUser = userDisplayViewModel.SelectedUser;
             oAddUserViewModel.Title = "Edit User";
 
-            AddEditUser oAddEditForm = new AddEditUser(oMainWindow);
+            AddEditUserViewModel viewModel = new AddEditUserViewModel(oMainWindow);
+            viewModel.SelectedUser = oAddUserViewModel.SelectedUser;
+            AddEditUser oAddEditForm = new AddEditUser(oMainWindow, viewModel);
             oAddEditForm.DataContext = oAddUserViewModel;            
 
             oMainWindow.mainModel.ContentWindow = oAddEditForm;
@@ -61,7 +65,7 @@ namespace FuelSupply.APP.View
 
         private void btnDeleteUser_Click(object sender, RoutedEventArgs e)
         {
-
+            userDisplayViewModel.DeleteUser();
         }
 
         private void btnChangePassword_Click(object sender, RoutedEventArgs e)

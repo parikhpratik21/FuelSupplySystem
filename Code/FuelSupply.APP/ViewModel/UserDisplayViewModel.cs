@@ -1,4 +1,5 @@
 ﻿using FuelSupply.BAL.Manager;
+using FuelSupply.BAL.Manager.Common;
 using FuelSupply.DAL.Entity.UserEntity;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,13 @@ namespace FuelSupply.APP.ViewModel
         #region "Declaration"
         private List<User> _UserList;
         private User _selectedUser;
+        private MainWindow oMainWindow;
         #endregion
 
         public UserDisplayViewModel(Window pOwnerWindow)
         {
             _UserList = UserManager.GetAllUser();
+            oMainWindow = (MainWindow)pOwnerWindow;
         }
 
         #region "Property"
@@ -58,6 +61,25 @@ namespace FuelSupply.APP.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
         }
+        #endregion
+
+        #region "Methods"
+        public void DeleteUser()
+        {
+            bool result = MessageManager.ShowConfirmationMessage("Are you sure you want to delete selected user?", oMainWindow);
+            if(result == true)
+            {
+                bool deleteResult = UserManager.DeleteUser(_selectedUser.Id);
+                if(deleteResult == false)
+                {
+                    MessageManager.ShowErrorMessage("Error while deleting user, Please try again.", oMainWindow);
+                }
+                else
+                {
+                    UserList = UserManager.GetAllUser();
+                }
+            }
+        }    
         #endregion
     }
 }

@@ -6,7 +6,7 @@
         xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform" 
         WindowTitleBrush="{StaticResource AppTitleBarColor}" TitleCaps="False" TitleForeground="White" BorderThickness="2.0" 
         BorderBrush="{StaticResource AppTitleBarColor}" ShowMaxRestoreButton="False" ShowCloseButton="True" ShowMinButton="False" Closing="MetroWindow_Closing" 
-        ShowIconOnTitleBar="True" IconTemplate="{StaticResource LoginIconTemplate}" WindowStartupLocation="CenterOwner" Title="Add Credit" Height="230" Width="350"
+        ShowIconOnTitleBar="False" IconTemplate="{StaticResource LoginIconTemplate}" WindowStartupLocation="CenterOwner" Title="Add Credit" Height="230" Width="380"
         >
     <Window.CommandBindings>
         <CommandBinding Command="Close" Executed="btnAdd_Click" />
@@ -20,14 +20,11 @@
         <Style x:Key="TextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource MetroTextBox}">
             <Setter Property="Margin" Value="5,0,5,0"/>
             <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch" />            
         </Style>
       
         <Style x:Key="LableStyle" TargetType="Label">
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+            <Setter Property="FontSize" Value="12"/>                        
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style>
@@ -38,10 +35,15 @@
             <Setter Property="FontSize" Value="12" />
             <Setter Property="FontWeight" Value="Bold" />            
         </Style>
+        <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Margin" Value="5,0,5,0"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
     </Controls:MetroWindow.Resources>
     <Grid Name="CreditGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="0.3*" />
             <RowDefinition Height="3*" />
             <RowDefinition Height="0.3*" />
             <RowDefinition Height="0.8*" />
@@ -55,20 +57,25 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />                
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.3*" />
+                <ColumnDefinition Width="0.2*" />
                 <ColumnDefinition Width="0.8*" />
                 <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="0.3*" />
+                <ColumnDefinition Width="0.2*" />
             </Grid.ColumnDefinitions>
             <Label Name="lblCustomerCodeHeader" Content="Code:" Grid.Column="1" Grid.Row="0" Style="{StaticResource LabelHeaderStyle}"></Label>
             <Label Name="lblCustomerCode" Grid.Column="2" Grid.Row="0" Style="{StaticResource LableStyle}" Content="{Binding SelectedCustomer.Code}"></Label>
             <Label Name="lblCustomerNameHeader" Content="Name:" Grid.Column="1" Grid.Row="1" Style="{StaticResource LabelHeaderStyle}"></Label>
             <Label Name="lblCustomerName" Grid.Column="2" Grid.Row="1" Style="{StaticResource LableStyle}"  Content="{Binding SelectedCustomer.Name}" ></Label>
-            <Label Name="lblCredit" Content="Credit:" Grid.Column="1" Grid.Row="2" Style="{StaticResource LabelHeaderStyle}"></Label>
-            <TextBox Name="txtCredit" Grid.Column="2" Grid.Row="2" Style="{StaticResource TextBoxStyle}" Controls:TextBoxHelper.Watermark="In Rupees" Text="{Binding Credit, Mode=TwoWay}"></TextBox>
+
+            <Label Name="lblpaymentType" Content="Payment Type:" Grid.Column="1" Grid.Row="2" Style="{StaticResource LabelHeaderStyle}"></Label>
+            <ComboBox Name="cmbPaymentType" ItemsSource="{Binding PaymentTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" Style="{StaticResource ComboBoxStyle}" Grid.Column="2" Grid.Row="2" SelectedValue="{Binding SelectedCustomer.PaymentType}" ></ComboBox>            
+            
+            <Label Name="lblCredit" Content="Credit:" Grid.Column="1" Grid.Row="3" Style="{StaticResource LabelHeaderStyle}"></Label>
+            <TextBox Name="txtCredit" Grid.Column="2" Grid.Row="3" Style="{StaticResource TextBoxStyle}" Controls:TextBoxHelper.Watermark="In Rupees" Text="{Binding Credit, Mode=TwoWay}"></TextBox>
         </Grid>
 
         <Grid Grid.Row="3" Grid.Column="0">

@@ -9,6 +9,7 @@
 
 namespace FuelSupply.DAL.Database_Entity
 {
+    using FuelSupply.DAL.Entity.CreditEntity;
     using FuelSupply.DAL.Entity.CustomerEntity;
     using FuelSupply.DAL.Entity.FuelEntity;
     using FuelSupply.DAL.Entity.UserEntity;
@@ -37,5 +38,6 @@ namespace FuelSupply.DAL.Database_Entity
         public virtual DbSet<PaymentType> PaymentTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
+        public virtual DbSet<CreditHistory> CreditHistories { get; set; }
     }
 }

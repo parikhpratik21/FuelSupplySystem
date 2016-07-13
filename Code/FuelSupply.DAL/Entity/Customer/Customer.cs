@@ -1,4 +1,5 @@
-﻿using FuelSupply.DAL.Entity.FuelEntity;
+﻿using FuelSupply.DAL.Entity.CreditEntity;
+using FuelSupply.DAL.Entity.FuelEntity;
 using FuelSupply.DAL.Entity.UserEntity;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace FuelSupply.DAL.Entity.CustomerEntity
         {
             this.FuelHistories = new HashSet<FuelHistory>();
             this.Customer1 = new HashSet<Customer>();
+            this.CreditHistories = new HashSet<CreditHistory>();
         }
 
         public int Id { get; set; }
@@ -37,5 +39,6 @@ namespace FuelSupply.DAL.Entity.CustomerEntity
         public virtual ICollection<FuelHistory> FuelHistories { get; set; }
         public virtual ICollection<Customer> Customer1 { get; set; }
         public virtual Customer Customer2 { get; set; }
+        public virtual ICollection<CreditHistory> CreditHistories { get; set; }
     }
 }

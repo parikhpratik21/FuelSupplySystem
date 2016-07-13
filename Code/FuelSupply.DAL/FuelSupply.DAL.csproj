@@ -81,6 +81,7 @@
       <DependentUpon>FuelSupply.edmx</DependentUpon>
     </Compile>
     <Compile Include="Entity\Comman\Constant.cs" />
+    <Compile Include="Entity\Credit\CreditHistory.cs" />
     <Compile Include="Entity\Customer\Customer.cs" />
     <Compile Include="Entity\Customer\CustomerType.cs" />
     <Compile Include="Entity\Fuel\FuelHistory.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Entity\User\User.cs" />
     <Compile Include="Entity\User\UserType.cs" />
     <Compile Include="Provider\Common\LogManager.cs" />
+    <Compile Include="Provider\Credit\CreditProvider.cs" />
     <Compile Include="Provider\Customer\CustomerProvider.cs" />
     <Compile Include="Provider\Fuel\FuelProvider.cs" />
     <Compile Include="Provider\User\UserProvider.cs" />

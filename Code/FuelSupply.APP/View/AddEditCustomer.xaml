@@ -9,23 +9,27 @@
         <Style x:Key="TextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource MetroTextBox}">
             <Setter Property="Margin" Value="10,0,10,0"/>
             <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch" />            
         </Style>
         <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
             <Setter Property="Margin" Value="10,0,10,0"/>
             <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch" />            
         </Style>
         <Style x:Key="LableStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>            
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style x:Key="LableHeaderStyle" TargetType="Label">
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Right"/>
         </Style>
-        <Style x:Key="LabelHeaderStyle" TargetType="Label" BasedOn="{StaticResource MetroLabel}">
+        <Style x:Key="TitleLableStyle" TargetType="Label" BasedOn="{StaticResource MetroLabel}">
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="FontSize" Value="20" />
@@ -44,7 +48,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Label Name="txtTitle" Content="{Binding Title}" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Style="{StaticResource LabelHeaderStyle}"></Label>
+        <Label Name="txtTitle" Content="{Binding Title}" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Style="{StaticResource TitleLableStyle}"></Label>
 
         <ScrollViewer Grid.Column="0" Grid.Row="1"  VerticalScrollBarVisibility="Auto">
             <Grid Background="White" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible">
@@ -66,37 +70,37 @@
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
-            <Label Name="lblCustomerCode" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="0" Content="Customer Code: "></Label>
+                <Label Name="lblCustomerCode" Style="{StaticResource LableHeaderStyle}" Grid.Column="0" Grid.Row="0" Content="Customer Code: "></Label>
             <TextBox Name="txtUserCode" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="0" Text="{Binding SelectedCustomer.Code}"></TextBox>
 
-            <Label Name="lblName" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="1" Content="Name: "></Label>
+                <Label Name="lblName" Style="{StaticResource LableHeaderStyle}" Grid.Column="0" Grid.Row="1" Content="Name: "></Label>
             <TextBox Name="txtName" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="1" Text="{Binding SelectedCustomer.Name}"></TextBox>
 
-            <Label Name="lblCustomerType" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="2" Content="Customer Type: "></Label>
-            <ComboBox ItemsSource="{Binding CustomerTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedCustomer.CustomerType}" Name="txtCustomerType" Style="{StaticResource ComboBoxStyle}" Grid.Column="1" Grid.Row="2"></ComboBox>
+                <Label Name="lblCustomerType" Style="{StaticResource LableHeaderStyle}" Grid.Column="0" Grid.Row="2" Content="Customer Type: "></Label>
+            <ComboBox ItemsSource="{Binding CustomerTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedCustomer.CustomerType}" Name="txtCustomerType" Style="{StaticResource ComboBoxStyle}" Grid.Column="1" Grid.Row="2" SelectionChanged="txtCustomerType_SelectionChanged"></ComboBox>
 
-            <Label Name="lblKeyCustomerName" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="3" Content="Key Customer Name: "></Label>
-                <TextBox Name="txtKeyCustomerName" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="3" Text="{Binding SelectedCustomer.Customer2.Name}"></TextBox>
+                <Label Name="lblKeyCustomerName" Style="{StaticResource LableHeaderStyle}" Grid.Column="0" Grid.Row="3" Content="Key Customer Name: "></Label>
+                <ComboBox ItemsSource="{Binding KeyCustomerList}" IsEnabled="{Binding IsKeyCustomerListEnable}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedCustomer.KeyCustomerId}" Name="cmbKeyCustomer" Style="{StaticResource ComboBoxStyle}" Grid.Column="1" Grid.Row="3"></ComboBox>
 
-            <Label Name="lblPaymentType" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="4" Content="Payment Type: "></Label>
+                <Label Name="lblPaymentType" Style="{StaticResource LableHeaderStyle}" Grid.Column="0" Grid.Row="4" Content="Payment Type: "></Label>
                 <ComboBox Name="txtPaymentType" ItemsSource="{Binding PaymentTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedCustomer.PaymentType}" Style="{StaticResource ComboBoxStyle}" Grid.Column="1" Grid.Row="4" ></ComboBox>
 
-            <Label Name="lblPaymentLimit" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="5" Content="Payment Limit: "></Label>
+                <Label Name="lblPaymentLimit" Style="{StaticResource LableHeaderStyle}" Grid.Column="0" Grid.Row="5" Content="Payment Limit: "></Label>
                 <TextBox Name="txtpaymentLimit" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="5" Text="{Binding SelectedCustomer.PaymentLimit}"></TextBox>
 
-                <Label Name="lblAddress" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="6" Content="Address: "></Label>
+                <Label Name="lblAddress" Style="{StaticResource LableHeaderStyle}" Grid.Column="0" Grid.Row="6" Content="Address: "></Label>
             <TextBox Name="txtAddress" Height="70"  Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="6" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Text="{Binding SelectedCustomer.Address}"></TextBox>
 
-            <Label Name="lblPinCode" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="7" Content="PinCode: "></Label>
+                <Label Name="lblPinCode" Style="{StaticResource LableHeaderStyle}" Grid.Column="0" Grid.Row="7" Content="PinCode: "></Label>
             <TextBox Name="txtPinCode" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="7" Text="{Binding SelectedCustomer.Pincode}"></TextBox>
 
-            <Label Name="lblCity" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="8" Content="City: "></Label>
+                <Label Name="lblCity" Style="{StaticResource LableHeaderStyle}" Grid.Column="0" Grid.Row="8" Content="City: "></Label>
             <TextBox Name="txtCity" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="8" Text="{Binding SelectedCustomer.City}"></TextBox>
 
-            <Label Name="lblState" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="9" Content="State: "></Label>
+                <Label Name="lblState" Style="{StaticResource LableHeaderStyle}" Grid.Column="0" Grid.Row="9" Content="State: "></Label>
             <TextBox Name="txtState" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="9" Text="{Binding SelectedCustomer.State}"></TextBox>
 
-            <Label Name="lblCountry" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="10" Content="Country: "></Label>
+                <Label Name="lblCountry" Style="{StaticResource LableHeaderStyle}" Grid.Column="0" Grid.Row="10" Content="Country: "></Label>
             <TextBox Name="txtCountry" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="10" Text="{Binding SelectedCustomer.Country}"></TextBox>
         </Grid>
         </ScrollViewer>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FuelSupply.DAL.Entity.Comman
 {
-    public class Constant
+    public class Constants
     {
         #region "Enum"
         public enum eCustomerType

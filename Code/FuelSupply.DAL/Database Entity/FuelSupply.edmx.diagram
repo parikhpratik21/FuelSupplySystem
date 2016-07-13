@@ -23,6 +23,11 @@
         <AssociationConnector Association="FuelSupplySystemModel.FK_FuelHistory_User" ManuallyRouted="false" />
         <AssociationConnector Association="FuelSupplySystemModel.FK_User_UserType" ManuallyRouted="false" />
         <AssociationConnector Association="FuelSupplySystemModel.FK_Customer_Customer" />
+        <EntityTypeShape EntityType="FuelSupplySystemModel.CreditHistory" Width="1.5" PointX="5.25" PointY="8.75" />
+        <AssociationConnector Association="FuelSupplySystemModel.FK_CreditHistory_Customer" />
+        <AssociationConnector Association="FuelSupplySystemModel.FK_CreditHistory_FuelStation" />
+        <AssociationConnector Association="FuelSupplySystemModel.FK_CreditHistory_PaymentType" />
+        <AssociationConnector Association="FuelSupplySystemModel.FK_CreditHistory_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

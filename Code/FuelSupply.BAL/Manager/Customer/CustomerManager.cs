@@ -26,6 +26,11 @@ namespace FuelSupply.BAL.Manager
             return CustomerProvider.GetAllPaymentTypes();
         }
 
+        public static List<Customer> GetAllKeyCustomer()
+        {
+            return CustomerProvider.GetAllKeyCustomer();
+        }
+
         public static Customer GetCustomerById(int pCustomerId)
         {
             return CustomerProvider.GetCustomerById(pCustomerId);

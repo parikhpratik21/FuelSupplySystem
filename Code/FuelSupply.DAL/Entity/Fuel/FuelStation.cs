@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FuelSupply.DAL.Entity.CreditEntity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace FuelSupply.DAL.Entity.FuelEntity
         public FuelStation()
         {
             this.FuelHistories = new HashSet<FuelHistory>();
+            this.CreditHistories = new HashSet<CreditHistory>();
         }
 
         public int Id { get; set; }
@@ -23,5 +25,6 @@ namespace FuelSupply.DAL.Entity.FuelEntity
         public string Country { get; set; }
 
         public virtual ICollection<FuelHistory> FuelHistories { get; set; }
+        public virtual ICollection<CreditHistory> CreditHistories { get; set; }
     }
 }

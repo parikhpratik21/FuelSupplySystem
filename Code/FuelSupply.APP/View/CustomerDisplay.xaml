@@ -34,6 +34,7 @@
                     <DataGridTextColumn Header="Key Customer" Binding="{Binding Customer2.Name}" Width="1.3*"/>
                     <DataGridTextColumn Header="Customer Type" Binding="{Binding CustomerType1.Name}" Width="1.3*"/>
                     <DataGridTextColumn Header="Payment Type" Binding="{Binding PaymentType1.Name}" Width="1.3*"/>
+                    <DataGridTextColumn Header="Payment Limit" Binding="{Binding PaymentLimit}" Width="1.3*"/>
                     <DataGridTextColumn Header="Available Amount" Binding="{Binding AvailablePay}" Width="1.5*"/>
                     <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="2*"/>
                     <DataGridTextColumn Header="Pincode" Binding="{Binding Pincode}" Width="1*"/>

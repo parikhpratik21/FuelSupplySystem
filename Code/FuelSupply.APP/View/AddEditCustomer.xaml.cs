@@ -28,12 +28,12 @@ namespace FuelSupply.APP.View
         private MainWindow oMainWindow;
         #endregion      
 
-        public AddEditCustomer(Window pOwnerWindow)
+        public AddEditCustomer(Window pOwnerWindow, AddEditCustomerViewModel pViewModel)
         {
             InitializeComponent();
 
             oMainWindow = (MainWindow)pOwnerWindow;
-            viewModel = new AddEditCustomerViewModel(pOwnerWindow);
+            viewModel = pViewModel;
             this.DataContext = viewModel;
         }
 
@@ -50,12 +50,19 @@ namespace FuelSupply.APP.View
 
         private void btnSaveUser_Click(object sender, RoutedEventArgs e)
         {
-
+            bool result = viewModel.AddEditCustomer();
+            if (result == true)
+                oMainWindow.btnCustomer_Click(null, null);
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             oMainWindow.btnCustomer_Click(null, null);
+        }
+
+        private void txtCustomerType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            viewModel.OnPropertyChanged("IsKeyCustomerListEnable");
         }
     }
 }

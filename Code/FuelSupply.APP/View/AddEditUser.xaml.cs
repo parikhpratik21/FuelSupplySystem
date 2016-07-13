@@ -28,13 +28,13 @@ namespace FuelSupply.APP.View
         private MainWindow oMainWindow;
         #endregion      
 
-        public AddEditUser(Window pOwnerWindow)
+        public AddEditUser(Window pOwnerWindow, AddEditUserViewModel pViewModel)
         {
             InitializeComponent();
 
-            oMainWindow = (MainWindow)pOwnerWindow;
-            viewModel = new AddEditUserViewModel(pOwnerWindow);
-            this.DataContext = viewModel;
+            viewModel = pViewModel;
+            oMainWindow = (MainWindow)pOwnerWindow;            
+            this.DataContext = pViewModel;
         }
 
         #region EventHandlers (1)
@@ -50,7 +50,9 @@ namespace FuelSupply.APP.View
 
         private void btnSaveUser_Click(object sender, RoutedEventArgs e)
         {
-
+            bool result = viewModel.AddEditUser(txtPasswrod.Password);
+            if(result == true)
+                oMainWindow.btnUser_Click(null, null);
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

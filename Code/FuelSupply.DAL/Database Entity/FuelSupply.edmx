@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="FuelSupplySystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CreditHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Time" Type="datetime" />
+          <Property Name="FuelStationId" Type="int" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="PaymentType" Type="int" />
+          <Property Name="CreditAmount" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="Id" />
@@ -106,6 +118,54 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK_CreditHistory_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="CreditHistory" Type="Self.CreditHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CreditHistory">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CreditHistory_FuelStation">
+          <End Role="FuelStation" Type="Self.FuelStation" Multiplicity="0..1" />
+          <End Role="CreditHistory" Type="Self.CreditHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FuelStation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CreditHistory">
+              <PropertyRef Name="FuelStationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CreditHistory_PaymentType">
+          <End Role="PaymentType" Type="Self.PaymentType" Multiplicity="0..1" />
+          <End Role="CreditHistory" Type="Self.CreditHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CreditHistory">
+              <PropertyRef Name="PaymentType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CreditHistory_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="CreditHistory" Type="Self.CreditHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CreditHistory">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Customer_Customer">
           <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
           <End Role="Customer1" Type="Self.Customer" Multiplicity="*" />
@@ -215,6 +275,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="FuelSupplySystemModelStoreContainer">
+          <EntitySet Name="CreditHistory" EntityType="Self.CreditHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerType" EntityType="Self.CustomerType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FuelHistory" EntityType="Self.FuelHistory" Schema="dbo" store:Type="Tables" />
@@ -224,6 +285,22 @@
           <EntitySet Name="PaymentType" EntityType="Self.PaymentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CreditHistory_Customer" Association="Self.FK_CreditHistory_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CreditHistory" EntitySet="CreditHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CreditHistory_FuelStation" Association="Self.FK_CreditHistory_FuelStation">
+            <End Role="FuelStation" EntitySet="FuelStation" />
+            <End Role="CreditHistory" EntitySet="CreditHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CreditHistory_PaymentType" Association="Self.FK_CreditHistory_PaymentType">
+            <End Role="PaymentType" EntitySet="PaymentType" />
+            <End Role="CreditHistory" EntitySet="CreditHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CreditHistory_User" Association="Self.FK_CreditHistory_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="CreditHistory" EntitySet="CreditHistory" />
+          </AssociationSet>
           <AssociationSet Name="FK_Customer_Customer" Association="Self.FK_Customer_Customer">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Customer1" EntitySet="Customer" />
@@ -289,6 +366,7 @@
           <NavigationProperty Name="FuelHistories" Relationship="Self.FK_FuelHistory_Customer" FromRole="Customer" ToRole="FuelHistory" />
           <NavigationProperty Name="Customer1" Relationship="FuelSupplySystemModel.FK_Customer_Customer" FromRole="Customer" ToRole="Customer1" />
           <NavigationProperty Name="Customer2" Relationship="FuelSupplySystemModel.FK_Customer_Customer" FromRole="Customer1" ToRole="Customer" />
+          <NavigationProperty Name="CreditHistories" Relationship="FuelSupplySystemModel.FK_CreditHistory_Customer" FromRole="Customer" ToRole="CreditHistory" />
         </EntityType>
         <EntityType Name="CustomerType">
           <Key>
@@ -340,6 +418,7 @@
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="FuelHistories" Relationship="Self.FK_FuelHistory_FuelStation" FromRole="FuelStation" ToRole="FuelHistory" />
+          <NavigationProperty Name="CreditHistories" Relationship="FuelSupplySystemModel.FK_CreditHistory_FuelStation" FromRole="FuelStation" ToRole="CreditHistory" />
         </EntityType>
         <EntityType Name="FuelType">
           <Key>
@@ -356,6 +435,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_PaymentType" FromRole="PaymentType" ToRole="Customer" />
+          <NavigationProperty Name="CreditHistories" Relationship="FuelSupplySystemModel.FK_CreditHistory_PaymentType" FromRole="PaymentType" ToRole="CreditHistory" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -375,6 +455,7 @@
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="FuelHistories" Relationship="Self.FK_FuelHistory_User" FromRole="User" ToRole="FuelHistory" />
           <NavigationProperty Name="UserType1" Relationship="Self.FK_User_UserType" FromRole="User" ToRole="UserType" />
+          <NavigationProperty Name="CreditHistories" Relationship="FuelSupplySystemModel.FK_CreditHistory_User" FromRole="User" ToRole="CreditHistory" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -526,6 +607,23 @@
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Customer1" EntitySet="Customers" />
           </AssociationSet>
+          <EntitySet Name="CreditHistories" EntityType="FuelSupplySystemModel.CreditHistory" />
+          <AssociationSet Name="FK_CreditHistory_Customer" Association="FuelSupplySystemModel.FK_CreditHistory_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CreditHistory" EntitySet="CreditHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CreditHistory_FuelStation" Association="FuelSupplySystemModel.FK_CreditHistory_FuelStation">
+            <End Role="FuelStation" EntitySet="FuelStations" />
+            <End Role="CreditHistory" EntitySet="CreditHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CreditHistory_PaymentType" Association="FuelSupplySystemModel.FK_CreditHistory_PaymentType">
+            <End Role="PaymentType" EntitySet="PaymentTypes" />
+            <End Role="CreditHistory" EntitySet="CreditHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CreditHistory_User" Association="FuelSupplySystemModel.FK_CreditHistory_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="CreditHistory" EntitySet="CreditHistories" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_Customer_Customer">
           <End Type="FuelSupplySystemModel.Customer" Role="Customer" Multiplicity="0..1" />
@@ -536,6 +634,70 @@
             </Principal>
             <Dependent Role="Customer1">
               <PropertyRef Name="KeyCustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CreditHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Time" Type="DateTime" Precision="3" />
+          <Property Name="FuelStationId" Type="Int32" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="PaymentType" Type="Int32" />
+          <Property Name="CreditAmount" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Customer" Relationship="FuelSupplySystemModel.FK_CreditHistory_Customer" FromRole="CreditHistory" ToRole="Customer" />
+          <NavigationProperty Name="FuelStation" Relationship="FuelSupplySystemModel.FK_CreditHistory_FuelStation" FromRole="CreditHistory" ToRole="FuelStation" />
+          <NavigationProperty Name="PaymentType1" Relationship="FuelSupplySystemModel.FK_CreditHistory_PaymentType" FromRole="CreditHistory" ToRole="PaymentType" />
+          <NavigationProperty Name="User" Relationship="FuelSupplySystemModel.FK_CreditHistory_User" FromRole="CreditHistory" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_CreditHistory_Customer">
+          <End Type="FuelSupplySystemModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="FuelSupplySystemModel.CreditHistory" Role="CreditHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CreditHistory">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CreditHistory_FuelStation">
+          <End Type="FuelSupplySystemModel.FuelStation" Role="FuelStation" Multiplicity="0..1" />
+          <End Type="FuelSupplySystemModel.CreditHistory" Role="CreditHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FuelStation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CreditHistory">
+              <PropertyRef Name="FuelStationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CreditHistory_PaymentType">
+          <End Type="FuelSupplySystemModel.PaymentType" Role="PaymentType" Multiplicity="0..1" />
+          <End Type="FuelSupplySystemModel.CreditHistory" Role="CreditHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CreditHistory">
+              <PropertyRef Name="PaymentType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CreditHistory_User">
+          <End Type="FuelSupplySystemModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="FuelSupplySystemModel.CreditHistory" Role="CreditHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CreditHistory">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -652,6 +814,19 @@
               <MappingFragment StoreEntitySet="UserType">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CreditHistories">
+            <EntityTypeMapping TypeName="FuelSupplySystemModel.CreditHistory">
+              <MappingFragment StoreEntitySet="CreditHistory">
+                <ScalarProperty Name="CreditAmount" ColumnName="CreditAmount" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="FuelStationId" ColumnName="FuelStationId" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
