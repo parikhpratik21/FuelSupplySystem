@@ -11,6 +11,14 @@ namespace FuelSupply.BAL.Manager
     public class FuelManager
     {
         #region "Methods"
+        public static FuelStation GetFuelStationById(int pFuelStationId)
+        {
+            return FuelProvider.GetFuelStationById(pFuelStationId);
+        }
+        public static List<FuelStation> GetAllFuelStation()
+        {
+            return FuelProvider.GetAllFuelStation();
+        }
         public static List<FuelHistory> GetAllFuelHistory()
         {
             return FuelProvider.GetAllFuelHistory();

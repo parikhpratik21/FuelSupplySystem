@@ -24,13 +24,16 @@ namespace FuelSupply.APP.View
     {
          #region "Declaration"
         private AddFuelViewModel oViewModel;
+        private MainWindow oMainWindow; 
         #endregion
-        public Add_Fuel(Customer pSelectedCustomer)
+        public Add_Fuel(Customer pSelectedCustomer, Window pOwnerWindow)
         {
             InitializeComponent();
-            oViewModel = new AddFuelViewModel();
+            oViewModel = new AddFuelViewModel(pOwnerWindow);
             oViewModel.SelectedCustomer = pSelectedCustomer;
             this.DataContext = oViewModel;
+
+            oMainWindow = (MainWindow)pOwnerWindow;
         }     
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -38,9 +41,14 @@ namespace FuelSupply.APP.View
 
         }
 
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-
+            bool result = oViewModel.AddFuel();
+            if (result == true)
+            {
+                this.Close();
+                oMainWindow.btnCustomer_Click(null, null);
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

@@ -1,4 +1,6 @@
 using FuelSupply.APP.View;
+using FuelSupply.BAL.Manager;
+using FuelSupply.BAL.Manager.Common;
 using GalaSoft.MvvmLight;
 using System.ComponentModel;
 using System.Windows;
@@ -43,6 +45,7 @@ namespace FuelSupply.APP.ViewModel
         {         
             //oProfile = new Profile(pOwnerForm);
             //this.ContentWindow = oProfile;
+            SharedData.CurrentFuelStation = FuelManager.GetFuelStationById(1);
         }
 
         public UserControl ContentWindow

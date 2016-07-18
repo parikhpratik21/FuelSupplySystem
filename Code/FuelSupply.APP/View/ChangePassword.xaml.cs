@@ -40,7 +40,7 @@ namespace FuelSupply.APP.View
 
         }
 
-        private void btnOkay_Click(object sender, RoutedEventArgs e)
+        private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             bool result = oViewModel.ChangePassword(txtNewPassword.Password,txtConfirmPassword.Password);
             if (result == true)

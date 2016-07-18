@@ -9,7 +9,7 @@
         ShowIconOnTitleBar="False" IconTemplate="{StaticResource LoginIconTemplate}" WindowStartupLocation="CenterOwner" 
         ShowInTaskbar="False" Title="Add Fuel" Height="300" Width="350">
     <Window.CommandBindings>
-        <CommandBinding Command="Close" Executed="btnAdd_Click" />
+        <CommandBinding Command="Close" Executed="btnSave_Click" />
     </Window.CommandBindings>
 
     <Window.InputBindings>
@@ -75,10 +75,10 @@
             <Label Name="lblKeyCustomerHeader" Content="Key Customer:" Grid.Column="1" Grid.Row="2" Style="{StaticResource LabelHeaderStyle}"></Label>
             <ComboBox ItemsSource="{Binding KeyCustomerList}" IsEnabled="{Binding IsKeyCustomerListEnable}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedCustomer.Customer2.Id}" Name="cmbKeyCustomer" Style="{StaticResource ComboBoxStyle}" Grid.Column="2" Grid.Row="2"></ComboBox>
 
-            <Label Name="lblFuelType" Content="Credit:" Grid.Column="1" Grid.Row="3" Style="{StaticResource LabelHeaderStyle}"></Label>
-            <ComboBox Name="cmbFuelType" ItemsSource="{Binding FuelTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedCustomer.PaymentType, Mode=TwoWay}" Style="{StaticResource ComboBoxStyle}" Grid.Column="2" Grid.Row="3" ></ComboBox>
+            <Label Name="lblFuelType" Content="Fuel Type:" Grid.Column="1" Grid.Row="3" Style="{StaticResource LabelHeaderStyle}"></Label>
+            <ComboBox Name="cmbFuelType" ItemsSource="{Binding FuelTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding FuelType, Mode=TwoWay}" Style="{StaticResource ComboBoxStyle}" Grid.Column="2" Grid.Row="3" ></ComboBox>
 
-            <Label Name="lblFuleInLiter" Content="Fuel:" Grid.Column="1" Grid.Row="4" Style="{StaticResource LabelHeaderStyle}"></Label>
+            <Label Name="lblFuleInLiter" Content="Fuel(In Liter):" Grid.Column="1" Grid.Row="4" Style="{StaticResource LabelHeaderStyle}"></Label>
             <TextBox Name="txtFuelLiter" Grid.Column="2" Grid.Row="4" Style="{StaticResource TextBoxStyle}"  Text="{Binding FuelTaken, Mode=TwoWay}" Controls:TextBoxHelper.Watermark="In Liter"></TextBox>
 
             <Label Name="lblFuleAmount" Content="Amount:" Grid.Column="1" Grid.Row="5" Style="{StaticResource LabelHeaderStyle}"></Label>
@@ -97,7 +97,7 @@
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
-            <Button Name="btnAdd" Content="Add" Grid.Column="1" Grid.Row="0" Click="btnAdd_Click"></Button>
+            <Button Name="btnAdd" Content="Add" Grid.Column="1" Grid.Row="0" Click="btnSave_Click"></Button>
             <Button Name="btnCancel" Content="Cancel" Grid.Column="3" Grid.Row="0" Click="btnCancel_Click"></Button>
         </Grid>
     </Grid>

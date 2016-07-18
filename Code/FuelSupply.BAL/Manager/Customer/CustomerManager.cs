@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FuelSupply.DAL.Provider;
+using FuelSupply.DAL.Entity.CreditEntity;
+using FuelSupply.BAL.Manager.Common;
 
 namespace FuelSupply.BAL.Manager
 {
@@ -61,9 +63,24 @@ namespace FuelSupply.BAL.Manager
             return CustomerProvider.DeleteCustomer(pCustomerId);
         }
 
-        public static bool IncreaseCredit(int pCustomerId, decimal pAmount)
+        public static bool IncreaseCredit(int pCustomerId, decimal pAmount, int pPaymentType)
         {
-            return CustomerProvider.IncreaseCredit(pCustomerId, pAmount);
+            bool result = CustomerProvider.IncreaseCredit(pCustomerId, pAmount);
+            if (result == true)
+            {
+                CreditHistory oHistory = new CreditHistory();
+                oHistory.CreditAmount = pAmount;
+                oHistory.CustomerId = pCustomerId;
+                oHistory.Time = DateTime.Now;
+                oHistory.UserId = SharedData.LoggedUser.Id;
+                oHistory.PaymentType = pPaymentType;
+                oHistory.Id = 0;
+                oHistory.FuelStationId = SharedData.CurrentFuelStation.Id;
+                bool oHistoryResult = CreditManager.AddCreditHistory(oHistory);
+                return oHistoryResult;
+            }
+            else
+                return true;
         }
 
         public static bool DeductAmount(int pCustomerId, decimal pAmount)

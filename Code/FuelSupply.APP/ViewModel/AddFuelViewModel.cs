@@ -1,4 +1,5 @@
 ﻿using FuelSupply.BAL.Manager;
+using FuelSupply.BAL.Manager.Common;
 using FuelSupply.DAL.Entity.CustomerEntity;
 using FuelSupply.DAL.Entity.FuelEntity;
 using System;
@@ -7,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace FuelSupply.APP.ViewModel
 {
@@ -17,7 +19,9 @@ namespace FuelSupply.APP.ViewModel
         private List<FuelType> _FuelTypeList;
         private Decimal _FuelTaken;
         private Decimal _FuelAmount;
-        private List<Customer> _KeyCustomerList; 
+        private List<Customer> _KeyCustomerList;
+        private MainWindow oMainWindow;
+        private int _FuelType;
         #endregion
 
         #region "Property"
@@ -86,6 +90,19 @@ namespace FuelSupply.APP.ViewModel
             }
         }
 
+        public int FuelType
+        {
+            get
+            {
+                return _FuelType;
+            }
+            set
+            {
+                _FuelType = value;
+                OnPropertyChanged("FuelType");
+            }
+        }
+
         public bool IsKeyCustomerListEnable
         {
             get
@@ -115,10 +132,69 @@ namespace FuelSupply.APP.ViewModel
         #endregion
 
         #region "Methods"
-        public AddFuelViewModel()
+        public AddFuelViewModel(Window pOwnerWindow)
         {
             _FuelTypeList = FuelManager.GetAllFuelTypeList();
             _KeyCustomerList = CustomerManager.GetAllKeyCustomer();
+
+            oMainWindow = (MainWindow)pOwnerWindow;
+        }
+
+        public bool AddFuel()
+        {
+            if (FuelAmount <= 0)
+            {
+                MessageManager.ShowErrorMessage("Please enter valid fuel amount", oMainWindow);
+            }
+            else if (FuelTaken <= 0)
+            {
+                MessageManager.ShowErrorMessage("Please enter valid fuel taken", oMainWindow);
+            }
+            else
+            {
+                //First check whether we can deduct money or not
+                bool bCheckAvailibility = CustomerManager.CheckDeductionAvailibility(_SelectedCustomer.Id, FuelAmount);
+                if (bCheckAvailibility == false)
+                {
+                    MessageManager.ShowErrorMessage("Available amount is low can not add fuel, Please add credit", oMainWindow);
+                }
+                else
+                {
+                    bool bDeductAmount = CustomerManager.DeductAmount(_SelectedCustomer.Id, FuelAmount);
+                    if (bDeductAmount == false)
+                    {
+                        MessageManager.ShowErrorMessage("Error while adding the fuel, Please try again", oMainWindow);
+                    }
+                    else
+                    {
+                        FuelHistory oFuelHistory = new FuelHistory();
+                        oFuelHistory.CustomerId = _SelectedCustomer.Id;
+                        oFuelHistory.CustomerName = _SelectedCustomer.Name;
+                        oFuelHistory.FuelAmount = FuelAmount;
+                        oFuelHistory.FuelStationId = SharedData.CurrentFuelStation.Id;
+                        oFuelHistory.FuelType = FuelType;
+                        oFuelHistory.FuelVolume = FuelTaken;
+                        oFuelHistory.KeyCustomerId = _SelectedCustomer.KeyCustomerId;
+                        oFuelHistory.Id = 0;
+                        if(_SelectedCustomer.KeyCustomerId != null && _SelectedCustomer.KeyCustomerId >0)
+                        {
+                            oFuelHistory.KeyCustomerName = _SelectedCustomer.Customer2.Name;
+                        }
+                        oFuelHistory.Time = DateTime.Now;
+                        oFuelHistory.UserId = SharedData.LoggedUser.Id;
+                        oFuelHistory.UserName = SharedData.LoggedUser.Name;
+
+                        bool result = FuelManager.AddFuelHistory(oFuelHistory);
+                        if (result == false)
+                        {
+                            MessageManager.ShowErrorMessage("Error while adding the fuel, Please try again", oMainWindow);
+                        }
+                        else
+                            return true;
+                    }
+                }
+            }
+            return false;
         }
         #endregion
     }

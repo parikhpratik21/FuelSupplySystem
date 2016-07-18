@@ -92,6 +92,7 @@ namespace FuelSupply.APP.ViewModel
                 else
                 { 
                     _LogedUser =  oUser;
+                    SharedData.LoggedUser = oUser;
                     oWindow.SuccessLogIn();
                 }
             }            

@@ -9,7 +9,7 @@
         ShowIconOnTitleBar="False" IconTemplate="{StaticResource LoginIconTemplate}" WindowStartupLocation="CenterOwner" Title="Add Credit" Height="230" Width="380"
         >
     <Window.CommandBindings>
-        <CommandBinding Command="Close" Executed="btnAdd_Click" />
+        <CommandBinding Command="Close" Executed="btnSave_Click" />
     </Window.CommandBindings>
 
     <Window.InputBindings>
@@ -89,7 +89,7 @@
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
-            <Button Name="btnAdd" Content="Add" Grid.Column="1" Grid.Row="0" Click="btnAdd_Click"></Button>
+            <Button Name="btnAdd" Content="Add" Grid.Column="1" Grid.Row="0" Click="btnSave_Click"></Button>
             <Button Name="btnCancel" Content="Cancel" Grid.Column="3" Grid.Row="0" Click="btnCancel_Click"></Button>
         </Grid>
     </Grid>

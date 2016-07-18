@@ -24,18 +24,26 @@ namespace FuelSupply.APP.View
     {
         #region "Declaration"
         private AddCreditViewModel oViewModel;
+        private MainWindow oMainWindow;
         #endregion
-        public AddCredit(Customer pSelectedCustomer)
+        public AddCredit(Customer pSelectedCustomer, Window pOwnerWindow)
         {
             InitializeComponent();
-            oViewModel = new AddCreditViewModel();
+            oViewModel = new AddCreditViewModel(pOwnerWindow);
             oViewModel.SelectedCustomer = pSelectedCustomer;
             this.DataContext = oViewModel;
+
+            oMainWindow = (MainWindow)pOwnerWindow;
         }
 
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-
+            bool result = oViewModel.AddCredit();
+            if (result == true)
+            {
+                this.Close();
+                oMainWindow.btnCustomer_Click(null, null);                
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

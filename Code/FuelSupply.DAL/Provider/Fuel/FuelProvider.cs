@@ -95,6 +95,15 @@ namespace FuelSupply.DAL.Provider
             }
             return false;
         }
+
+        public static FuelStation GetFuelStationById(int pFuelStationId)
+        {
+            return fuelDbObject.FuelStations.Where(x => x.Id == pFuelStationId).FirstOrDefault();
+        }
+        public static List<FuelStation> GetAllFuelStation()
+        {
+            return fuelDbObject.FuelStations.ToList();
+        }
         #endregion
     }
 }

@@ -48,6 +48,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Manager\Common\Constant.cs" />
     <Compile Include="Manager\Common\MessageManager.cs" />
+    <Compile Include="Manager\Common\SharedData.cs" />
     <Compile Include="Manager\Credit\CreditManager.cs" />
     <Compile Include="Manager\Customer\CustomerManager.cs" />
     <Compile Include="Manager\Fuel\FuelManager.cs" />

@@ -1,4 +1,5 @@
 ﻿using FuelSupply.BAL.Manager;
+using FuelSupply.BAL.Manager.Common;
 using FuelSupply.DAL.Entity.CustomerEntity;
 using FuelSupply.DAL.Entity.FuelEntity;
 using System;
@@ -7,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace FuelSupply.APP.ViewModel
 {
@@ -16,6 +18,7 @@ namespace FuelSupply.APP.ViewModel
         private Customer _SelectedCustomer;
         private decimal _Credit;
         private List<PaymentType> _PaymentTypeList;
+        private MainWindow oMainWindow;
         #endregion
 
         #region "Property"
@@ -71,9 +74,30 @@ namespace FuelSupply.APP.ViewModel
         #endregion
 
         #region "Methods"
-        public AddCreditViewModel()
+        public AddCreditViewModel(Window pOwnerWindow)
         {
             _PaymentTypeList = CustomerManager.GetAllPaymentTypes();
+
+            oMainWindow = (MainWindow)pOwnerWindow;
+        }
+
+        public bool AddCredit()
+        {
+            if (Credit <= 0)
+            {
+                MessageManager.ShowErrorMessage("Please enter valid amount", oMainWindow);
+            }            
+            else
+            {
+                bool result = CustomerManager.IncreaseCredit(_SelectedCustomer.Id, Credit,(int)_SelectedCustomer.PaymentType);
+                if (result == false)
+                {
+                    MessageManager.ShowErrorMessage("Error while adding the credit, Please try again", oMainWindow);
+                }
+                else
+                    return true;
+            }
+            return false;
         }
         #endregion
     }

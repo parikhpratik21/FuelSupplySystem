@@ -65,7 +65,7 @@ namespace FuelSupply.APP.View
 
         private void btnAddCredit_Click(object sender, RoutedEventArgs e)
         {
-            AddCredit oAddCredit = new AddCredit(customerDisplayModel.SelectedCustomer);
+            AddCredit oAddCredit = new AddCredit(customerDisplayModel.SelectedCustomer, oMainWindow);
             oAddCredit.Owner = oMainWindow;
             oAddCredit.ShowDialog();
         }
@@ -77,7 +77,7 @@ namespace FuelSupply.APP.View
 
         private void btnAddFuel_Click(object sender, RoutedEventArgs e)
         {
-            Add_Fuel oAddFuel = new Add_Fuel(customerDisplayModel.SelectedCustomer);
+            Add_Fuel oAddFuel = new Add_Fuel(customerDisplayModel.SelectedCustomer,oMainWindow);
             oAddFuel.Owner = oMainWindow;
             oAddFuel.ShowDialog();
         }
