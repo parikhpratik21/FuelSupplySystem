@@ -10,7 +10,7 @@
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Margin" Value="0,0,0,0" />
             <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
-        </Style>      
+        </Style>     
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -26,27 +26,125 @@
 
         <Label Name="txtTitle" Content="User List" Grid.Column="0" Grid.Row="1" Style="{StaticResource LabelHeaderStyle}"></Label>
         <Grid Grid.Column="0" Grid.Row="2" Background="White">
-            <DataGrid Name="dgUserList" ItemsSource="{Binding UserList}" AutoGenerateColumns="False"  SelectionChanged="DataGrid_SelectionChanged">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="0.5*" />
-                    <DataGridTextColumn Header="Code" Binding="{Binding Code}" Width="1*"/>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="1*"/>
-                    <DataGridTextColumn Header="UserName" Binding="{Binding UserName}" Width="1*"/>
-                    <DataGridTextColumn Header="UserType" Binding="{Binding UserType1.Name}" Width="1*"/>
-                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="2*"/>
-                    <DataGridTextColumn Header="Pincode" Binding="{Binding Pincode}" Width="1*"/>
-                    <DataGridTextColumn Header="City" Binding="{Binding City}" Width="1*"/>
-                    <DataGridTextColumn Header="State" Binding="{Binding State}" Width="1*"/>
-                    <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="1*" />
+            <DataGrid Name="dgUserList" ItemsSource="{Binding UserList}" AutoGenerateColumns="False"  SelectionChanged="DataGrid_SelectionChanged"
+                     VerticalGridLinesBrush="LightGray" GridLinesVisibility="Vertical" BorderThickness="0" AlternationCount="2"
+                      CanUserAddRows="False" CanUserDeleteRows="False"  SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True"
+                      MouseDoubleClick="dgUserList_MouseDoubleClick">
                     
-                    <!--<DataGridTemplateColumn Header="Birthday">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <DatePicker SelectedDate="{Binding Birthday}" BorderThickness="0" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>-->
-
+                <DataGrid.RowStyle>                    
+                    <Style TargetType="{x:Type DataGridRow}">                            
+                        <Style.Triggers>
+                            <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                <Setter Property="Background" Value="White"></Setter>
+                            </Trigger>
+                            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                <Setter Property="Background" Value="LightCyan"></Setter>
+                            </Trigger>
+                            <DataTrigger Binding="{Binding Path=Selectable}" Value="False">
+                                <DataTrigger.Setters>
+                                    <Setter Property="Background" Value="LightGray" />
+                                </DataTrigger.Setters>
+                            </DataTrigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" Value="#66BAF2" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter Property="Background" Value="#1076BB" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                        </Style.Triggers>                         
+                    </Style>
+                    
+                </DataGrid.RowStyle>
+                <DataGrid.Resources>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#1076BB" />                    
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background" Value="#00DFDF" />
+                        <Setter Property="BorderBrush" Value="#E8FFFF" />
+                        <Setter Property="BorderThickness" Value="1,1,1,3" />
+                        <Setter Property="Height" Value="35" />
+                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="0.5*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Code" Binding="{Binding Code}" Width="1*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="1*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="UserName" Binding="{Binding UserName}" Width="1*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="UserType" Binding="{Binding UserType1.Name}" Width="1*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="2*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Pincode" Binding="{Binding Pincode}" Width="1*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="City" Binding="{Binding City}" Width="1*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="State" Binding="{Binding State}" Width="1*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="1*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="Margin" Value="0,0,-1,0"></Setter>
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>                                 
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

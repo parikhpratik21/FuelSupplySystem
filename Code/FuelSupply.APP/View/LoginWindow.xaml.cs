@@ -50,5 +50,12 @@ namespace FuelSupply.APP.View
         {
             Environment.Exit(0);
         }
+
+        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            //oViewModel.UserName = "pratik.parikh";
+            //txtPassword.Password = "abc@123";
+            //btnLogIn_Click(null, null);
+        }
     }
 }

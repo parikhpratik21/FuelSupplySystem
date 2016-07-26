@@ -56,6 +56,8 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="5.5*"/>
+                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
@@ -90,17 +92,29 @@
                     <TextBlock Text="Customer"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>              
             </Button>
-            <Button Name="btnHistory" Grid.Column="7" Click="btnHistory_Click" Background="#0073c4" Style="{StaticResource ButtonStyle}" HorizontalContentAlignment="Stretch">
+            <Button Name="btnFuelHistory" Grid.Column="7" Click="btnFuelHistory_Click" Background="#0073c4" Style="{StaticResource ButtonStyle}" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
                     <Image Source="..\Images\history.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
-                    <TextBlock Text="History"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                    <TextBlock Text="Fuel History"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>              
             </Button>
-            <Button Name="btnLogOut" Grid.Column="9" Click="btnLogOut_Click" Background="#80838f" Style="{StaticResource ButtonStyle}" HorizontalContentAlignment="Stretch">
+
+            <Button Name="btnCreditHistory" Grid.Column="9" Click="btnCreditHistory_Click" Background="#C04000" Style="{StaticResource ButtonStyle}" HorizontalContentAlignment="Stretch">
+                <Grid  HorizontalAlignment="Stretch" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="..\Images\history.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
+                    <TextBlock Text="Credit History"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                </Grid>
+            </Button>
+            
+            <Button Name="btnLogOut" Grid.Column="11" Click="btnLogOut_Click" Background="#80838f" Style="{StaticResource ButtonStyle}" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

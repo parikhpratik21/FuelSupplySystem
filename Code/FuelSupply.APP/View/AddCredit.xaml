@@ -6,7 +6,7 @@
         xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform" 
         WindowTitleBrush="{StaticResource AppTitleBarColor}" TitleCaps="False" TitleForeground="White" BorderThickness="2.0" 
         BorderBrush="{StaticResource AppTitleBarColor}" ShowMaxRestoreButton="False" ShowCloseButton="True" ShowMinButton="False" Closing="MetroWindow_Closing" 
-        ShowIconOnTitleBar="False" IconTemplate="{StaticResource LoginIconTemplate}" WindowStartupLocation="CenterOwner" Title="Add Credit" Height="230" Width="380"
+        ShowIconOnTitleBar="False" IconTemplate="{StaticResource LoginIconTemplate}" WindowStartupLocation="CenterOwner" Title="Add Credit" Height="250" Width="380"
         >
     <Window.CommandBindings>
         <CommandBinding Command="Close" Executed="btnSave_Click" />
@@ -72,7 +72,7 @@
             <Label Name="lblCustomerName" Grid.Column="2" Grid.Row="1" Style="{StaticResource LableStyle}"  Content="{Binding SelectedCustomer.Name}" ></Label>
 
             <Label Name="lblpaymentType" Content="Payment Type:" Grid.Column="1" Grid.Row="2" Style="{StaticResource LabelHeaderStyle}"></Label>
-            <ComboBox Name="cmbPaymentType" ItemsSource="{Binding PaymentTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" Style="{StaticResource ComboBoxStyle}" Grid.Column="2" Grid.Row="2" SelectedValue="{Binding SelectedCustomer.PaymentType}" ></ComboBox>            
+            <ComboBox Name="cmbPaymentType" Margin="5,5,5,5" ItemsSource="{Binding PaymentTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" Style="{StaticResource ComboBoxFlatStyle}" Grid.Column="2" Grid.Row="2" SelectedValue="{Binding SelectedCustomer.PaymentType}" ></ComboBox>            
             
             <Label Name="lblCredit" Content="Credit:" Grid.Column="1" Grid.Row="3" Style="{StaticResource LabelHeaderStyle}"></Label>
             <TextBox Name="txtCredit" Grid.Column="2" Grid.Row="3" Style="{StaticResource TextBoxStyle}" Controls:TextBoxHelper.Watermark="In Rupees" Text="{Binding Credit, Mode=TwoWay}"></TextBox>

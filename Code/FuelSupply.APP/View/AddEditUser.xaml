@@ -82,7 +82,7 @@
                 <PasswordBox Name="txtPasswrod" Style="{StaticResource PasswordBoxStyle}" Grid.Column="1" Grid.Row="3" Visibility="{Binding IsPasswordVisible}" ></PasswordBox>
 
                 <Label Name="lblUserType" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="4" Content="User Type: "></Label>
-            <ComboBox Name="txtUserType" ItemsSource="{Binding UserTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" Style="{StaticResource ComboBoxStyle}" Grid.Column="1" Grid.Row="4" SelectedValue="{Binding SelectedUser.UserType}" ></ComboBox>
+                <ComboBox Name="txtUserType" Margin="10,5,10,5" ItemsSource="{Binding UserTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" Style="{StaticResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="4" SelectedValue="{Binding SelectedUser.UserType}" ></ComboBox>
 
                 <Label Name="lblContactNo" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="5" Content="Contact No: "></Label>
             <TextBox Name="txtContactNo" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="5" Text="{Binding SelectedUser.ContactNo}"></TextBox>

@@ -79,5 +79,10 @@ namespace FuelSupply.APP.View
         {
             userDisplayViewModel.SelectedUser = (User)dgUserList.SelectedItem;
         }
+
+        private void dgUserList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            btnEditUser_Click(null, null);
+        }
     }
 }

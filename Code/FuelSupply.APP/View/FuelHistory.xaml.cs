@@ -17,11 +17,22 @@ namespace FuelSupply.APP.View
     /// <summary>
     /// Interaction logic for History.xaml
     /// </summary>
-    public partial class History : UserControl
+    public partial class FuelHistory : UserControl
     {
-        public History()
+        public FuelHistory()
         {
             InitializeComponent();
         }
+
+        private void btnExport_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnReport_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+       
     }
 }

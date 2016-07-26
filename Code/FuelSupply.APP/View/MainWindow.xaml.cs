@@ -58,8 +58,9 @@ namespace FuelSupply.APP
         }       
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
-        {            
-            OpenLoginWindows();
+        {
+            btnUser_Click(null, null);
+            //OpenLoginWindows();
         }
 
         private void OpenLoginWindows()
@@ -248,9 +249,9 @@ namespace FuelSupply.APP
             mainModel.ContentWindow = oCustomer;
         }
 
-        private void btnHistory_Click(object sender, RoutedEventArgs e)
+        private void btnFuelHistory_Click(object sender, RoutedEventArgs e)
         {
-            History oHistory  = new History();
+            FuelHistory oHistory  = new FuelHistory();
             mainModel.ContentWindow = oHistory;
         }
 
@@ -266,6 +267,11 @@ namespace FuelSupply.APP
                 oLoginWindow.Focus();
                 oLoginWindow.txtUseName.Focus();
             }
+        }
+
+        private void btnCreditHistory_Click(object sender, RoutedEventArgs e)
+        {
+
         }             
     }
 }

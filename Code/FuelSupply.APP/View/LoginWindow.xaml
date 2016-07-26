@@ -6,7 +6,8 @@
         xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform" 
         WindowTitleBrush="{StaticResource AppTitleBarColor}" TitleCaps="False" TitleForeground="White" BorderThickness="2.0" 
         BorderBrush="{StaticResource AppTitleBarColor}" ShowMaxRestoreButton="False" ShowCloseButton="False" ShowMinButton="False" Closing="MetroWindow_Closing" 
-        ShowIconOnTitleBar="False" IconTemplate="{StaticResource LoginIconTemplate}" WindowStartupLocation="CenterOwner" Title="Login" Height="200" Width="350">
+        ShowIconOnTitleBar="False" IconTemplate="{StaticResource LoginIconTemplate}" WindowStartupLocation="CenterOwner" Title="Login" Height="200" Width="350"
+                      Loaded="MetroWindow_Loaded">
 
     <Window.CommandBindings>
         <CommandBinding Command="Close" Executed="btnLogIn_Click" />

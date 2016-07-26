@@ -81,5 +81,10 @@ namespace FuelSupply.APP.View
             oAddFuel.Owner = oMainWindow;
             oAddFuel.ShowDialog();
         }
+
+        private void dgCustomerList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            btnEditCustomer_Click(null, null);
+        }
     }
 }

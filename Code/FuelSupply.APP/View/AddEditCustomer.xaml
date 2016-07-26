@@ -77,13 +77,13 @@
             <TextBox Name="txtName" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="1" Text="{Binding SelectedCustomer.Name}"></TextBox>
 
                 <Label Name="lblCustomerType" Style="{StaticResource LableHeaderStyle}" Grid.Column="0" Grid.Row="2" Content="Customer Type: "></Label>
-            <ComboBox ItemsSource="{Binding CustomerTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedCustomer.CustomerType}" Name="txtCustomerType" Style="{StaticResource ComboBoxStyle}" Grid.Column="1" Grid.Row="2" SelectionChanged="txtCustomerType_SelectionChanged"></ComboBox>
+            <ComboBox ItemsSource="{Binding CustomerTypeList}" Margin="10,5,10,5" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedCustomer.CustomerType}" Name="txtCustomerType" Style="{StaticResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="2" SelectionChanged="txtCustomerType_SelectionChanged"></ComboBox>
 
                 <Label Name="lblKeyCustomerName" Style="{StaticResource LableHeaderStyle}" Grid.Column="0" Grid.Row="3" Content="Key Customer Name: "></Label>
-                <ComboBox ItemsSource="{Binding KeyCustomerList}" IsEnabled="{Binding IsKeyCustomerListEnable}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedCustomer.KeyCustomerId}" Name="cmbKeyCustomer" Style="{StaticResource ComboBoxStyle}" Grid.Column="1" Grid.Row="3"></ComboBox>
+                <ComboBox ItemsSource="{Binding KeyCustomerList}" Margin="10,5,10,5" IsEnabled="{Binding IsKeyCustomerListEnable}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedCustomer.KeyCustomerId}" Name="cmbKeyCustomer" Style="{StaticResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="3"></ComboBox>
 
                 <Label Name="lblPaymentType" Style="{StaticResource LableHeaderStyle}" Grid.Column="0" Grid.Row="4" Content="Payment Type: "></Label>
-                <ComboBox Name="txtPaymentType" ItemsSource="{Binding PaymentTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedCustomer.PaymentType}" Style="{StaticResource ComboBoxStyle}" Grid.Column="1" Grid.Row="4" ></ComboBox>
+                <ComboBox Name="txtPaymentType" Margin="10,5,10,5" ItemsSource="{Binding PaymentTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedCustomer.PaymentType}" Style="{StaticResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="4" ></ComboBox>
 
                 <Label Name="lblPaymentLimit" Style="{StaticResource LableHeaderStyle}" Grid.Column="0" Grid.Row="5" Content="Payment Limit: "></Label>
                 <TextBox Name="txtpaymentLimit" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="5" Text="{Binding SelectedCustomer.PaymentLimit}"></TextBox>
