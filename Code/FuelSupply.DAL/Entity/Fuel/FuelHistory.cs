@@ -27,5 +27,5 @@ namespace FuelSupply.DAL.Entity.FuelEntity
         public virtual FuelStation FuelStation { get; set; }
         public virtual FuelType FuelType1 { get; set; }
         public virtual User User { get; set; }
-    }
+    }   
 }

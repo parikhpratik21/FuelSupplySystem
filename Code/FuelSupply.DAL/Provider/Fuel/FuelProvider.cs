@@ -34,19 +34,29 @@ namespace FuelSupply.DAL.Provider
             return FuelTypeList;
         }
 
-        public static List<FuelHistory> GetFuelHistoryByKeyCustomerId(int pKeyCustomerId)
+        public static List<FuelHistory> GetFuelHistoryByKeyCustomerId(int pKeyCustomerId, DateTime? pStartDate, DateTime? pEndDate)
         {
-            return fuelDbObject.FuelHistories.Where(x => x.KeyCustomerId == pKeyCustomerId).ToList();
+            return fuelDbObject.FuelHistories.Where(x => x.KeyCustomerId == pKeyCustomerId && (x.Time > pStartDate && x.Time < pEndDate)).ToList();
         }
 
-        public static List<FuelHistory> GetFuelHistoryByCustomerId(int pCustomerId)
+        public static List<FuelHistory> GetFuelHistoryByCustomerId(int pCustomerId, DateTime? pStartDate, DateTime? pEndDate)
         {
-            return fuelDbObject.FuelHistories.Where(x => x.CustomerId == pCustomerId).ToList();
+            return fuelDbObject.FuelHistories.Where(x => x.CustomerId == pCustomerId && (x.Time > pStartDate && x.Time < pEndDate)).ToList();
         }
 
-        public static List<FuelHistory> FetFuelHistoryByUserId(int pUserId)
+        public static List<FuelHistory> GetFuelHistoryByUserId(int pUserId, DateTime? pStartDate, DateTime? pEndDate)
         {
-            return fuelDbObject.FuelHistories.Where(x => x.UserId == pUserId).ToList();
+            return fuelDbObject.FuelHistories.Where(x => x.UserId == pUserId && (x.Time > pStartDate && x.Time < pEndDate)).ToList();
+        }
+
+        public static List<FuelHistory> GetFuelHistoryByFuelTypeId(int pFuelTypeId, DateTime? pStartDate, DateTime? pEndDate)
+        {
+            return fuelDbObject.FuelHistories.Where(x => x.FuelType == pFuelTypeId && (x.Time > pStartDate && x.Time < pEndDate)).ToList();
+        }
+
+        public static List<FuelHistory> GetFuelHistoryBetweenDates(DateTime? pStartDate, DateTime? pEndDate)
+        {
+            return fuelDbObject.FuelHistories.Where(x => x.Time > pStartDate && x.Time < pEndDate).ToList();
         }
 
         public static List<FuelHistory> FetFuelHistoryByFuelStationId(int pFuelStationId)

@@ -32,6 +32,12 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Right"/>
         </Style>
+        <Style x:Key="WelcomeLableStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="12"/>            
+            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>        
@@ -41,7 +47,23 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Label Name="txtTitle" Content="User Profile" Grid.Column="0" Grid.Row="0" Style="{StaticResource LabelHeaderStyle}"></Label>
+        <Grid Name="grdTitle" Grid.Column="0" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>                
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Name="txtTitle" Content="User Profile" Grid.Column="0" Grid.Row="0" Style="{StaticResource LabelHeaderStyle}"></Label>
+
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
+                <Label Name="lblLoggedUserNameHeader" Content="Welcome" Foreground="Black" Style="{StaticResource WelcomeLableStyle}"></Label>
+                <Label Name="lblLoggedUserNameValue" Content="{Binding LoggedUserName}" Foreground="Black"  Style="{StaticResource LableStyle}"></Label>
+            </StackPanel>
+            
+        </Grid>        
         <ScrollViewer Grid.Column="0" Grid.Row="1"  VerticalScrollBarVisibility="Auto">
             <Grid  Background="White" Margin="0,-5,0,0">
                 <Grid.RowDefinitions>

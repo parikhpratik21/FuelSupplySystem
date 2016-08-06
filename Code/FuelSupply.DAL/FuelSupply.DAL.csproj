@@ -85,6 +85,7 @@
     <Compile Include="Entity\Customer\Customer.cs" />
     <Compile Include="Entity\Customer\CustomerType.cs" />
     <Compile Include="Entity\Fuel\FuelHistory.cs" />
+    <Compile Include="Entity\Fuel\FuelHistoryType.cs" />
     <Compile Include="Entity\Fuel\FuelLimitType.cs" />
     <Compile Include="Entity\Fuel\FuelStation.cs" />
     <Compile Include="Entity\Fuel\FuelType.cs" />

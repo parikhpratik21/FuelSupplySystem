@@ -24,6 +24,18 @@ namespace FuelSupply.APP.ViewModel
         #endregion
 
         #region "Property"
+        public string LoggedUserName
+        {
+            get
+            {
+                if (SharedData.LoggedUser != null)
+                {
+                    return SharedData.LoggedUser.Name;
+                }
+                else
+                    return string.Empty;
+            }
+        }
         public Customer SelectedCustomer
         {
             get {

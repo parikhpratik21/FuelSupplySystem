@@ -36,6 +36,12 @@
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Margin" Value="0,0,0,-10" />
             <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+        </Style>       
+        <Style x:Key="WelcomeLableStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
         </Style>
     </UserControl.Resources>
     <Grid>
@@ -48,8 +54,25 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Label Name="txtTitle" Content="{Binding Title}" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Style="{StaticResource TitleLableStyle}"></Label>
+        
+        <Grid Name="grdTitle" Grid.Column="0" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
+            <Label Name="txtTitle" Content="{Binding Title}" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Style="{StaticResource TitleLableStyle}"></Label>
+
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
+                <Label Name="lblLoggedUserNameHeader" Content="Welcome" Foreground="Black" Style="{StaticResource WelcomeLableStyle}"></Label>
+                <Label Name="lblLoggedUserNameValue" Content="{Binding LoggedUserName}" Foreground="Black"  Style="{StaticResource LableStyle}"></Label>
+            </StackPanel>
+
+        </Grid>
+        
         <ScrollViewer Grid.Column="0" Grid.Row="1"  VerticalScrollBarVisibility="Auto">
             <Grid Background="White" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible">
             <Grid.RowDefinitions>

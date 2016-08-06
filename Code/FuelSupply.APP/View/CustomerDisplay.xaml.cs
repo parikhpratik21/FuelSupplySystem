@@ -86,5 +86,33 @@ namespace FuelSupply.APP.View
         {
             btnEditCustomer_Click(null, null);
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if(customerDisplayModel != null && customerDisplayModel.CustomerList != null && customerDisplayModel.CustomerList.Count() > 0)
+            {
+                dgCustomerList.SelectedIndex = 0;
+            }
+        }
+
+        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Color col = (Color)ColorConverter.ConvertFromString("#a5a5a5");
+            txtSearch.Background = new SolidColorBrush(col);
+        }
+
+        private void txtSearch_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Color col = (Color)ColorConverter.ConvertFromString("#c5c5c5");
+            txtSearch.Background = new SolidColorBrush(col);
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace FuelSupply.APP.View
     /// <summary>
     /// Interaction logic for CreditHistory.xaml
     /// </summary>
-    public partial class CreditHistory : Window
+    public partial class CreditHistory : UserControl
     {
         public CreditHistory()
         {

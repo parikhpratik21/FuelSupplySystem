@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="FuelSupply.APP.View.CustomerDisplay"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Loaded="UserControl_Loaded"
       >
     <UserControl.Resources>
         <Style x:Key="LabelHeaderStyle" TargetType="Label" BasedOn="{StaticResource MetroLabel}">
@@ -10,6 +11,19 @@
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Margin" Value="0,0,0,0" />
             <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+        </Style>
+        <Style x:Key="LableStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style x:Key="WelcomeLableStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
         </Style>
     </UserControl.Resources>
     <Grid>
@@ -23,8 +37,65 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        
+        <Grid Name="grdTitle" Grid.Column="0" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
-        <Label Name="txtTitle" Content="Customer List" Grid.Column="0" Grid.Row="1" Style="{StaticResource LabelHeaderStyle}"></Label>
+            <TextBox KeyDown="txtSearch_KeyDown"  Name="txtSearch" Controls:TextBoxHelper.Watermark="Search" IsEnabled="True" Padding="2" BorderThickness="1" BorderBrush="#afafaf" Width="150" Height="30" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Background="#c5c5c5" Foreground="#646464"
+                     Text="{Binding SearchTerms,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" GotFocus="TextBox_GotFocus" LostFocus="txtSearch_LostFocus" 
+                     Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.ButtonCommand="{Binding ClearSearchCommand}"                                                
+                     >
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding SearchCommand}" Key="Enter" />
+                </TextBox.InputBindings>
+
+                <TextBox.Style>
+                    <Style TargetType="{x:Type TextBox}"
+                               BasedOn="{StaticResource SearchMetroTextBox}">
+                        <Style.Triggers>
+                            <Trigger Property="Controls:TextBoxHelper.HasText"
+                                         Value="True">
+                                <Setter Property="Controls:TextBoxHelper.ButtonTemplate"
+                                            Value="{DynamicResource ChromelessButtonTemplate}" />
+                            </Trigger>
+                            <Trigger Property="Controls:TextBoxHelper.HasText"
+                                         Value="False">
+                                <Setter Property="Controls:TextBoxHelper.ClearTextButton"
+                                            Value="False" />
+                            </Trigger>
+                            <Trigger Property="Controls:TextBoxHelper.HasText"
+                                         Value="True">
+                                <Setter Property="Controls:TextBoxHelper.ClearTextButton"
+                                            Value="True" />
+                            </Trigger>
+                            <Trigger Property="IsFocused"  Value="True">
+                                <Setter Property="BorderBrush" Value="#afafaf"/>
+                                <Setter Property="BorderThickness" Value="1"/>
+                                <Setter Property="Background" Value="#a5a5a5"/>
+                                <Setter Property="CaretBrush" Value="#c5c5c5"/>
+
+
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            
+            <Label Name="txtTitle" Content="Customer List" Grid.Column="1" Grid.Row="0" Style="{StaticResource LabelHeaderStyle}"></Label>
+
+            <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="0">
+                <Label Name="lblLoggedUserNameHeader" Content="Welcome" Foreground="Black" Style="{StaticResource WelcomeLableStyle}"></Label>
+                <Label Name="lblLoggedUserNameValue" Content="{Binding LoggedUserName}" Foreground="Black"  Style="{StaticResource LableStyle}"></Label>
+            </StackPanel>
+
+        </Grid>
         <Grid Grid.Column="0" Grid.Row="2" Background="White" >
             <DataGrid Name="dgCustomerList" ItemsSource="{Binding CustomerList}" AutoGenerateColumns="False" SelectionChanged="DataGrid_SelectionChanged"
                          VerticalGridLinesBrush="LightGray" GridLinesVisibility="Vertical" BorderThickness="0" AlternationCount="2"

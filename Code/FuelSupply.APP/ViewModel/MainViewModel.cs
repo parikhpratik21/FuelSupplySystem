@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using FuelSupply.BAL.Manager.Common;
 
 namespace FuelSupply.APP.ViewModel
 {
@@ -48,6 +49,18 @@ namespace FuelSupply.APP.ViewModel
             SharedData.CurrentFuelStation = FuelManager.GetFuelStationById(1);
         }
 
+        public bool IsAdminUser
+        {
+            get
+            {
+                if (SharedData.LoggedUser != null && SharedData.LoggedUser.UserType != null && SharedData.LoggedUser.UserType == (int)SharedData.UserType.Admin)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+        }
         public UserControl ContentWindow
         {
             get { return _content; }

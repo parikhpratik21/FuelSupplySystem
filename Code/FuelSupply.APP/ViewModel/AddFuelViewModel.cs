@@ -137,6 +137,8 @@ namespace FuelSupply.APP.ViewModel
             _FuelTypeList = FuelManager.GetAllFuelTypeList();
             _KeyCustomerList = CustomerManager.GetAllKeyCustomer();
 
+            _FuelType = _FuelTypeList.FirstOrDefault().Id;
+
             oMainWindow = (MainWindow)pOwnerWindow;
         }
 

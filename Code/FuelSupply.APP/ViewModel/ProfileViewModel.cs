@@ -1,4 +1,5 @@
 ﻿using FuelSupply.BAL.Manager;
+using FuelSupply.BAL.Manager.Common;
 using FuelSupply.DAL.Entity.UserEntity;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,19 @@ namespace FuelSupply.APP.ViewModel
             {
                 _UserTypeList = value;
                 OnPropertyChanged("UserTypeList");
+            }
+        }
+
+        public string LoggedUserName
+        {
+            get
+            {
+                if (SharedData.LoggedUser != null)
+                {
+                    return SharedData.LoggedUser.Name;
+                }
+                else
+                    return string.Empty;
             }
         }
         #endregion

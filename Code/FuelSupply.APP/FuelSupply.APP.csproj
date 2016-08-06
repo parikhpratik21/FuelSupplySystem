@@ -56,8 +56,22 @@
     <Reference Include="Hammer.SpinningWheel">
       <HintPath>..\Lib\Hammer.SpinningWheel.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\Lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\MahApps.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\Lib\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -65,6 +79,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -86,12 +101,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ExportEntity\CreditHistoryExport.cs" />
+    <Compile Include="ExportEntity\FuelHistoryExport.cs" />
+    <Compile Include="Helper\ExportToExcel.cs" />
     <Compile Include="Helper\RelayCommand.cs" />
     <Compile Include="ViewModel\AddCreditViewModel.cs" />
     <Compile Include="ViewModel\AddEditCustomerViewModel.cs" />
     <Compile Include="ViewModel\AddEditUserViewModel.cs" />
     <Compile Include="ViewModel\AddFuelViewModel.cs" />
     <Compile Include="ViewModel\ChangePasswordViewModel.cs" />
+    <Compile Include="ViewModel\FuelHistoryViewModel.cs" />
     <Compile Include="ViewModel\CreditHistoryViewModel.cs" />
     <Compile Include="ViewModel\CustomerDisplayViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />

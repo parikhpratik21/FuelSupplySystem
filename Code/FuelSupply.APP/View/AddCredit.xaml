@@ -6,7 +6,7 @@
         xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform" 
         WindowTitleBrush="{StaticResource AppTitleBarColor}" TitleCaps="False" TitleForeground="White" BorderThickness="2.0" 
         BorderBrush="{StaticResource AppTitleBarColor}" ShowMaxRestoreButton="False" ShowCloseButton="True" ShowMinButton="False" Closing="MetroWindow_Closing" 
-        ShowIconOnTitleBar="False" IconTemplate="{StaticResource LoginIconTemplate}" WindowStartupLocation="CenterOwner" Title="Add Credit" Height="250" Width="380"
+        ShowInTaskbar="False" ShowIconOnTitleBar="False" IconTemplate="{StaticResource LoginIconTemplate}" WindowStartupLocation="CenterOwner" Title="Add Credit" Height="250" Width="380"
         >
     <Window.CommandBindings>
         <CommandBinding Command="Close" Executed="btnSave_Click" />

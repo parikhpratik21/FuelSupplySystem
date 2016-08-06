@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="FuelSupply.APP.View.FuelHistory"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-       >
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"        
+       Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <Style x:Key="LabelHeaderStyle" TargetType="Label" BasedOn="{StaticResource MetroLabel}">
             <Setter Property="VerticalAlignment" Value="Center" />
@@ -13,6 +13,12 @@
         </Style>
         <Style x:Key="LableStyle" TargetType="Label">
             <Setter Property="FontSize" Value="12"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>        
+        <Style x:Key="WelcomeLableStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Right"/>
         </Style>
@@ -30,8 +36,24 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        
+        <Grid Name="grdTitle" Grid.Column="0" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>                
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <Label Name="txtTitle" Content="Fuel History" Grid.Column="0" Grid.Row="0" Style="{StaticResource LabelHeaderStyle}"></Label>
 
-        <Label Name="txtTitle" Content="Fuel History" Grid.Column="0" Grid.Row="1" Style="{StaticResource LabelHeaderStyle}"></Label>
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
+                <Label Name="lblLoggedUserNameHeader" Content="Welcome" Foreground="Black" Style="{StaticResource WelcomeLableStyle}"></Label>
+                <Label Name="lblLoggedUserNameValue" Content="{Binding LoggedUserName}" Foreground="Black" FontWeight="Bold" Style="{StaticResource LableStyle}"></Label>
+            </StackPanel>
+
+        </Grid>
         <Grid Grid.Column="0" Grid.Row="2" Background="White" VerticalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>              
@@ -40,7 +62,7 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1.4*"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
@@ -53,26 +75,18 @@
             </Grid.ColumnDefinitions>
 
             <Label Name="lblHistoryBy" Content="History By: " Style="{StaticResource LableStyle}" Grid.Row="0" Grid.Column="0"></Label>
-            <ComboBox Name="cmbHistoryBy" Style="{StaticResource ComboBoxFlatStyle}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch">
-                <ComboBoxItem Content="Key Customer"></ComboBoxItem>
-                <ComboBoxItem Content="Customer"></ComboBoxItem>
-                <ComboBoxItem Content="User"></ComboBoxItem>
-                <ComboBoxItem Content="Fuel Type"></ComboBoxItem>
+            <ComboBox Name="cmbHistoryBy" ItemsSource="{Binding FuelHistoryType}" DisplayMemberPath="Name" SelectedValuePath="Id"  Style="{StaticResource ComboBoxFlatStyle}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" SelectionChanged="cmbHistoryBy_SelectionChanged">               
             </ComboBox>
 
-            <Label Name="lblCustomer" Content="Customers: " Style="{StaticResource LableStyle}" Grid.Row="0" Grid.Column="3"></Label>
-            <ComboBox Name="cmbCustomer" Style="{StaticResource ComboBoxFlatStyle}" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="4">
-                <ComboBoxItem Content="Key Customer"></ComboBoxItem>
-                <ComboBoxItem Content="Customer"></ComboBoxItem>
-                <ComboBoxItem Content="User"></ComboBoxItem>
-                <ComboBoxItem Content="Fuel Type"></ComboBoxItem>
+            <Label Name="lblHistoryInfoHeader" Content="{Binding HistoryInfoHeader}" Style="{StaticResource LableStyle}" Grid.Row="0" Grid.Column="3"></Label>
+            <ComboBox Name="cbHistoryTypeValue" ItemsSource="{Binding HistoryValueList}" DisplayMemberPath="Name" SelectedValuePath="Id" Style="{StaticResource ComboBoxFlatStyle}" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="4">               
             </ComboBox>
 
             <Label Name="lblStartTime" Content="Start Date: " Style="{StaticResource LableStyle}" Grid.Row="0" Grid.Column="6"></Label>
-            <DatePicker Name="dpStartTime" Grid.Row="0" Grid.Column="7"></DatePicker>
+            <DatePicker Name="dpStartTime" Grid.Row="0" Grid.Column="7" VerticalContentAlignment="Center"></DatePicker>
             <Label Name="lblEndTime" Content="End Date: " Style="{StaticResource LableStyle}" Grid.Row="0" Grid.Column="9"></Label>
-            <DatePicker Name="dpEndTime" Grid.Row="0" Grid.Column="10"></DatePicker>
-            <Button Name="btnApply" Content="Apply" Grid.Row="0" Grid.Column="12" ></Button>
+            <DatePicker Name="dpEndTime" Grid.Row="0" Grid.Column="10" VerticalContentAlignment="Center"></DatePicker>
+            <Button Name="btnApply" Content="Apply" Grid.Row="0" Grid.Column="12" Click="btnApply_Click" ></Button>
         </Grid>
         <!--<Grid Grid.Column="0" Grid.Row="4" Background="White">
             <Grid.RowDefinitions>
@@ -96,7 +110,7 @@
         </Grid>-->
         
         <Grid Grid.Column="0" Grid.Row="4" Background="White" >
-            <DataGrid Name="dgCustomerList" ItemsSource="{Binding FuelHistoryList}" AutoGenerateColumns="False" 
+            <DataGrid Name="dgHistoryList" ItemsSource="{Binding FuelHistoryList}" AutoGenerateColumns="False" 
                     VerticalGridLinesBrush="LightGray" GridLinesVisibility="Vertical" BorderThickness="0" AlternationCount="2"
                       CanUserAddRows="False" CanUserDeleteRows="False"  SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True">
                 <DataGrid.RowStyle>
@@ -207,33 +221,60 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="1.5*"/>
                 <ColumnDefinition Width="0.5*"/>
-                <ColumnDefinition Width="1.5*"/>               
-                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Name="btnExport" Margin="0" Grid.Row="0" Grid.Column="1" Click="btnExport_Click" HorizontalContentAlignment="Stretch">
+            <Button Name="btnExportToExcel" Margin="0" Grid.Row="0" Grid.Column="1" Click="btnExportToExcel_Click" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
                     <Image Source="..\Images\add.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
-                    <TextBlock Text="Export"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                    <TextBlock Text="Export To Excel"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>
-            <Button Name="btnReport" Grid.Row="0" Grid.Column="3"  Click="btnReport_Click" HorizontalContentAlignment="Stretch">
+            <Button Name="btnExportToWord" Grid.Row="0" Grid.Column="3"  Click="btnExportToWord_Click" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
                     <Image Source="..\Images\edit.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
-                    <TextBlock Text="Report"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                    <TextBlock Text="Export To Word"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
-            </Button>           
+            </Button>
+
+            <Button Name="btnExportToCSV" Grid.Row="0" Grid.Column="5"  Click="btnExportToCSV_Click" HorizontalContentAlignment="Stretch">
+                <Grid  HorizontalAlignment="Stretch" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="..\Images\edit.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
+                    <TextBlock Text="Export To CSV"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                </Grid>
+            </Button>
+
+
+            <Button Name="btnExportToPDF" Grid.Row="0" Grid.Column="7"  Click="btnExportToPDF_Click" HorizontalContentAlignment="Stretch">
+                <Grid  HorizontalAlignment="Stretch" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="..\Images\edit.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
+                    <TextBlock Text="Export To PDF"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                </Grid>
+            </Button>
         </Grid>
     </Grid>
 </UserControl>
