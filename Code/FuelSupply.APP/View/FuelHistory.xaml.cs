@@ -72,7 +72,7 @@ namespace FuelSupply.APP.View
 
         private void cmbHistoryBy_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            viewModel.SelectedFuelHistoryType = (FuelHistoryType)cmbHistoryBy.SelectedItem;
+            viewModel.SelectedFuelHistoryType = (HistoryType)cmbHistoryBy.SelectedItem;
 
             viewModel.OnPropertyChanged("HistoryValueList");
             viewModel.OnPropertyChanged("HistoryInfoHeader");

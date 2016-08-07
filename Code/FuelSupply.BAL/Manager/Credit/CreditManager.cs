@@ -16,24 +16,34 @@ namespace FuelSupply.BAL.Manager
             return CreditProvider.GetAllCreditHistory();            
         }
 
-        public static List<CreditHistory> GetCreditHistoryByPaymentId(int pPaymentType)
+        public static List<CreditHistory> GetCreditHistoryByPaymentId(int pPaymentType, DateTime? pStartDate, DateTime? pEndDate)
         {
-            return CreditProvider.GetCreditHistoryByPaymentId(pPaymentType);            
+            return CreditProvider.GetCreditHistoryByPaymentId(pPaymentType,pStartDate,pEndDate);            
         }
 
-        public static List<CreditHistory> GetCreditHistoryByCustomerId(int pCustomerId)
+        public static List<CreditHistory> GetCreditHistoryByCustomerId(int pCustomerId, DateTime? pStartDate, DateTime? pEndDate)
         {
-            return CreditProvider.GetCreditHistoryByCustomerId(pCustomerId);            
+            return CreditProvider.GetCreditHistoryByCustomerId(pCustomerId, pStartDate, pEndDate);            
         }
 
-        public static List<CreditHistory> FetCreditHistoryByUserId(int pUserId)
+        public static List<CreditHistory> GetCreditHistoryByKeyCustomerId(int pKeyCustomerId, DateTime? pStartDate, DateTime? pEndDate)
         {
-            return CreditProvider.FetCreditHistoryByUserId(pUserId);            
+            return CreditProvider.GetCreditHistoryByKeyCustomerId(pKeyCustomerId, pStartDate, pEndDate);            
+        }
+        
+        public static List<CreditHistory> FetCreditHistoryByUserId(int pUserId, DateTime? pStartDate, DateTime? pEndDate)
+        {
+            return CreditProvider.FetCreditHistoryByUserId(pUserId, pStartDate, pEndDate);            
         }
 
-        public static List<CreditHistory> FetCreditHistoryByFuelStationId(int pFuelStationId)
+        public static List<CreditHistory> FetCreditHistoryByFuelStationId(int pFuelStationId, DateTime? pStartDate, DateTime? pEndDate)
         {
-            return CreditProvider.FetCreditHistoryByFuelStationId(pFuelStationId);            
+            return CreditProvider.FetCreditHistoryByFuelStationId(pFuelStationId, pStartDate, pEndDate);            
+        }
+
+        public static List<CreditHistory> GetCreditHistoryBetweenDates(DateTime? pStartDate, DateTime? pEndDate)
+        {
+            return CreditProvider.GetFuelHistoryBetweenDates(pStartDate, pEndDate);
         }
 
         public static bool AddCreditHistory(CreditHistory pHistory)

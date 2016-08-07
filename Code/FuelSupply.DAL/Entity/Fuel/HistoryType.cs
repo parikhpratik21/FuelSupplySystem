@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FuelSupply.DAL.Entity.Fuel
 {
-    public class FuelHistoryType
+    public class HistoryType
     {
         public int Id { get; set; }
         public string Name { get; set; }

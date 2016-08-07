@@ -274,6 +274,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="Fetch_CreditHistoryBy_KeyCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="KeyCustomerId" Type="int" Mode="In" />
+          <Parameter Name="StartTime" Type="date" Mode="In" />
+          <Parameter Name="EndTime" Type="date" Mode="In" />
+        </Function>
         <EntityContainer Name="FuelSupplySystemModelStoreContainer">
           <EntitySet Name="CreditHistory" EntityType="Self.CreditHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
@@ -624,6 +629,11 @@
             <End Role="User" EntitySet="Users" />
             <End Role="CreditHistory" EntitySet="CreditHistories" />
           </AssociationSet>
+          <FunctionImport Name="Fetch_CreditHistoryBy_KeyCustomer" EntitySet="CreditHistories" ReturnType="Collection(FuelSupplySystemModel.CreditHistory)">
+            <Parameter Name="KeyCustomerId" Mode="In" Type="Int32" />
+            <Parameter Name="StartTime" Mode="In" Type="DateTime" />
+            <Parameter Name="EndTime" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
         <Association Name="FK_Customer_Customer">
           <End Type="FuelSupplySystemModel.Customer" Role="Customer" Multiplicity="0..1" />
@@ -701,6 +711,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="Fetch_CreditHistoryBy_KeyCustomer_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="DateTime" Name="Time" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="FuelStationId" Nullable="true" />
+          <Property Type="Int32" Name="CustomerId" Nullable="true" />
+          <Property Type="Int32" Name="UserId" Nullable="true" />
+          <Property Type="Int32" Name="PaymentType" Nullable="true" />
+          <Property Type="Decimal" Name="CreditAmount" Nullable="true" Precision="18" Scale="2" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -830,6 +849,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Fetch_CreditHistoryBy_KeyCustomer" FunctionName="FuelSupplySystemModel.Store.Fetch_CreditHistoryBy_KeyCustomer">
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

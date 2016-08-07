@@ -25,4 +25,6 @@ namespace FuelSupply.DAL.Entity.CreditEntity
         public virtual PaymentType PaymentType1 { get; set; }
         public virtual User User { get; set; }
     }
+
+    public class CreditHistoryList : List<CreditHistory> { }
 }

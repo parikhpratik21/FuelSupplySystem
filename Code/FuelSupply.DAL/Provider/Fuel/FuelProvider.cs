@@ -36,7 +36,7 @@ namespace FuelSupply.DAL.Provider
 
         public static List<FuelHistory> GetFuelHistoryByKeyCustomerId(int pKeyCustomerId, DateTime? pStartDate, DateTime? pEndDate)
         {
-            return fuelDbObject.FuelHistories.Where(x => x.KeyCustomerId == pKeyCustomerId && (x.Time > pStartDate && x.Time < pEndDate)).ToList();
+            return fuelDbObject.FuelHistories.Where(x => (x.KeyCustomerId == pKeyCustomerId || x.CustomerId == pKeyCustomerId) && (x.Time > pStartDate && x.Time < pEndDate)).ToList();
         }
 
         public static List<FuelHistory> GetFuelHistoryByCustomerId(int pCustomerId, DateTime? pStartDate, DateTime? pEndDate)

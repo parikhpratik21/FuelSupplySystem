@@ -26,27 +26,38 @@ namespace FuelSupply.DAL.Provider
         {
             List<CreditHistory> FuelHostoryList = creditDbObject.CreditHistories.ToList();
             return FuelHostoryList;
-        }       
-
-        public static List<CreditHistory> GetCreditHistoryByPaymentId(int pPaymentType)
-        {
-            return creditDbObject.CreditHistories.Where(x => x.PaymentType == pPaymentType).ToList();
         }
 
-        public static List<CreditHistory> GetCreditHistoryByCustomerId(int pCustomerId)
+        public static List<CreditHistory> GetCreditHistoryByPaymentId(int pPaymentType, DateTime? pStartDate, DateTime? pEndDate)
         {
-            return creditDbObject.CreditHistories.Where(x => x.CustomerId == pCustomerId).ToList();
+            return creditDbObject.CreditHistories.Where(x => x.PaymentType == pPaymentType && (x.Time > pStartDate && x.Time < pEndDate)).ToList();
         }
 
-        public static List<CreditHistory> FetCreditHistoryByUserId(int pUserId)
+        public static List<CreditHistory> GetCreditHistoryByCustomerId(int pCustomerId, DateTime? pStartDate, DateTime? pEndDate)
         {
-            return creditDbObject.CreditHistories.Where(x => x.UserId == pUserId).ToList();
+            return creditDbObject.CreditHistories.Where(x => x.CustomerId == pCustomerId && (x.Time > pStartDate && x.Time < pEndDate)).ToList();
         }
 
-        public static List<CreditHistory> FetCreditHistoryByFuelStationId(int pFuelStationId)
+        public static List<CreditHistory> GetCreditHistoryByKeyCustomerId(int pCustomerId, DateTime? pStartDate, DateTime? pEndDate)
         {
-            return creditDbObject.CreditHistories.Where(x => x.FuelStationId == pFuelStationId).ToList();
-        }       
+            List<CreditHistory> oHistoryListByKeyCustomer = creditDbObject.Fetch_CreditHistoryBy_KeyCustomer(pCustomerId, pStartDate, pEndDate).ToList();
+            return oHistoryListByKeyCustomer;
+        }
+        
+        public static List<CreditHistory> FetCreditHistoryByUserId(int pUserId, DateTime? pStartDate, DateTime? pEndDate)
+        {
+            return creditDbObject.CreditHistories.Where(x => x.UserId == pUserId && (x.Time > pStartDate && x.Time < pEndDate)).ToList();
+        }
+
+        public static List<CreditHistory> FetCreditHistoryByFuelStationId(int pFuelStationId, DateTime? pStartDate, DateTime? pEndDate)
+        {
+            return creditDbObject.CreditHistories.Where(x => x.FuelStationId == pFuelStationId && (x.Time > pStartDate && x.Time < pEndDate)).ToList();
+        }
+
+        public static List<CreditHistory> GetFuelHistoryBetweenDates(DateTime? pStartDate, DateTime? pEndDate)
+        {
+            return creditDbObject.CreditHistories.Where(x => x.Time > pStartDate && x.Time < pEndDate).ToList();
+        }
 
         public static bool AddCreditHistory(CreditHistory pHistory)
         {

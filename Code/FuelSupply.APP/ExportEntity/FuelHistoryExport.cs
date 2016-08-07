@@ -18,8 +18,8 @@ namespace FuelSupply.APP.ExportEntity
         [Description("Customer Name")]
         public string CustomerName { get; set; }
 
-        [Description("Key Customer Name")]
-        public string KeyCustomerName { get; set; }
+        [Description("Key Customer")]
+        public string KeyCustomer { get; set; }
 
         [Description("Fuel Type")]
         public string FuelType { get; set; }

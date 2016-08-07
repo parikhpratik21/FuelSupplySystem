@@ -24,8 +24,8 @@ namespace FuelSupply.APP.ViewModel
     public class FuelHistoryViewModel : INotifyPropertyChanged
     {
         #region "Declaration"
-        private List<FuelHistoryType> _FuelHistoryTypeList;
-        private FuelHistoryType _SelectedFuelHistoryType;
+        private List<HistoryType> _FuelHistoryTypeList;
+        private HistoryType _SelectedFuelHistoryType;
         private MainWindow oMainWindow;
         private List<Customer> _CustomerList;
         private List<Customer> _KeyCustomerList;
@@ -60,7 +60,7 @@ namespace FuelSupply.APP.ViewModel
                 OnPropertyChanged("FuelHistoryList");
             }
         }
-        public List<FuelHistoryType> FuelHistoryType
+        public List<HistoryType> FuelHistoryType
         {
             get
             {
@@ -73,7 +73,7 @@ namespace FuelSupply.APP.ViewModel
             }
         }
 
-        public FuelHistoryType SelectedFuelHistoryType
+        public HistoryType SelectedFuelHistoryType
         {
             get
             {
@@ -92,15 +92,15 @@ namespace FuelSupply.APP.ViewModel
             {
                 if (_SelectedFuelHistoryType != null)
                 {
-                    if(_SelectedFuelHistoryType.Id == (int)SharedData.HisotryByType.Key_Customer)
+                    if(_SelectedFuelHistoryType.Id == (int)SharedData.FuelHisotryByType.Key_Customer)
                     {
                         return "Key Customers: ";
                     }
-                    else if (_SelectedFuelHistoryType.Id == (int)SharedData.HisotryByType.Customer)
+                    else if (_SelectedFuelHistoryType.Id == (int)SharedData.FuelHisotryByType.Customer)
                     {
                         return "Customers: ";
                     }
-                    else if(_SelectedFuelHistoryType.Id == (int)SharedData.HisotryByType.User)
+                    else if(_SelectedFuelHistoryType.Id == (int)SharedData.FuelHisotryByType.User)
                     {
                         return "Users: ";
                     }
@@ -120,15 +120,15 @@ namespace FuelSupply.APP.ViewModel
             {
                 if (_SelectedFuelHistoryType != null)
                 {
-                    if (_SelectedFuelHistoryType.Id == (int)SharedData.HisotryByType.Key_Customer)
+                    if (_SelectedFuelHistoryType.Id == (int)SharedData.FuelHisotryByType.Key_Customer)
                     {
                         return _KeyCustomerList;
                     }
-                    else if (_SelectedFuelHistoryType.Id == (int)SharedData.HisotryByType.Customer)
+                    else if (_SelectedFuelHistoryType.Id == (int)SharedData.FuelHisotryByType.Customer)
                     {
                         return _CustomerList;
                     }
-                    else if (_SelectedFuelHistoryType.Id == (int)SharedData.HisotryByType.User)
+                    else if (_SelectedFuelHistoryType.Id == (int)SharedData.FuelHisotryByType.User)
                     {
                         return _UserList;
                     }
@@ -146,23 +146,23 @@ namespace FuelSupply.APP.ViewModel
 
         public FuelHistoryViewModel(Window pOwnerWindow)
         {
-            _FuelHistoryTypeList = new List<DAL.Entity.Fuel.FuelHistoryType>();
-            FuelHistoryType oFuelHistoryType = new DAL.Entity.Fuel.FuelHistoryType();
+            _FuelHistoryTypeList = new List<DAL.Entity.Fuel.HistoryType>();
+            HistoryType oFuelHistoryType = new DAL.Entity.Fuel.HistoryType();
             oFuelHistoryType.Id = 1;
             oFuelHistoryType.Name = "Key Customer";
             _FuelHistoryTypeList.Add(oFuelHistoryType);
 
-            oFuelHistoryType = new DAL.Entity.Fuel.FuelHistoryType();
+            oFuelHistoryType = new DAL.Entity.Fuel.HistoryType();
             oFuelHistoryType.Id = 2;
             oFuelHistoryType.Name = "Customer";
             _FuelHistoryTypeList.Add(oFuelHistoryType);
 
-            oFuelHistoryType = new DAL.Entity.Fuel.FuelHistoryType();
+            oFuelHistoryType = new DAL.Entity.Fuel.HistoryType();
             oFuelHistoryType.Id = 3;
             oFuelHistoryType.Name = "User";
             _FuelHistoryTypeList.Add(oFuelHistoryType);
 
-            oFuelHistoryType = new DAL.Entity.Fuel.FuelHistoryType();
+            oFuelHistoryType = new DAL.Entity.Fuel.HistoryType();
             oFuelHistoryType.Id = 4;
             oFuelHistoryType.Name = "Fuel Type";
             _FuelHistoryTypeList.Add(oFuelHistoryType);
@@ -241,7 +241,7 @@ namespace FuelSupply.APP.ViewModel
             {
                 if (_SelectedFuelHistoryType != null)
                 {
-                    if (_SelectedFuelHistoryType.Id == (int)SharedData.HisotryByType.Key_Customer)
+                    if (_SelectedFuelHistoryType.Id == (int)SharedData.FuelHisotryByType.Key_Customer)
                     {
                         if(pSelectedId == 0)
                         {
@@ -252,7 +252,7 @@ namespace FuelSupply.APP.ViewModel
                           FuelHistoryList = FuelManager.GetFuelHistoryByKeyCustomerId((int)pSelectedId,pStartDate,pEndDate);
                         }                        
                     }
-                    else if (_SelectedFuelHistoryType.Id == (int)SharedData.HisotryByType.Customer)
+                    else if (_SelectedFuelHistoryType.Id == (int)SharedData.FuelHisotryByType.Customer)
                     {
                         if (pSelectedId == 0)
                         {
@@ -263,7 +263,7 @@ namespace FuelSupply.APP.ViewModel
                             FuelHistoryList = FuelManager.GetFuelHistoryByCustomerId((int)pSelectedId, pStartDate, pEndDate);
                         }  
                     }
-                    else if (_SelectedFuelHistoryType.Id == (int)SharedData.HisotryByType.User)
+                    else if (_SelectedFuelHistoryType.Id == (int)SharedData.FuelHisotryByType.User)
                     {
                         if (pSelectedId == 0)
                         {
@@ -319,7 +319,12 @@ namespace FuelSupply.APP.ViewModel
                         oExportEntity.FuelType = "Petrol";
 
                     oExportEntity.FuelVolume = oHistory.FuelVolume;
-                    oExportEntity.KeyCustomerName = oHistory.KeyCustomerName;
+
+                    if (oHistory.Customer != null && oHistory.Customer.Customer2 != null)
+                        oExportEntity.KeyCustomerName = oHistory.Customer.Customer2.Name;
+                    else
+                        oExportEntity.KeyCustomerName = string.Empty;
+
 
                     if (oHistory.User != null)
                         oExportEntity.UserName = oHistory.User.Name;

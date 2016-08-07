@@ -1,5 +1,11 @@
-﻿using System;
+﻿using FuelSupply.APP.ExportEntity;
+using FuelSupply.APP.Helper;
+using FuelSupply.APP.ViewModel;
+using FuelSupply.DAL.Entity.Fuel;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +25,102 @@ namespace FuelSupply.APP.View
     /// </summary>
     public partial class CreditHistory : UserControl
     {
-        public CreditHistory()
+        #region "Declaration"
+        public CreditHistoryViewModel viewModel;
+        public MainWindow oMainWindow;
+        #endregion
+
+        public CreditHistory(Window pOwnerWindow)
         {
             InitializeComponent();
+
+            oMainWindow = (MainWindow)pOwnerWindow;
+            viewModel = new CreditHistoryViewModel(pOwnerWindow);
+            this.DataContext = viewModel;
+
+            dgCreditHistoryList.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
+            dgCreditHistoryList.SelectionMode = DataGridSelectionMode.Extended;
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbHistoryBy.Focus();
+            cmbHistoryBy.SelectedIndex = 0;
+
+            dpEndTime.SelectedDate = DateTime.Now;
+            dpStartTime.SelectedDate = DateTime.Now;
+        }
+
+        private void btnExportToExcel_Click(object sender, RoutedEventArgs e)
+        {
+            ExportToExcel<CreditHistoryExport, CreditHistoryExportList> oExcelSheet = new ExportToExcel<CreditHistoryExport, CreditHistoryExportList>();
+            List<CreditHistoryExport> oCreditHistoryExportList = viewModel.ConvertCreditHistoryToCreditHistoryExportEntity();
+            ICollectionView view = CollectionViewSource.GetDefaultView(oCreditHistoryExportList);
+            oExcelSheet.dataToPrint = (List<CreditHistoryExport>)view.SourceCollection;
+            oExcelSheet.GenerateReport();    
+        }
+
+        private void btnExportToWord_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnExportToCSV_Click(object sender, RoutedEventArgs e)
+        {
+            dgCreditHistoryList.SelectAllCells();
+            ApplicationCommands.Copy.Execute(null, dgCreditHistoryList);
+            dgCreditHistoryList.UnselectAllCells();
+
+            String result = (string)Clipboard.GetData(DataFormats.Text);
+            Clipboard.Clear();
+
+            SaveFileDialog oSaveFileDialog = new SaveFileDialog();
+            oSaveFileDialog.Filter = "CSV Files (*.csv)|*.csv;";
+            if (oSaveFileDialog.ShowDialog() == true)
+            {
+                System.IO.File.WriteAllText(oSaveFileDialog.FileName, result);
+            }
+        }
+
+        private void btnExportToPDF_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog oSaveFileDialog = new SaveFileDialog();
+            oSaveFileDialog.Filter = "PDF Files (*.pdf)|*.pdf";
+            if (oSaveFileDialog.ShowDialog() == true)
+            {
+                List<CreditHistoryExport> oFuelHistoryExportList = viewModel.ConvertCreditHistoryToCreditHistoryExportEntity();
+                viewModel.Export_Data_To_PDF(oFuelHistoryExportList, oSaveFileDialog.FileName);
+            }
+        }
+
+        private void cmbHistoryBy_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            viewModel.SelectedCreditHistoryType = (HistoryType)cmbHistoryBy.SelectedItem;
+
+            viewModel.OnPropertyChanged("HistoryValueList");
+            viewModel.OnPropertyChanged("HistoryInfoHeader");
+
+            cbHistoryTypeValue.SelectedIndex = 0;
+        }
+
+        private void btnApply_Click(object sender, RoutedEventArgs e)
+        {
+            DateTime? pStartTime = DateTime.Now;
+            DateTime? pEndTime = DateTime.Now;
+
+            if (dpStartTime.SelectedDate != null && dpStartTime.SelectedDate.Value != null)
+            {
+                pStartTime = new DateTime(dpStartTime.SelectedDate.Value.Year, dpStartTime.SelectedDate.Value.Month,
+                    dpStartTime.SelectedDate.Value.Day, 0, 0, 0);
+            }
+
+            if (dpEndTime.SelectedDate != null && dpEndTime.SelectedDate.Value != null)
+            {
+                pEndTime = new DateTime(dpEndTime.SelectedDate.Value.Year, dpEndTime.SelectedDate.Value.Month,
+                    dpEndTime.SelectedDate.Value.Day, 23, 59, 59);
+            }
+
+            viewModel.GetFuelHistory(pStartTime, pEndTime, (int?)cbHistoryTypeValue.SelectedValue);
         }
     }
 }

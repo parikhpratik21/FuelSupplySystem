@@ -272,7 +272,7 @@ namespace FuelSupply.APP
 
         private void btnCreditHistory_Click(object sender, RoutedEventArgs e)
         {
-            CreditHistory oHistory = new CreditHistory();
+            CreditHistory oHistory = new CreditHistory(this);
             mainModel.ContentWindow = oHistory;
         }             
     }
