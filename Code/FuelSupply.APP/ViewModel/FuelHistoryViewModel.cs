@@ -321,9 +321,9 @@ namespace FuelSupply.APP.ViewModel
                     oExportEntity.FuelVolume = oHistory.FuelVolume;
 
                     if (oHistory.Customer != null && oHistory.Customer.Customer2 != null)
-                        oExportEntity.KeyCustomerName = oHistory.Customer.Customer2.Name;
+                        oExportEntity.KeyCustomer = oHistory.Customer.Customer2.Name;
                     else
-                        oExportEntity.KeyCustomerName = string.Empty;
+                        oExportEntity.KeyCustomer = string.Empty;
 
 
                     if (oHistory.User != null)
@@ -496,7 +496,7 @@ namespace FuelSupply.APP.ViewModel
                     cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
                 pdfTable.AddCell(cellRow);
 
-                cellRow = new PdfPCell(new Phrase(oHistory.KeyCustomerName));
+                cellRow = new PdfPCell(new Phrase(oHistory.KeyCustomer));
                 cellRow.HorizontalAlignment = 1;
                 cellRow.VerticalAlignment = 1;
                 if (rowIndex % 2 == 0)

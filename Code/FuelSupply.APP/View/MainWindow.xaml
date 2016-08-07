@@ -12,7 +12,18 @@
         <Style x:Key="ButtonStyle" TargetType="Button" >
             <Setter Property="Foreground" Value="#ffffff"/>            
             <Setter Property="FontSize" Value="15"/>
-            
+            <Setter Property="BorderThickness" Value="0"/>
+            <Style.Triggers>
+                <Trigger Property ="IsMouseOver" Value="True">
+                    <Setter Property= "Background" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="SelectedButtonStyle" TargetType="Button" >
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="ExtraBold"></Setter>
+            <Setter Property="BorderThickness" Value="2"/>
             <Style.Triggers>
                 <Trigger Property ="IsMouseOver" Value="True">
                     <Setter Property= "Background" Value="Black"/>
@@ -56,14 +67,14 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="5.5*"/>
+                <ColumnDefinition Width="5.7*"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            
-            <Button Name="btnProfile" Grid.Column="1" Click="btnProfile_Click" Background="#00879c" Style="{StaticResource ButtonStyle}" HorizontalContentAlignment="Stretch">
-                <Grid  HorizontalAlignment="Stretch" >                   
+
+            <Button Name="btnProfile" Grid.Column="1" Click="btnProfile_Click" Background="#00879c" Style="{StaticResource SelectedButtonStyle}" HorizontalContentAlignment="Stretch">
+                <Grid  HorizontalAlignment="Stretch">                   
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="1.5*"/>

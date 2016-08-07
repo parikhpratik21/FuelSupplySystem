@@ -236,29 +236,64 @@ namespace FuelSupply.APP
         {
             Profile oProfile = new Profile(this, oLogInViewModel.Loggeduser);
             mainModel.ContentWindow = oProfile;
+
+            btnProfile.Style = (System.Windows.Style)this.FindResource("SelectedButtonStyle");
+            btnLogOut.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnUser.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnCustomer.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnFuelHistory.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnCreditHistory.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
         }
 
         public void btnUser_Click(object sender, RoutedEventArgs e)
         {
             UserDisplay oUserDisplay = new UserDisplay(this);
             mainModel.ContentWindow = oUserDisplay;
+
+            btnProfile.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnLogOut.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnUser.Style = (System.Windows.Style)this.FindResource("SelectedButtonStyle");
+            btnCustomer.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnFuelHistory.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnCreditHistory.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
         }
 
         public void btnCustomer_Click(object sender, RoutedEventArgs e)
         {
             CustomerDisplay oCustomer = new CustomerDisplay(this);
             mainModel.ContentWindow = oCustomer;
+
+            btnProfile.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnLogOut.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnUser.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnCustomer.Style = (System.Windows.Style)this.FindResource("SelectedButtonStyle");
+            btnFuelHistory.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnCreditHistory.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
         }
 
         private void btnFuelHistory_Click(object sender, RoutedEventArgs e)
         {
             FuelHistory oHistory  = new FuelHistory(this);
             mainModel.ContentWindow = oHistory;
+
+            btnProfile.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnLogOut.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnUser.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnCustomer.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnFuelHistory.Style = (System.Windows.Style)this.FindResource("SelectedButtonStyle");
+            btnCreditHistory.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
         }
 
         private void btnLogOut_Click(object sender, RoutedEventArgs e)
         {
-            OpenLoginWindows();     
+            OpenLoginWindows();
+
+            btnProfile.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnLogOut.Style = (System.Windows.Style)this.FindResource("SelectedButtonStyle");
+            btnUser.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnCustomer.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnFuelHistory.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnCreditHistory.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
         }
 
         private void MetroWindow_Activated(object sender, EventArgs e)
@@ -274,6 +309,13 @@ namespace FuelSupply.APP
         {
             CreditHistory oHistory = new CreditHistory(this);
             mainModel.ContentWindow = oHistory;
+
+            btnProfile.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnLogOut.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnUser.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnCustomer.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnFuelHistory.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+            btnCreditHistory.Style = (System.Windows.Style)this.FindResource("SelectedButtonStyle");
         }             
     }
 }
