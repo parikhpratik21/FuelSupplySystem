@@ -217,7 +217,7 @@ namespace FuelSupply.APP.ViewModel
         }
 
         #region "Methods"
-        public void GetFuelHistory(DateTime? pStartDate, DateTime? pEndDate, int? pSelectedId)
+        public async Task<bool> GetFuelHistory(DateTime? pStartDate, DateTime? pEndDate, int? pSelectedId)
         {
             if (pStartDate == null)
             {
@@ -239,57 +239,62 @@ namespace FuelSupply.APP.ViewModel
             {
                 if (_SelectedCreditHistoryType != null)
                 {
-                    if (_SelectedCreditHistoryType.Id == (int)SharedData.FuelHisotryByType.Key_Customer)
+                    await Task.Run(() =>
                     {
-                        if (pSelectedId == 0)
+                        System.Threading.Thread.Sleep(10);
+
+                        if (_SelectedCreditHistoryType.Id == (int)SharedData.FuelHisotryByType.Key_Customer)
                         {
-                            CreditHistoryList = CreditManager.GetCreditHistoryBetweenDates(pStartDate, pEndDate);
+                            if (pSelectedId == 0)
+                            {
+                                CreditHistoryList = CreditManager.GetCreditHistoryBetweenDates(pStartDate, pEndDate);
+                            }
+                            else
+                            {
+                                CreditHistoryList = CreditManager.GetCreditHistoryByKeyCustomerId((int)pSelectedId, pStartDate, pEndDate);
+                            }
+                        }
+                        else if (_SelectedCreditHistoryType.Id == (int)SharedData.FuelHisotryByType.Customer)
+                        {
+                            if (pSelectedId == 0)
+                            {
+                                CreditHistoryList = CreditManager.GetCreditHistoryBetweenDates(pStartDate, pEndDate);
+                            }
+                            else
+                            {
+                                CreditHistoryList = CreditManager.GetCreditHistoryByCustomerId((int)pSelectedId, pStartDate, pEndDate);
+                            }
+                        }
+                        else if (_SelectedCreditHistoryType.Id == (int)SharedData.FuelHisotryByType.User)
+                        {
+                            if (pSelectedId == 0)
+                            {
+                                CreditHistoryList = CreditManager.GetCreditHistoryBetweenDates(pStartDate, pEndDate);
+                            }
+                            else
+                            {
+                                CreditHistoryList = CreditManager.FetCreditHistoryByUserId((int)pSelectedId, pStartDate, pEndDate);
+                            }
                         }
                         else
                         {
-                            CreditHistoryList = CreditManager.GetCreditHistoryByKeyCustomerId((int)pSelectedId, pStartDate, pEndDate);
+                            if (pSelectedId == 0)
+                            {
+                                CreditHistoryList = CreditManager.GetCreditHistoryBetweenDates(pStartDate, pEndDate);
+                            }
+                            else
+                            {
+                                CreditHistoryList = CreditManager.GetCreditHistoryByPaymentId((int)pSelectedId, pStartDate, pEndDate);
+                            }
                         }
-                    }
-                    else if (_SelectedCreditHistoryType.Id == (int)SharedData.FuelHisotryByType.Customer)
-                    {
-                        if (pSelectedId == 0)
-                        {
-                            CreditHistoryList = CreditManager.GetCreditHistoryBetweenDates(pStartDate, pEndDate);
-                        }
-                        else
-                        {
-                            CreditHistoryList = CreditManager.GetCreditHistoryByCustomerId((int)pSelectedId, pStartDate, pEndDate);
-                        }
-                    }
-                    else if (_SelectedCreditHistoryType.Id == (int)SharedData.FuelHisotryByType.User)
-                    {
-                        if (pSelectedId == 0)
-                        {
-                            CreditHistoryList = CreditManager.GetCreditHistoryBetweenDates(pStartDate, pEndDate);
-                        }
-                        else
-                        {
-                            CreditHistoryList = CreditManager.FetCreditHistoryByUserId((int)pSelectedId, pStartDate, pEndDate);
-                        }
-                    }
-                    else
-                    {
-                        if (pSelectedId == 0)
-                        {
-                            CreditHistoryList = CreditManager.GetCreditHistoryBetweenDates(pStartDate, pEndDate);
-                        }
-                        else
-                        {
-                            CreditHistoryList = CreditManager.GetCreditHistoryByPaymentId((int)pSelectedId, pStartDate, pEndDate);
-                        }
-                    }
+                    });                    
                 }
                 else
                 {
                     MessageManager.ShowErrorMessage("Please select valid value", oMainWindow);
                 }
             }
-
+            return true;
         }
 
         public List<CreditHistoryExport> ConvertCreditHistoryToCreditHistoryExportEntity()

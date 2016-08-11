@@ -238,7 +238,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
-                    <Image Source="..\Images\add.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
+                    <Image Source="..\Images\XLSExport.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
                     <TextBlock Text="Export To Excel"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>
@@ -248,7 +248,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
-                    <Image Source="..\Images\edit.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
+                    <Image Source="..\Images\DOCExport.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
                     <TextBlock Text="Export To Word"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>
@@ -259,7 +259,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
-                    <Image Source="..\Images\edit.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
+                    <Image Source="..\Images\CSVExport.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
                     <TextBlock Text="Export To CSV"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>
@@ -271,7 +271,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
-                    <Image Source="..\Images\edit.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
+                    <Image Source="..\Images\PDFExport.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
                     <TextBlock Text="Export To PDF"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>

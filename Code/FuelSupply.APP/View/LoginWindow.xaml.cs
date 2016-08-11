@@ -39,11 +39,12 @@ namespace FuelSupply.APP.View
             oMainWindows.EnabledGrid();
         }
 
-        private void btnLogIn_Click(object sender, RoutedEventArgs e)
+        private async void btnLogIn_Click(object sender, RoutedEventArgs e)
         {
             oMainWindows.startProcess("Loading...");
-            oViewModel.Login(txtPassword.Password);
+            await oViewModel.Login(txtPassword.Password);
             oMainWindows.stopProcess();
+            oMainWindows.EnabledGrid();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

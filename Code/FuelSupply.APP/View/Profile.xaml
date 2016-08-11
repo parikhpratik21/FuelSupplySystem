@@ -6,16 +6,14 @@
         <Style x:Key="TextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource MetroTextBox}">
             <Setter Property="Margin" Value="10,5,10,5"/>
             <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="IsEnabled" Value="False" />
-            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch" />            
+            <Setter Property="Foreground" Value="Black"/>
         </Style>
         <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
             <Setter Property="Margin" Value="10,0,10,0"/>
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="IsEnabled" Value="False" />
-            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+            <Setter Property="Foreground" Value="Black"/>
         </Style>
         <Style x:Key="LabelHeaderStyle" TargetType="Label" BasedOn="{StaticResource MetroLabel}">            
             <Setter Property="VerticalAlignment" Value="Center" />
@@ -28,7 +26,7 @@
         <Style x:Key="LableStyle" TargetType="Label">
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Foreground" Value="{StaticResource AppTextColor}"/>
+            <Setter Property="Foreground" Value="Black"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Right"/>
         </Style>
@@ -65,7 +63,7 @@
             
         </Grid>        
         <ScrollViewer Grid.Column="0" Grid.Row="1"  VerticalScrollBarVisibility="Auto">
-            <Grid  Background="White" Margin="0,-5,0,0">
+            <Grid Name="grdMain" IsEnabled="{Binding IsProfileEnable}" Background="White" Margin="0,-5,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="50"/>

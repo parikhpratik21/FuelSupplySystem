@@ -4,17 +4,18 @@
         xmlns:hammer="clr-namespace:Hammer.SpinningWheel;assembly=Hammer.SpinningWheel"
          ResizeMode="NoResize"  Height="120" Width="167"
         ShowInTaskbar="False" WindowStartupLocation="Manual" WindowStyle="None" AllowsTransparency="True" Background="Transparent">
-    <Grid Name="root" Background="Transparent" Margin="0" >
+    <Grid Name="root" Background="Transparent" Margin="0"  >
         <Border BorderBrush="Gray" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                BorderThickness="1" CornerRadius="10" Background="White" >
+                BorderThickness="1" CornerRadius="10" Background="{StaticResource AppTitleBarColor}">
             <UniformGrid Columns="1" Rows="2" Margin="0,10,2,-59" Height="161" VerticalAlignment="Top">
                 <hammer:SpinningWheel IsSpinning="True" 
-    		DotRadius="3"
+    		DotRadius="4"
     		Speed="0.9"
     		Radius="25"
-    		DotCount="20"  
+    		DotCount="15"  
     		SymmetricalArrange="True"
     		x:Name="wheel" Margin="0,14,0,32"
+                             DotColor="White"
                               >
                     <hammer:SpinningWheel.Style>
                         <Style>
@@ -29,7 +30,7 @@
                         </Style>
                     </hammer:SpinningWheel.Style>
                 </hammer:SpinningWheel>
-                <Label Name="lblLoadingtext" Content="Loading...." Margin="0,-10,0,0" HorizontalContentAlignment="Center"  Width="143" />
+                <Label Name="lblLoadingtext" Content="Loading...." Margin="0,-10,0,0" HorizontalContentAlignment="Center" Foreground="White" FontWeight="Bold"  Width="143" />
 
             </UniformGrid>
         </Border>

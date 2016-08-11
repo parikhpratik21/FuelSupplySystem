@@ -55,6 +55,20 @@ namespace FuelSupply.APP.ViewModel
                     return string.Empty;
             }
         }
+
+        public bool IsProfileEnable
+        {
+            get
+            {
+                if (SharedData.LoggedUser != null && SharedData.LoggedUser.UserType == (int?)SharedData.UserType.Admin)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+        }
+
         #endregion
         public ProfileViewModel(Window pOwnerForm)
         {

@@ -81,6 +81,7 @@ namespace FuelSupply.APP
             CloseLoginPopup();
             mainModel.OnPropertyChanged("IsAdminUser");
             btnProfile_Click(null, null);
+            this.Focus();
         }
 
         public void CloseLoginPopup()
@@ -245,9 +246,22 @@ namespace FuelSupply.APP
             btnCreditHistory.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
         }
 
-        public void btnUser_Click(object sender, RoutedEventArgs e)
+        public async void btnUser_Click(object sender, RoutedEventArgs e)
         {
-            UserDisplay oUserDisplay = new UserDisplay(this);
+            UserDisplayViewModel oViewModel = null;
+            startProcess("Loading...");
+
+            await Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(10);
+
+                oViewModel = new UserDisplayViewModel(this);
+            });
+
+            stopProcess();
+            EnabledGrid();
+
+            UserDisplay oUserDisplay = new UserDisplay(this, oViewModel);
             mainModel.ContentWindow = oUserDisplay;
 
             btnProfile.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
@@ -258,9 +272,22 @@ namespace FuelSupply.APP
             btnCreditHistory.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
         }
 
-        public void btnCustomer_Click(object sender, RoutedEventArgs e)
+        public async void btnCustomer_Click(object sender, RoutedEventArgs e)
         {
-            CustomerDisplay oCustomer = new CustomerDisplay(this);
+            CustomerDisplayViewModel oViewModel = null;
+            startProcess("Loading...");
+
+            await Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(10);
+
+                oViewModel = new CustomerDisplayViewModel(this);
+            });
+
+            stopProcess();
+            EnabledGrid();
+
+            CustomerDisplay oCustomer = new CustomerDisplay(this, oViewModel);
             mainModel.ContentWindow = oCustomer;
 
             btnProfile.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
@@ -271,9 +298,22 @@ namespace FuelSupply.APP
             btnCreditHistory.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
         }
 
-        private void btnFuelHistory_Click(object sender, RoutedEventArgs e)
+        private async void btnFuelHistory_Click(object sender, RoutedEventArgs e)
         {
-            FuelHistory oHistory  = new FuelHistory(this);
+            FuelHistoryViewModel oViewModel = null;
+            startProcess("Loading...");
+
+            await Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(10);
+
+                oViewModel = new FuelHistoryViewModel(this);
+            });
+
+            stopProcess();
+            EnabledGrid();
+
+            FuelHistory oHistory = new FuelHistory(this, oViewModel);
             mainModel.ContentWindow = oHistory;
 
             btnProfile.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
@@ -305,9 +345,22 @@ namespace FuelSupply.APP
             }
         }
 
-        private void btnCreditHistory_Click(object sender, RoutedEventArgs e)
+        private async void btnCreditHistory_Click(object sender, RoutedEventArgs e)
         {
-            CreditHistory oHistory = new CreditHistory(this);
+            CreditHistoryViewModel oViewModel = null;
+            startProcess("Loading...");
+
+            await Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(10);
+
+                oViewModel = new CreditHistoryViewModel(this);
+            });
+
+            stopProcess();
+            EnabledGrid();
+
+            CreditHistory oHistory = new CreditHistory(this, oViewModel);
             mainModel.ContentWindow = oHistory;
 
             btnProfile.Style = (System.Windows.Style)this.FindResource("ButtonStyle");

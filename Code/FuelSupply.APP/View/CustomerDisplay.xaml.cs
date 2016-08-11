@@ -25,12 +25,12 @@ namespace FuelSupply.APP.View
         private CustomerDisplayViewModel customerDisplayModel; 
         private MainWindow oMainWindow;
         #endregion
-        public CustomerDisplay(Window pOwnerWindow)
+        public CustomerDisplay(Window pOwnerWindow, CustomerDisplayViewModel pViewModel)
         {
             InitializeComponent();
 
             oMainWindow = (MainWindow)pOwnerWindow;
-            customerDisplayModel = new CustomerDisplayViewModel(pOwnerWindow);
+            customerDisplayModel = pViewModel;
             this.DataContext = customerDisplayModel;
         }
 

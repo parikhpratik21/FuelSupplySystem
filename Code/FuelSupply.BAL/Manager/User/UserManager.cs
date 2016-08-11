@@ -50,14 +50,44 @@ namespace FuelSupply.BAL.Manager
             return UserProvider.ChangePassword(pUserId, pNewPassword);
         }
 
-        public static bool AddUser(User pUser)
+        public static bool AddUser(User pUser, ref string pErrorString)
         {
-            return UserProvider.AddUser(pUser);
+            if (UserProvider.ValidateUser(pUser) == false)
+            {
+                pErrorString = "User code and UserName must be unique";
+                return false;
+            }
+            else
+            {
+                bool result = UserProvider.AddUser(pUser);
+                if (result == false)
+                {
+                    pErrorString = "Error while adding User, Please try again.";
+                    return false;
+                }
+                else
+                    return true;
+            }               
         }
 
-        public static bool UpdateUser(User pUser)
+        public static bool UpdateUser(User pUser,ref string pErrorString)
         {
-            return UserProvider.UpdateUser(pUser);
+            if (UserProvider.ValidateUser(pUser) == false)
+            {
+                pErrorString = "User code and UserName must be unique";
+                return false;
+            }
+            else
+            {
+                bool result = UserProvider.UpdateUser(pUser);
+                if (result == false)
+                {
+                    pErrorString = "Error while updating User, Please try again.";
+                    return false;
+                }
+                else
+                    return true;
+            }               
         }
 
         public static bool DeleteUser(int pUserId)

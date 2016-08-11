@@ -63,6 +63,28 @@ namespace FuelSupply.DAL.Provider
             return false;
         }
 
+        public static bool ValidateUser(User pUser)
+        {
+            if (pUser.Id <= 0)
+            {
+                if (userDbObject.Users.Where(x => x.Code == pUser.Code || x.UserName == pUser.UserName).Count() > 0)
+                {
+                    return false;
+                }
+                else
+                    return true;
+            }
+            else
+            {
+                if (userDbObject.Users.Where(x => (x.Code == pUser.Code || x.UserName == pUser.UserName) && x.Id != pUser.Id).Count() > 0)
+                {
+                    return false;
+                }
+                else
+                    return true;
+            }
+        }
+
         public static bool AddUser(User pUser)
         {
             User oUser = userDbObject.Users.Where(x => x.Code == pUser.Code || x.UserName == pUser.UserName).FirstOrDefault();

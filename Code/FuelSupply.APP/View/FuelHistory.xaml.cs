@@ -30,24 +30,24 @@ namespace FuelSupply.APP.View
         public FuelHistoryViewModel viewModel;
         public MainWindow oMainWindow;
         #endregion
-        public FuelHistory(Window pOwnerWindow)
+        public FuelHistory(Window pOwnerWindow,FuelHistoryViewModel pViewModel)
         {
             InitializeComponent();
             oMainWindow = (MainWindow)pOwnerWindow;
-            viewModel = new FuelHistoryViewModel(pOwnerWindow);
+            viewModel = pViewModel;
             this.DataContext = viewModel;
 
             dgHistoryList.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
             dgHistoryList.SelectionMode = DataGridSelectionMode.Extended;
         }
 
-        private void btnExportToExcel_Click(object sender, RoutedEventArgs e)
+        private async void btnExportToExcel_Click(object sender, RoutedEventArgs e)
         {
             ExportToExcel<FuelHistoryExport, FuelHistoryExportList> oExcelSheet = new ExportToExcel<FuelHistoryExport, FuelHistoryExportList>();
             List<FuelHistoryExport> oFuelHistoryExportList = viewModel.ConvertFuelHistoryToFuelHistoryExportEntity();
             ICollectionView view = CollectionViewSource.GetDefaultView(oFuelHistoryExportList);
             oExcelSheet.dataToPrint = (List<FuelHistoryExport>)view.SourceCollection;
-            oExcelSheet.GenerateReport();           
+            oExcelSheet.GenerateReport(); 
         }
 
         private void btnExportToWord_Click(object sender, RoutedEventArgs e)
@@ -80,7 +80,7 @@ namespace FuelSupply.APP.View
             cbHistoryTypeValue.SelectedIndex = 0;
         }
 
-        private void btnApply_Click(object sender, RoutedEventArgs e)
+        private async void btnApply_Click(object sender, RoutedEventArgs e)
         {
             DateTime? pStartTime = DateTime.Now;
             DateTime? pEndTime = DateTime.Now;
@@ -97,7 +97,11 @@ namespace FuelSupply.APP.View
                     dpEndTime.SelectedDate.Value.Day, 23, 59, 59);
             }
 
-            viewModel.GetFuelHistory(pStartTime, pEndTime, (int?)cbHistoryTypeValue.SelectedValue);
+            oMainWindow.startProcess("Loading...");
+            await viewModel.GetFuelHistory(pStartTime, pEndTime, (int?)cbHistoryTypeValue.SelectedValue);
+            oMainWindow.stopProcess();
+            oMainWindow.EnabledGrid();
+            
         }
 
         private void btnExportToPDF_Click(object sender, RoutedEventArgs e)

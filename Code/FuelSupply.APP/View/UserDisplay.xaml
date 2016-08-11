@@ -233,6 +233,8 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
             <Button Name="btnAddUser" Margin="0" Grid.Row="0" Grid.Column="1" Click="btnAddUser_Click" HorizontalContentAlignment="Stretch">
@@ -274,6 +276,17 @@
                     <Image Source="..\Images\changepassword.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
                     <TextBlock Text="Change Password"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>              
+            </Button>
+
+            <Button Name="btnDatabaseBackup" Grid.Row="0" Grid.Column="9" Click="btnDatabaseBackup_Click"  HorizontalContentAlignment="Stretch">
+                <Grid  HorizontalAlignment="Stretch" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="..\Images\Database.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
+                    <TextBlock Text="DB Backup"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                </Grid>
             </Button>
         </Grid>
     </Grid>

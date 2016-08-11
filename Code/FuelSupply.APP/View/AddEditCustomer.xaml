@@ -133,14 +133,27 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2.5*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1.3*"/>
+                <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="2.5*"/>              
+                <ColumnDefinition Width="2*"/>              
             </Grid.ColumnDefinitions>
 
-            <Button Name="btnSaveUser" Margin="0" Grid.Row="0" Grid.Column="1" Click="btnSaveUser_Click" HorizontalContentAlignment="Stretch">
+            <Button Name="btnAddFingerPrint" Margin="0" Grid.Row="0" Grid.Column="1" Click="btnAddFingerPrint_Click"  HorizontalContentAlignment="Stretch">
+                <Grid  HorizontalAlignment="Stretch" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="..\Images\Finger.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
+                    <TextBlock Text="FingerPrint"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                </Grid>
+            </Button>
+            
+            <Button Name="btnSaveUser" Margin="0" Grid.Row="0" Grid.Column="3" Click="btnSaveUser_Click" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -150,7 +163,7 @@
                     <TextBlock Text="Save"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>
-            <Button Name="btnCancel" Grid.Row="0" Grid.Column="3"  Click="btnCancel_Click" HorizontalContentAlignment="Stretch">
+            <Button Name="btnCancel" Grid.Row="0" Grid.Column="5"  Click="btnCancel_Click" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

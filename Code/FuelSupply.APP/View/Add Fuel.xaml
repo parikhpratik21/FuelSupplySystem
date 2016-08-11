@@ -73,8 +73,9 @@
             <Label Name="lblCustomerNameHeader" Content="Name:" Grid.Column="1" Grid.Row="1" Style="{StaticResource LabelHeaderStyle}"></Label>
             <Label Name="lblCustomerName" Grid.Column="2" Grid.Row="1" Style="{StaticResource LableStyle}"  Content="{Binding SelectedCustomer.Name}" ></Label>
             <Label Name="lblKeyCustomerHeader" Content="Key Customer:" Grid.Column="1" Grid.Row="2" Style="{StaticResource LabelHeaderStyle}"></Label>
-            <ComboBox ItemsSource="{Binding KeyCustomerList}" Margin="5,5,5,5" IsEnabled="{Binding IsKeyCustomerListEnable}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedCustomer.Customer2.Id}" Name="cmbKeyCustomer" Style="{StaticResource ComboBoxFlatStyle}" Grid.Column="2" Grid.Row="2"></ComboBox>
-
+            <!--<ComboBox ItemsSource="{Binding KeyCustomerList}" Margin="5,5,5,5" IsEnabled="{Binding IsKeyCustomerListEnable}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedCustomer.Customer2.Id}" Name="cmbKeyCustomer" Style="{StaticResource ComboBoxFlatStyle}" Grid.Column="2" Grid.Row="2"></ComboBox>-->
+            <Label Name="lblKeyCustomerName" Content="{Binding SelectedCustomer.Customer2.Name}" Margin="5,5,5,5" Grid.Column="2" Grid.Row="2" Style="{StaticResource LableStyle}"></Label>
+            
             <Label Name="lblFuelType" Content="Fuel Type:" Grid.Column="1" Grid.Row="3" Style="{StaticResource LabelHeaderStyle}"></Label>
             <ComboBox Name="cmbFuelType" Margin="5,5,5,5" ItemsSource="{Binding FuelTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding FuelType, Mode=TwoWay}" Style="{StaticResource ComboBoxFlatStyle}" Grid.Column="2" Grid.Row="3" ></ComboBox>
 

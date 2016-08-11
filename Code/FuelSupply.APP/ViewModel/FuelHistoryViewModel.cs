@@ -219,7 +219,7 @@ namespace FuelSupply.APP.ViewModel
         #endregion
 
         #region "Methods"
-        public void GetFuelHistory(DateTime? pStartDate, DateTime? pEndDate, int? pSelectedId)
+        public async Task<bool> GetFuelHistory(DateTime? pStartDate, DateTime? pEndDate, int? pSelectedId)
         {
             if(pStartDate == null)
             {
@@ -241,57 +241,62 @@ namespace FuelSupply.APP.ViewModel
             {
                 if (_SelectedFuelHistoryType != null)
                 {
-                    if (_SelectedFuelHistoryType.Id == (int)SharedData.FuelHisotryByType.Key_Customer)
+                    await Task.Run(() =>
                     {
-                        if(pSelectedId == 0)
+                        System.Threading.Thread.Sleep(10);
+
+                        if (_SelectedFuelHistoryType.Id == (int)SharedData.FuelHisotryByType.Key_Customer)
                         {
-                            FuelHistoryList = FuelManager.GetFuelHistoryBetweenDates(pStartDate, pEndDate);
+                            if (pSelectedId == 0)
+                            {
+                                FuelHistoryList = FuelManager.GetFuelHistoryBetweenDates(pStartDate, pEndDate);
+                            }
+                            else
+                            {
+                                FuelHistoryList = FuelManager.GetFuelHistoryByKeyCustomerId((int)pSelectedId, pStartDate, pEndDate);
+                            }
+                        }
+                        else if (_SelectedFuelHistoryType.Id == (int)SharedData.FuelHisotryByType.Customer)
+                        {
+                            if (pSelectedId == 0)
+                            {
+                                FuelHistoryList = FuelManager.GetFuelHistoryBetweenDates(pStartDate, pEndDate);
+                            }
+                            else
+                            {
+                                FuelHistoryList = FuelManager.GetFuelHistoryByCustomerId((int)pSelectedId, pStartDate, pEndDate);
+                            }
+                        }
+                        else if (_SelectedFuelHistoryType.Id == (int)SharedData.FuelHisotryByType.User)
+                        {
+                            if (pSelectedId == 0)
+                            {
+                                FuelHistoryList = FuelManager.GetFuelHistoryBetweenDates(pStartDate, pEndDate);
+                            }
+                            else
+                            {
+                                FuelHistoryList = FuelManager.GetFuelHistoryByUserId((int)pSelectedId, pStartDate, pEndDate);
+                            }
                         }
                         else
                         {
-                          FuelHistoryList = FuelManager.GetFuelHistoryByKeyCustomerId((int)pSelectedId,pStartDate,pEndDate);
-                        }                        
-                    }
-                    else if (_SelectedFuelHistoryType.Id == (int)SharedData.FuelHisotryByType.Customer)
-                    {
-                        if (pSelectedId == 0)
-                        {
-                            FuelHistoryList = FuelManager.GetFuelHistoryBetweenDates(pStartDate, pEndDate);
+                            if (pSelectedId == 0)
+                            {
+                                FuelHistoryList = FuelManager.GetFuelHistoryBetweenDates(pStartDate, pEndDate);
+                            }
+                            else
+                            {
+                                FuelHistoryList = FuelManager.GetFuelHistoryByFuelTypeId((int)pSelectedId, pStartDate, pEndDate);
+                            }
                         }
-                        else
-                        {
-                            FuelHistoryList = FuelManager.GetFuelHistoryByCustomerId((int)pSelectedId, pStartDate, pEndDate);
-                        }  
-                    }
-                    else if (_SelectedFuelHistoryType.Id == (int)SharedData.FuelHisotryByType.User)
-                    {
-                        if (pSelectedId == 0)
-                        {
-                            FuelHistoryList = FuelManager.GetFuelHistoryBetweenDates(pStartDate, pEndDate);
-                        }
-                        else
-                        {
-                            FuelHistoryList = FuelManager.GetFuelHistoryByUserId((int)pSelectedId, pStartDate, pEndDate);
-                        }  
-                    }
-                    else
-                    {
-                        if (pSelectedId == 0)
-                        {
-                            FuelHistoryList = FuelManager.GetFuelHistoryBetweenDates(pStartDate, pEndDate);
-                        }
-                        else
-                        {
-                            FuelHistoryList = FuelManager.GetFuelHistoryByFuelTypeId((int)pSelectedId, pStartDate, pEndDate);
-                        }  
-                    }
+                    });
                 }
                 else
                 {
                     MessageManager.ShowErrorMessage("Please select valid value", oMainWindow);
                 }
             }
-
+            return true;
         }
 
         public List<FuelHistoryExport> ConvertFuelHistoryToFuelHistoryExportEntity()

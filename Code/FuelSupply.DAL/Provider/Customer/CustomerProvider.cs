@@ -32,7 +32,7 @@ namespace FuelSupply.DAL.Provider
         {
             List<CustomerType> CustomerTypeList = customerDbObject.CustomerTypes.ToList();
             return CustomerTypeList;
-        }        
+        }               
 
         public static List<PaymentType> GetAllPaymentTypes()
         {
@@ -59,12 +59,58 @@ namespace FuelSupply.DAL.Provider
         {
             return customerDbObject.Customers.Where(x => x.KeyCustomerId == null || x.KeyCustomerId == 0).ToList();
         }
-        
+
+        public static List<CustomerFingerPrint> GetAllCustomerFingerPrint()
+        {
+            List<CustomerFingerPrint> CustomerFingerPrintList = customerDbObject.CustomerFingerPrints.ToList();
+            return CustomerFingerPrintList;
+        }
+
+        public static List<CustomerFingerPrint> GetCustomerFingerPrintByCustomerId(int pCustomerId)
+        {
+            List<CustomerFingerPrint> CustomerFingerPrintList = customerDbObject.CustomerFingerPrints.Where(x => x.ID == pCustomerId).ToList();
+            return CustomerFingerPrintList;
+        }
+
+        public static Customer GetCustomerByFingerPrint(string pFingerPrint)
+        {
+            CustomerFingerPrint oFingerPrint = customerDbObject.CustomerFingerPrints.Where(x => x.FingerPrint == pFingerPrint).FirstOrDefault();
+            if (oFingerPrint == null)
+                return null;
+            else
+            {
+                Customer oCustomer = customerDbObject.Customers.Where(x => x.Id == oFingerPrint.CustomerID).FirstOrDefault();
+                return oCustomer;
+            }
+        }
+
         public static bool AddCustomer(Customer pCustomer)
         {
             customerDbObject.Customers.Add(pCustomer);
             customerDbObject.SaveChanges();
             return true;
+        }
+
+        public static bool ValidateCustomer(Customer pCustomer)
+        {
+            if(pCustomer.Id <= 0)
+            {
+                if (customerDbObject.Customers.Where(x => x.Code == pCustomer.Code || x.Name == pCustomer.Name).Count() > 0)
+                {
+                    return false;
+                }
+                else
+                    return true;
+            }
+            else
+            {
+                if (customerDbObject.Customers.Where(x => (x.Code == pCustomer.Code || x.Name == pCustomer.Name) && x.Id != pCustomer.Id).Count() > 0)
+                {
+                    return false;
+                }
+                else
+                    return true;
+            }
         }
 
         public static bool UpdateCustomer(Customer pCustomer)
@@ -81,7 +127,9 @@ namespace FuelSupply.DAL.Provider
                 oCustomer.Pincode = pCustomer.Pincode;
                 oCustomer.State = pCustomer.State;
                 oCustomer.PaymentLimit = pCustomer.PaymentLimit;
-                
+
+                oCustomer.CustomerFingerPrints = pCustomer.CustomerFingerPrints;
+
                 customerDbObject.SaveChanges();
 
                 return true;

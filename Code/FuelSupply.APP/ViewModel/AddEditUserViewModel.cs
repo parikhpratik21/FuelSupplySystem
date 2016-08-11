@@ -122,10 +122,11 @@ namespace FuelSupply.APP.ViewModel
         private bool AddUser(string pPassword)
         {
             _SelectedUser.Password = pPassword;
-            bool result = UserManager.AddUser(_SelectedUser);
+            string sErrorMsg = string.Empty;
+            bool result = UserManager.AddUser(_SelectedUser, ref sErrorMsg);
             if (result == false)
             {
-                MessageManager.ShowErrorMessage("Error while adding user, Please try again.", oMainWindows);
+                MessageManager.ShowErrorMessage(sErrorMsg, oMainWindows);
                 return false;
             }
             else
@@ -134,10 +135,11 @@ namespace FuelSupply.APP.ViewModel
 
         private bool UpdateUser()
         {
-            bool result = UserManager.UpdateUser(_SelectedUser);
+            string sErrorMsg = string.Empty;
+            bool result = UserManager.UpdateUser(_SelectedUser,ref sErrorMsg);
             if (result == false)
             {
-                MessageManager.ShowErrorMessage("Error while updating user, Please try again.", oMainWindows);
+                MessageManager.ShowErrorMessage(sErrorMsg, oMainWindows);
                 return false;
             }
             else

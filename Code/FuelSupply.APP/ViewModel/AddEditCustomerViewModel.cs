@@ -180,10 +180,11 @@ namespace FuelSupply.APP.ViewModel
         private bool AddCustomer()
         {
             _SelectedCustomer.AvailablePay = _SelectedCustomer.PaymentLimit;
-            bool result = CustomerManager.AddCustomer(_SelectedCustomer);
+            string sErrorString = string.Empty;
+            bool result = CustomerManager.AddCustomer(_SelectedCustomer, ref sErrorString);
             if (result == false)
             {
-                MessageManager.ShowErrorMessage("Error while adding customer, Please try again.", oMainWindow);
+                MessageManager.ShowErrorMessage(sErrorString, oMainWindow);
                 return false;
             }
             else
@@ -192,10 +193,11 @@ namespace FuelSupply.APP.ViewModel
 
         private bool UpdateCustomer()
         {
-            bool result = CustomerManager.UpdateCustomer(_SelectedCustomer);
+            string sErrorString = string.Empty;
+            bool result = CustomerManager.UpdateCustomer(_SelectedCustomer, ref sErrorString);
             if (result == false)
             {
-                MessageManager.ShowErrorMessage("Error while updating customer, Please try again.", oMainWindow);
+                MessageManager.ShowErrorMessage(sErrorString, oMainWindow);
                 return false;
             }
             else

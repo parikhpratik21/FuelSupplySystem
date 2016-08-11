@@ -48,14 +48,44 @@ namespace FuelSupply.BAL.Manager
             return CustomerProvider.GetCustomerListByKeyCustomer(pKeyCustomerId);
         }
 
-        public static bool AddCustomer(Customer pCustomer)
+        public static bool AddCustomer(Customer pCustomer, ref string pErrorString)
         {
-            return CustomerProvider.AddCustomer(pCustomer);
+            if(CustomerProvider.ValidateCustomer(pCustomer) == false)
+            {
+                pErrorString = "Customer code and name must be unique";
+                return false;
+            }
+            else
+            {
+                bool result = CustomerProvider.AddCustomer(pCustomer);
+                if (result == false)
+                {
+                    pErrorString = "Error while adding Customer, Please try again.";
+                    return false;
+                }
+                else
+                    return true;
+            }            
         }
 
-        public static bool UpdateCustomer(Customer pCustomer)
+        public static bool UpdateCustomer(Customer pCustomer, ref string pErrorString)
         {
-            return CustomerProvider.UpdateCustomer(pCustomer);
+            if (CustomerProvider.ValidateCustomer(pCustomer) == false)
+            {
+                pErrorString = "Customer code and name must be unique";
+                return false;
+            }
+            else
+            {
+                bool result = CustomerProvider.UpdateCustomer(pCustomer);
+                if (result == false)
+                {
+                    pErrorString = "Error while updating Customer, Please try again.";
+                    return false;
+                }
+                else
+                    return true;
+            }                        
         }
 
         public static bool DeleteCustomer(int pCustomerId)
@@ -93,6 +123,20 @@ namespace FuelSupply.BAL.Manager
             return CustomerProvider.CheckDeductionAvailibility(pCustomerId, pAmount);
         }
 
+        public static List<CustomerFingerPrint> GetAllCustomerFingerPrint()
+        {
+            return CustomerProvider.GetAllCustomerFingerPrint();
+        }
+
+        public static List<CustomerFingerPrint> GetCustomerFingerPrintByCustomerId(int pCustomerId)
+        {
+            return CustomerProvider.GetCustomerFingerPrintByCustomerId(pCustomerId);
+        }
+
+        public static Customer GetCustomerByFingerPrint(string pFingerPrint)
+        {
+            return CustomerProvider.GetCustomerByFingerPrint(pFingerPrint);
+        }
         #endregion
     }
 }

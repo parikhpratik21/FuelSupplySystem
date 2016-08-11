@@ -83,6 +83,7 @@
     <Compile Include="Entity\Comman\Constant.cs" />
     <Compile Include="Entity\Credit\CreditHistory.cs" />
     <Compile Include="Entity\Customer\Customer.cs" />
+    <Compile Include="Entity\Customer\CustomerFingerPrint.cs" />
     <Compile Include="Entity\Customer\CustomerType.cs" />
     <Compile Include="Entity\Fuel\FuelHistory.cs" />
     <Compile Include="Entity\Fuel\HistoryType.cs" />

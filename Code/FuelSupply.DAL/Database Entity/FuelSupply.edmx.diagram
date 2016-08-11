@@ -28,6 +28,8 @@
         <AssociationConnector Association="FuelSupplySystemModel.FK_CreditHistory_FuelStation" />
         <AssociationConnector Association="FuelSupplySystemModel.FK_CreditHistory_PaymentType" />
         <AssociationConnector Association="FuelSupplySystemModel.FK_CreditHistory_User" />
+        <EntityTypeShape EntityType="FuelSupplySystemModel.CustomerFingerPrint" Width="1.5" PointX="5.25" PointY="0.75" />
+        <AssociationConnector Association="FuelSupplySystemModel.FK_CustomerFingerPrint_Customer" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

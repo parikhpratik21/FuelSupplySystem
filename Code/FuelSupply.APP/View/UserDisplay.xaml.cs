@@ -26,12 +26,12 @@ namespace FuelSupply.APP.View
         private MainWindow oMainWindow;
         #endregion
 
-        public UserDisplay(Window pOwnerWindow)
+        public UserDisplay(Window pOwnerWindow, UserDisplayViewModel pViewModel)
         {
             InitializeComponent();
 
             oMainWindow = (MainWindow)pOwnerWindow;
-            userDisplayViewModel = new UserDisplayViewModel(pOwnerWindow);
+            userDisplayViewModel = pViewModel;
             this.DataContext = userDisplayViewModel;
         }
 
@@ -111,6 +111,11 @@ namespace FuelSupply.APP.View
             {
                 e.Handled = true;
             }
+        }
+
+        private void btnDatabaseBackup_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

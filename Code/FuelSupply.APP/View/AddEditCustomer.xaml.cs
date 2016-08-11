@@ -64,5 +64,10 @@ namespace FuelSupply.APP.View
         {
             viewModel.OnPropertyChanged("IsKeyCustomerListEnable");
         }
+
+        private void btnAddFingerPrint_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

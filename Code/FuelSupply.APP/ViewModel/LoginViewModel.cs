@@ -69,8 +69,8 @@ namespace FuelSupply.APP.ViewModel
             //_LogInButtonCommand = new RelayCommand(Login);
         }
 
-        public void Login(string pPassword)
-        {
+        public async Task<bool> Login(string pPassword)
+        {            
             string pErrorMsg = string.Empty;
             if (_UserName == null)
             {
@@ -84,18 +84,27 @@ namespace FuelSupply.APP.ViewModel
             }
             else
             {
-                User oUser = UserManager.Login(_UserName, pPassword, ref pErrorMsg);
+                User oUser = null;
+                await Task.Run(() =>
+                {
+                    System.Threading.Thread.Sleep(10);
+
+                     oUser = UserManager.Login(_UserName, pPassword, ref pErrorMsg);
+                });
+
                 if (oUser == null)
                 {
                     MessageManager.ShowErrorMessage(pErrorMsg, oWindow);
                 }
                 else
-                { 
-                    _LogedUser =  oUser;
+                {
+                    _LogedUser = oUser;
                     SharedData.LoggedUser = oUser;
-                    oWindow.SuccessLogIn();
-                }
-            }            
+
+                    oWindow.SuccessLogIn();  
+                }                                                          
+            }
+            return true;
         }
         #endregion
     }

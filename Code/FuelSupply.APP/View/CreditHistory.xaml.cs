@@ -30,12 +30,12 @@ namespace FuelSupply.APP.View
         public MainWindow oMainWindow;
         #endregion
 
-        public CreditHistory(Window pOwnerWindow)
+        public CreditHistory(Window pOwnerWindow,CreditHistoryViewModel pViewModel)
         {
             InitializeComponent();
 
             oMainWindow = (MainWindow)pOwnerWindow;
-            viewModel = new CreditHistoryViewModel(pOwnerWindow);
+            viewModel = pViewModel;
             this.DataContext = viewModel;
 
             dgCreditHistoryList.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
@@ -103,7 +103,7 @@ namespace FuelSupply.APP.View
             cbHistoryTypeValue.SelectedIndex = 0;
         }
 
-        private void btnApply_Click(object sender, RoutedEventArgs e)
+        private async void btnApply_Click(object sender, RoutedEventArgs e)
         {
             DateTime? pStartTime = DateTime.Now;
             DateTime? pEndTime = DateTime.Now;
@@ -120,7 +120,10 @@ namespace FuelSupply.APP.View
                     dpEndTime.SelectedDate.Value.Day, 23, 59, 59);
             }
 
-            viewModel.GetFuelHistory(pStartTime, pEndTime, (int?)cbHistoryTypeValue.SelectedValue);
+            oMainWindow.startProcess("Loading...");
+            await viewModel.GetFuelHistory(pStartTime, pEndTime, (int?)cbHistoryTypeValue.SelectedValue);
+            oMainWindow.stopProcess();
+            oMainWindow.EnabledGrid();
         }
     }
 }
