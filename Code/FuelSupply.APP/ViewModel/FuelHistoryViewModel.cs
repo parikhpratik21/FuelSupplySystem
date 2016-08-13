@@ -5,6 +5,7 @@ using FuelSupply.DAL.Entity.CustomerEntity;
 using FuelSupply.DAL.Entity.Fuel;
 using FuelSupply.DAL.Entity.FuelEntity;
 using FuelSupply.DAL.Entity.UserEntity;
+using FuelSupply.DAL.Provider.Common;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System;
@@ -343,106 +344,79 @@ namespace FuelSupply.APP.ViewModel
             return oFuelHistoryExportList;
         }
 
-        public void Export_Data_To_Word(List<FuelHistoryExport> pHistoryList, string filename)
+        public bool Export_Data_To_HTML(List<FuelHistoryExport> pHistoryList, string pFileName)
         {
-            if (pHistoryList != null && pHistoryList.Count > 0)
+            bool bResult = false;
+            try
             {
-                PropertyInfo[] headerInfo = typeof(FuelHistoryExport).GetProperties();
-
-                // Create an array for the headers and add it to the
-                // worksheet starting at cell A1.
-                List<string> objHeaders = new List<string>();
-                for (int index = 0; index < headerInfo.Length; index++)
+                if (pHistoryList != null && pHistoryList.Count > 0)
                 {
-                    objHeaders.Add(headerInfo[index].Name);
-                }
+                    string sHeaderBackColor = @"""#00DFDF""";
+                    string sRowBackColor = @"""#E0FFFF""";
 
-                int RowCount = pHistoryList.Count();
-                int ColumnCount = headerInfo.Count();
-                Object[,] DataArray = new object[RowCount, ColumnCount];              
+                    StringBuilder sbHtml = new StringBuilder();
+                    //create html & table
+                    sbHtml.AppendLine("<html><body><center><" +
+                                  "table border='1' cellpadding='10' cellspacing='0'>");
+                    sbHtml.AppendLine("<tr bgcolor=" + sHeaderBackColor + ">");
 
-                for (int j = 0; j < pHistoryList.Count; j++)
-                {
-                    var item = pHistoryList[j];
-                    for (int i = 0; i < objHeaders.Count; i++)
+                    PropertyInfo[] headerInfo = typeof(FuelHistoryExport).GetProperties();
+
+                    // Create an array for the headers and add it to the
+                    // worksheet starting at cell A1.
+                    List<string> objHeaders = new List<string>();
+                    for (int index = 0; index < headerInfo.Length; index++)
                     {
-                        var y = typeof(FuelHistoryExport).InvokeMember(objHeaders[i].ToString(), BindingFlags.GetProperty, null, item, null);
-                        DataArray[j, i] = (y == null) ? "" : y.ToString();
+                        objHeaders.Add(headerInfo[index].Name);
+                        sbHtml.AppendLine("<td align='center' valign='middle'><b>" +
+                                       headerInfo[index].Name + "</b></td>");
                     }
-                }
 
-                Word.Document oDoc = new Word.Document();
-                oDoc.Application.Visible = true;
+                    //create table body                   
 
-                //page orintation
-                oDoc.PageSetup.Orientation = Word.WdOrientation.wdOrientLandscape;
+                    int RowCount = pHistoryList.Count();
+                    int ColumnCount = headerInfo.Count();
+                    Object[,] DataArray = new object[RowCount, ColumnCount];
 
-
-                dynamic oRange = oDoc.Content.Application.Selection.Range;
-                string oTemp = "";
-                for (int r = 0; r <= RowCount - 1; r++)
-                {
-                    for (int c = 0; c <= ColumnCount - 1; c++)
+                    for (int j = 0; j < pHistoryList.Count; j++)
                     {
-                        oTemp = oTemp + DataArray[r, c] + "\t";
+                        if((j+1)%2 == 0)
+                        {
+                            sbHtml.AppendLine("<tr bgcolor=" + sRowBackColor + ">");
+                        }
+                        else
+                        {
+                            sbHtml.AppendLine("<tr>");
+                        }
+                        
 
+                        var item = pHistoryList[j];
+                        for (int i = 0; i < objHeaders.Count; i++)
+                        {
+                            var data = typeof(FuelHistoryExport).InvokeMember(objHeaders[i].ToString(), BindingFlags.GetProperty, null, item, null);
+
+                            sbHtml.AppendLine("<td align='center' valign='middle'>" + data.ToString() + "</td>");
+                        }
+
+                        sbHtml.AppendLine("</tr>");
                     }
+                    //table footer & end of html file
+                    sbHtml.AppendLine("</table></center></body></html>");
+
+                    string sFileData = sbHtml.ToString();
+
+                    System.IO.File.WriteAllText(pFileName, sFileData);
                 }
 
-                //table format
-                oRange.Text = oTemp;
-
-                object Separator = Word.WdTableFieldSeparator.wdSeparateByTabs;
-                object ApplyBorders = true;
-                object AutoFit = true;
-                object AutoFitBehavior = Word.WdAutoFitBehavior.wdAutoFitContent;
-
-                oRange.ConvertToTable(ref Separator, ref RowCount, ref ColumnCount,
-                                      Type.Missing, Type.Missing, ref ApplyBorders,
-                                      Type.Missing, Type.Missing, Type.Missing,
-                                      Type.Missing, Type.Missing, Type.Missing,
-                                      Type.Missing, ref AutoFit, ref AutoFitBehavior, Type.Missing);
-
-                oRange.Select();
-
-                oDoc.Application.Selection.Tables[1].Select();
-                oDoc.Application.Selection.Tables[1].Rows.AllowBreakAcrossPages = 0;
-                oDoc.Application.Selection.Tables[1].Rows.Alignment = 0;
-                oDoc.Application.Selection.Tables[1].Rows[1].Select();
-                oDoc.Application.Selection.InsertRowsAbove(1);
-                oDoc.Application.Selection.Tables[1].Rows[1].Select();
-
-                //header row style
-                oDoc.Application.Selection.Tables[1].Rows[1].Range.Bold = 1;
-                oDoc.Application.Selection.Tables[1].Rows[1].Range.Font.Name = "Tahoma";
-                oDoc.Application.Selection.Tables[1].Rows[1].Range.Font.Size = 14;
-
-                //add header row manually
-                for (int c = 0; c <= ColumnCount - 1; c++)
-                {
-                    oDoc.Application.Selection.Tables[1].Cell(1, c + 1).Range.Text = objHeaders[c];
-                }
-
-                //table style 
-                oDoc.Application.Selection.Tables[1].set_Style("Grid Table 4 - Accent 5");
-                oDoc.Application.Selection.Tables[1].Rows[1].Select();
-                oDoc.Application.Selection.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-
-                //header text
-                foreach (Word.Section section in oDoc.Application.ActiveDocument.Sections)
-                {
-                    Word.Range headerRange = section.Headers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
-                    headerRange.Fields.Add(headerRange, Word.WdFieldType.wdFieldPage);
-                    headerRange.Text = "Fuel History";
-                    headerRange.Font.Size = 16;
-                    headerRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                }
-
-                //save the file
-                oDoc.SaveAs2(filename);
-
-                //NASSIM LOUCHANI
+                bResult = true;
             }
+            catch(Exception ex)
+            {
+                bResult = false;
+                LogManager.logExceptionMessage("FuelHistoryViewModel", "Export_Data_To_HTML", ex);
+            }
+
+            return bResult;
         }
 
         public void Export_Data_To_PDF(List<FuelHistoryExport> pHistoryList, string filename)

@@ -215,14 +215,14 @@
                     <TextBlock Text="Export To Excel"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>
-            <Button Name="btnExportToWord" Grid.Row="0" Grid.Column="3"  Click="btnExportToWord_Click" HorizontalContentAlignment="Stretch">
+            <Button Name="btnExportToHTML" Grid.Row="0" Grid.Column="3"  Click="btnExportToHTML_Click" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
-                    <Image Source="..\Images\DOCExport.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
-                    <TextBlock Text="Export To Word"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                    <Image Source="..\Images\ExportToHTML.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
+                    <TextBlock Text="Export To HTML"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>
 

@@ -41,7 +41,7 @@ namespace FuelSupply.APP.View
             dgHistoryList.SelectionMode = DataGridSelectionMode.Extended;
         }
 
-        private async void btnExportToExcel_Click(object sender, RoutedEventArgs e)
+        private void btnExportToExcel_Click(object sender, RoutedEventArgs e)
         {
             ExportToExcel<FuelHistoryExport, FuelHistoryExportList> oExcelSheet = new ExportToExcel<FuelHistoryExport, FuelHistoryExportList>();
             List<FuelHistoryExport> oFuelHistoryExportList = viewModel.ConvertFuelHistoryToFuelHistoryExportEntity();
@@ -50,14 +50,16 @@ namespace FuelSupply.APP.View
             oExcelSheet.GenerateReport(); 
         }
 
-        private void btnExportToWord_Click(object sender, RoutedEventArgs e)
+        private void btnExportToHTML_Click(object sender, RoutedEventArgs e)
         {         
             SaveFileDialog oSaveFileDialog = new SaveFileDialog();
-            oSaveFileDialog.Filter = "Image Files (*.doc, *.docx)|*.doc;*.docx";
+            oSaveFileDialog.Filter = "HTML Files (*.html)|*.html;";
             if (oSaveFileDialog.ShowDialog() == true)
             {
                 List<FuelHistoryExport> oFuelHistoryExportList = viewModel.ConvertFuelHistoryToFuelHistoryExportEntity();
-                viewModel.Export_Data_To_Word(oFuelHistoryExportList,oSaveFileDialog.FileName);                
+                viewModel.Export_Data_To_HTML(oFuelHistoryExportList,oSaveFileDialog.FileName);
+
+                System.Diagnostics.Process.Start(oSaveFileDialog.FileName);
             }
         }
 
@@ -112,6 +114,8 @@ namespace FuelSupply.APP.View
             {
                 List<FuelHistoryExport> oFuelHistoryExportList = viewModel.ConvertFuelHistoryToFuelHistoryExportEntity();
                 viewModel.Export_Data_To_PDF(oFuelHistoryExportList, oSaveFileDialog.FileName);
+
+                System.Diagnostics.Process.Start(oSaveFileDialog.FileName);
             }
         }
 
@@ -129,6 +133,8 @@ namespace FuelSupply.APP.View
             if (oSaveFileDialog.ShowDialog() == true)
             {
                 System.IO.File.WriteAllText(oSaveFileDialog.FileName, result);
+
+                System.Diagnostics.Process.Start(oSaveFileDialog.FileName);
             }
         }
     }    

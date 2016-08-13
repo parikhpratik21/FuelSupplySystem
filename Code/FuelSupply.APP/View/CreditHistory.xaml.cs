@@ -60,9 +60,17 @@ namespace FuelSupply.APP.View
             oExcelSheet.GenerateReport();    
         }
 
-        private void btnExportToWord_Click(object sender, RoutedEventArgs e)
+        private void btnExportToHTML_Click(object sender, RoutedEventArgs e)
         {
+            SaveFileDialog oSaveFileDialog = new SaveFileDialog();
+            oSaveFileDialog.Filter = "HTML Files (*.html)|*.html;";
+            if (oSaveFileDialog.ShowDialog() == true)
+            {
+                List<CreditHistoryExport> oCreditHistoryExportList = viewModel.ConvertCreditHistoryToCreditHistoryExportEntity();
+                viewModel.Export_Data_To_HTML(oCreditHistoryExportList, oSaveFileDialog.FileName);
 
+                System.Diagnostics.Process.Start(oSaveFileDialog.FileName);
+            }
         }
 
         private void btnExportToCSV_Click(object sender, RoutedEventArgs e)
@@ -79,6 +87,8 @@ namespace FuelSupply.APP.View
             if (oSaveFileDialog.ShowDialog() == true)
             {
                 System.IO.File.WriteAllText(oSaveFileDialog.FileName, result);
+
+                System.Diagnostics.Process.Start(oSaveFileDialog.FileName);
             }
         }
 
@@ -90,6 +100,8 @@ namespace FuelSupply.APP.View
             {
                 List<CreditHistoryExport> oFuelHistoryExportList = viewModel.ConvertCreditHistoryToCreditHistoryExportEntity();
                 viewModel.Export_Data_To_PDF(oFuelHistoryExportList, oSaveFileDialog.FileName);
+
+                System.Diagnostics.Process.Start(oSaveFileDialog.FileName);
             }
         }
 

@@ -5,6 +5,7 @@ using FuelSupply.DAL.Entity.CreditEntity;
 using FuelSupply.DAL.Entity.CustomerEntity;
 using FuelSupply.DAL.Entity.Fuel;
 using FuelSupply.DAL.Entity.UserEntity;
+using FuelSupply.DAL.Provider.Common;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System;
@@ -437,6 +438,82 @@ namespace FuelSupply.APP.ViewModel
                 stream.Close();
             }
         }
+
+        public bool Export_Data_To_HTML(List<CreditHistoryExport> pHistoryList, string pFileName)
+        {
+            bool bResult = false;
+            try
+            {
+                if (pHistoryList != null && pHistoryList.Count > 0)
+                {
+                    string sHeaderBackColor = @"""#00DFDF""";
+                    string sRowBackColor = @"""#E0FFFF""";
+
+                    StringBuilder sbHtml = new StringBuilder();
+                    //create html & table
+                    sbHtml.AppendLine("<html><body><center><" +
+                                  "table border='1' cellpadding='10' cellspacing='0'>");
+                    sbHtml.AppendLine("<tr bgcolor=" + sHeaderBackColor + ">");
+
+                    PropertyInfo[] headerInfo = typeof(CreditHistoryExport).GetProperties();
+
+                    // Create an array for the headers and add it to the
+                    // worksheet starting at cell A1.
+                    List<string> objHeaders = new List<string>();
+                    for (int index = 0; index < headerInfo.Length; index++)
+                    {
+                        objHeaders.Add(headerInfo[index].Name);
+                        sbHtml.AppendLine("<td align='center' valign='middle'><b>" +
+                                       headerInfo[index].Name + "</b></td>");
+                    }
+
+                    //create table body                   
+
+                    int RowCount = pHistoryList.Count();
+                    int ColumnCount = headerInfo.Count();
+                    Object[,] DataArray = new object[RowCount, ColumnCount];
+
+                    for (int j = 0; j < pHistoryList.Count; j++)
+                    {
+                        if ((j + 1) % 2 == 0)
+                        {
+                            sbHtml.AppendLine("<tr bgcolor=" + sRowBackColor + ">");
+                        }
+                        else
+                        {
+                            sbHtml.AppendLine("<tr>");
+                        }
+
+
+                        var item = pHistoryList[j];
+                        for (int i = 0; i < objHeaders.Count; i++)
+                        {
+                            var data = typeof(CreditHistoryExport).InvokeMember(objHeaders[i].ToString(), BindingFlags.GetProperty, null, item, null);
+
+                            sbHtml.AppendLine("<td align='center' valign='middle'>" + data.ToString() + "</td>");
+                        }
+
+                        sbHtml.AppendLine("</tr>");
+                    }
+                    //table footer & end of html file
+                    sbHtml.AppendLine("</table></center></body></html>");
+
+                    string sFileData = sbHtml.ToString();
+
+                    System.IO.File.WriteAllText(pFileName, sFileData);
+                }
+
+                bResult = true;
+            }
+            catch (Exception ex)
+            {
+                bResult = false;
+                LogManager.logExceptionMessage("CreditHistoryViewModel", "Export_Data_To_HTML", ex);
+            }
+
+            return bResult;
+        }
+
         #endregion
     }
 }

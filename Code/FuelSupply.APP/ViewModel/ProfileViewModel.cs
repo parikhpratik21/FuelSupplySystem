@@ -16,6 +16,7 @@ namespace FuelSupply.APP.ViewModel
         #region "Declaration"
         private User _SelectedUser;
         private List<UserType> _UserTypeList;
+        MainWindow oMainWindows;
         #endregion
 
         #region "Property"
@@ -73,6 +74,7 @@ namespace FuelSupply.APP.ViewModel
         public ProfileViewModel(Window pOwnerForm)
         {
             _UserTypeList = UserManager.GetAllUserType();
+            oMainWindows = (MainWindow)pOwnerForm;
         }
 
         #region EventHandlers (1)
@@ -85,5 +87,21 @@ namespace FuelSupply.APP.ViewModel
             }
         }
         #endregion
+
+        public bool UpdateUser()
+        {
+            string sErrorMsg = string.Empty;
+            bool result = UserManager.UpdateUser(_SelectedUser, ref sErrorMsg);
+            if (result == false)
+            {
+                MessageManager.ShowErrorMessage(sErrorMsg, oMainWindows);
+                return false;
+            }
+            else
+            {
+                MessageManager.ShowInformationMessage("Profile updated successfully",oMainWindows);
+                return true;
+            }
+        }
     }
 }

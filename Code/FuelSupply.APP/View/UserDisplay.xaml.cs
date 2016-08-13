@@ -13,6 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.Win32;
+using FuelSupply.BAL.Manager.Common;
 
 namespace FuelSupply.APP.View
 {
@@ -115,7 +117,40 @@ namespace FuelSupply.APP.View
 
         private void btnDatabaseBackup_Click(object sender, RoutedEventArgs e)
         {
+            SaveFileDialog oDbBackup = new SaveFileDialog();
+            oDbBackup.FileName = "FuelSupplySystem";
+            oDbBackup.Filter = "BAK Files (*.bak)|*.bak;";
 
+            if(oDbBackup.ShowDialog() == true)
+            {
+               bool result = userDisplayViewModel.BackUpResoreDatabase("backup", oDbBackup.FileName);
+               if (result == true)
+                   MessageManager.ShowInformationMessage("Database backup complete successfully.", oMainWindow);
+               else
+                   MessageManager.ShowInformationMessage("Error while database backup, Please try backup.", oMainWindow);
+            }
+        }
+
+        private void btnDatabaseRestore_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog oDbRestore = new OpenFileDialog();
+            oDbRestore.FileName = "FuelSupplySystem";
+            oDbRestore.Filter = "BAK Files (*.bak)|*.bak;";
+
+            if (oDbRestore.ShowDialog() == true)
+            {
+                bool result = userDisplayViewModel.BackUpResoreDatabase("restore", oDbRestore.FileName);
+                if (result == true)
+                {
+                    MessageManager.ShowInformationMessage("Database restore complete successfully.", oMainWindow);
+
+                    MessageManager.ShowInformationMessage("Please restart system.", oMainWindow);
+
+                    Environment.Exit(1);
+                }
+                else
+                    MessageManager.ShowInformationMessage("Error while database restore, Please try backup.", oMainWindow);
+            }
         }
     }
 }

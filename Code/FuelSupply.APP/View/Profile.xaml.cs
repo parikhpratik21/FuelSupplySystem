@@ -33,5 +33,10 @@ namespace FuelSupply.APP.View
             profileModel.SelectedUser = pUser;
             this.DataContext = profileModel;
         }
+
+        private void btnSaveUser_Click(object sender, RoutedEventArgs e)
+        {
+            profileModel.UpdateUser();
+        }
     }
 }
