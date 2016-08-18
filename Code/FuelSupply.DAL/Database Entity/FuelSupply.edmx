@@ -44,12 +44,20 @@
           <Property Name="CustomerID" Type="int" />
           <Property Name="Policy" Type="nvarchar" MaxLength="10" />
           <Property Name="FingerPrint" Type="nvarchar" MaxLength="200" />
+          <Property Name="FingerPrintType" Type="int" />
         </EntityType>
         <EntityType Name="CustomerType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="FingerPrintType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="FuelHistory">
@@ -235,6 +243,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CustomerFingerPrint_FingerPrintType">
+          <End Role="FingerPrintType" Type="Self.FingerPrintType" Multiplicity="0..1" />
+          <End Role="CustomerFingerPrint" Type="Self.CustomerFingerPrint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FingerPrintType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CustomerFingerPrint">
+              <PropertyRef Name="FingerPrintType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FuelHistory_Customer">
           <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
           <End Role="FuelHistory" Type="Self.FuelHistory" Multiplicity="*" />
@@ -305,6 +325,7 @@
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerFingerPrint" EntityType="Self.CustomerFingerPrint" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerType" EntityType="Self.CustomerType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FingerPrintType" EntityType="Self.FingerPrintType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FuelHistory" EntityType="Self.FuelHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FuelLimitType" EntityType="Self.FuelLimitType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FuelStation" EntityType="Self.FuelStation" Schema="dbo" store:Type="Tables" />
@@ -346,6 +367,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_CustomerFingerPrint_Customer" Association="Self.FK_CustomerFingerPrint_Customer">
             <End Role="Customer" EntitySet="Customer" />
+            <End Role="CustomerFingerPrint" EntitySet="CustomerFingerPrint" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerFingerPrint_FingerPrintType" Association="Self.FK_CustomerFingerPrint_FingerPrintType">
+            <End Role="FingerPrintType" EntitySet="FingerPrintType" />
             <End Role="CustomerFingerPrint" EntitySet="CustomerFingerPrint" />
           </AssociationSet>
           <AssociationSet Name="FK_FuelHistory_Customer" Association="Self.FK_FuelHistory_Customer">
@@ -666,6 +691,11 @@
             <End Role="Customer" EntitySet="Customers" />
             <End Role="CustomerFingerPrint" EntitySet="CustomerFingerPrints" />
           </AssociationSet>
+          <EntitySet Name="FingerPrintTypes" EntityType="FuelSupplySystemModel.FingerPrintType" />
+          <AssociationSet Name="FK_CustomerFingerPrint_FingerPrintType" Association="FuelSupplySystemModel.FK_CustomerFingerPrint_FingerPrintType">
+            <End Role="FingerPrintType" EntitySet="FingerPrintTypes" />
+            <End Role="CustomerFingerPrint" EntitySet="CustomerFingerPrints" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_Customer_Customer">
           <End Type="FuelSupplySystemModel.Customer" Role="Customer" Multiplicity="0..1" />
@@ -761,6 +791,8 @@
           <Property Name="Policy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="FingerPrint" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Customer" Relationship="FuelSupplySystemModel.FK_CustomerFingerPrint_Customer" FromRole="CustomerFingerPrint" ToRole="Customer" />
+          <Property Name="FingerPrintType" Type="Int32" />
+          <NavigationProperty Name="FingerPrintType1" Relationship="FuelSupplySystemModel.FK_CustomerFingerPrint_FingerPrintType" FromRole="CustomerFingerPrint" ToRole="FingerPrintType" />
         </EntityType>
         <Association Name="FK_CustomerFingerPrint_Customer">
           <End Type="FuelSupplySystemModel.Customer" Role="Customer" Multiplicity="0..1" />
@@ -771,6 +803,26 @@
             </Principal>
             <Dependent Role="CustomerFingerPrint">
               <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FingerPrintType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CustomerFingerPrints" Relationship="FuelSupplySystemModel.FK_CustomerFingerPrint_FingerPrintType" FromRole="FingerPrintType" ToRole="CustomerFingerPrint" />
+        </EntityType>
+        <Association Name="FK_CustomerFingerPrint_FingerPrintType">
+          <End Type="FuelSupplySystemModel.FingerPrintType" Role="FingerPrintType" Multiplicity="0..1" />
+          <End Type="FuelSupplySystemModel.CustomerFingerPrint" Role="CustomerFingerPrint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FingerPrintType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CustomerFingerPrint">
+              <PropertyRef Name="FingerPrintType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -908,9 +960,18 @@
           <EntitySetMapping Name="CustomerFingerPrints">
             <EntityTypeMapping TypeName="FuelSupplySystemModel.CustomerFingerPrint">
               <MappingFragment StoreEntitySet="CustomerFingerPrint">
+                <ScalarProperty Name="FingerPrintType" ColumnName="FingerPrintType" />
                 <ScalarProperty Name="FingerPrint" ColumnName="FingerPrint" />
                 <ScalarProperty Name="Policy" ColumnName="Policy" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FingerPrintTypes">
+            <EntityTypeMapping TypeName="FuelSupplySystemModel.FingerPrintType">
+              <MappingFragment StoreEntitySet="FingerPrintType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

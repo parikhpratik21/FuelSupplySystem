@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
@@ -122,13 +123,20 @@ namespace FuelSupply.APP.Helper
             // Create an array for the headers and add it to the
             // worksheet starting at cell A1.
             List<object> objHeaders = new List<object>();
+
+            List<object> objDisplayHeaders = new List<object>();
             for (int index = 0; index < headerInfo.Length; index++)
             {
                 objHeaders.Add(headerInfo[index].Name);
+
+                object[] attrs = headerInfo[index].GetCustomAttributes(true);
+                string sColumnHeaderString = ((DescriptionAttribute)attrs[0]).Description;
+
+                objDisplayHeaders.Add(sColumnHeaderString);
             }
 
             var headerToAdd = objHeaders.ToArray();
-            AddExcelRows("A1", 1, headerToAdd.Length, headerToAdd,-1);
+            AddExcelRows("A1", 1, headerToAdd.Length, objDisplayHeaders.ToArray(), -1);
             SetHeaderStyle();
 
             return headerToAdd;

@@ -28,6 +28,11 @@ namespace FuelSupply.BAL.Manager
             return CustomerProvider.GetAllPaymentTypes();
         }
 
+        public static List<FingerPrintType> GetAllFingerPrintTypes()
+        {
+            return CustomerProvider.GetAllFingerPrintTypes();
+        }
+
         public static List<Customer> GetAllKeyCustomer()
         {
             return CustomerProvider.GetAllKeyCustomer();

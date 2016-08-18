@@ -348,7 +348,9 @@ namespace FuelSupply.APP.ViewModel
             List<string> objHeaders = new List<string>();
             for (int index = 0; index < headerInfo.Length; index++)
             {
-                objHeaders.Add(headerInfo[index].Name);
+                object[] attrs = headerInfo[index].GetCustomAttributes(true);
+                string sColumnHeaderString = ((DescriptionAttribute)attrs[0]).Description;
+                objHeaders.Add(sColumnHeaderString);
             }
 
             PdfPTable pdfTable = new PdfPTable(objHeaders.Count);
@@ -462,9 +464,14 @@ namespace FuelSupply.APP.ViewModel
                     List<string> objHeaders = new List<string>();
                     for (int index = 0; index < headerInfo.Length; index++)
                     {
+                        object[] attrs = headerInfo[index].GetCustomAttributes(true);
+                        string sColumnHeaderString = ((DescriptionAttribute)attrs[0]).Description;
+
                         objHeaders.Add(headerInfo[index].Name);
+
+                        //objHeaders.Add(headerInfo[index].Name);
                         sbHtml.AppendLine("<td align='center' valign='middle'><b>" +
-                                       headerInfo[index].Name + "</b></td>");
+                                       sColumnHeaderString + "</b></td>");
                     }
 
                     //create table body                   

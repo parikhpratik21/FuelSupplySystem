@@ -40,6 +40,12 @@ namespace FuelSupply.DAL.Provider
             return PaymentTypeList;
         }
 
+        public static List<FingerPrintType> GetAllFingerPrintTypes()
+        {
+            List<FingerPrintType> FingerPrintTypeList = customerDbObject.FingerPrintTypes.ToList();
+            return FingerPrintTypeList;
+        }
+
         public static Customer GetCustomerById(int pCustomerId)
         {
             return customerDbObject.Customers.Where(x => x.Id == pCustomerId).FirstOrDefault();

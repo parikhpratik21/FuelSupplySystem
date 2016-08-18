@@ -67,7 +67,10 @@ namespace FuelSupply.APP.View
 
         private void btnAddFingerPrint_Click(object sender, RoutedEventArgs e)
         {
+            AddFingerPrintViewModel oViewmodel = new AddFingerPrintViewModel(oMainWindow, viewModel.SelectedCustomer);
 
+            AddFingerPrint oFingerPrint = new AddFingerPrint(oMainWindow, oViewmodel);
+            oFingerPrint.ShowDialog();
         }
     }
 }

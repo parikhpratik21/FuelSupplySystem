@@ -12,7 +12,9 @@ namespace FuelSupply.DAL.Entity.CustomerEntity
         public Nullable<int> CustomerID { get; set; }
         public string Policy { get; set; }
         public string FingerPrint { get; set; }
+        public Nullable<int> FingerPrintType { get; set; }
 
         public virtual Customer Customer { get; set; }
+        public virtual FingerPrintType FingerPrintType1 { get; set; }
     }
 }

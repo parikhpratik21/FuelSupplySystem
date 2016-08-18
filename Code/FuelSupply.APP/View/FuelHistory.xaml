@@ -187,14 +187,14 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="FuelVolume" Binding="{Binding FuelVolume}" Width="1.3*">
+                    <DataGridTextColumn Header="Fuel Volume" Binding="{Binding FuelVolume}" Width="1.3*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="FuelAmount" Binding="{Binding FuelAmount}" Width="1.3*">
+                    <DataGridTextColumn Header="Fuel Amount" Binding="{Binding FuelAmount}" Width="1.3*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />

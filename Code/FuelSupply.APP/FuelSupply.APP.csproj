@@ -108,6 +108,7 @@
     <Compile Include="ViewModel\AddCreditViewModel.cs" />
     <Compile Include="ViewModel\AddEditCustomerViewModel.cs" />
     <Compile Include="ViewModel\AddEditUserViewModel.cs" />
+    <Compile Include="ViewModel\AddFingerPrintViewModel.cs" />
     <Compile Include="ViewModel\AddFuelViewModel.cs" />
     <Compile Include="ViewModel\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModel\FuelHistoryViewModel.cs" />
@@ -118,6 +119,9 @@
     <Compile Include="ViewModel\ProfileViewModel.cs" />
     <Compile Include="ViewModel\UserDisplayViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\AddFingerPrint.xaml.cs">
+      <DependentUpon>AddFingerPrint.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Add Fuel.xaml.cs">
       <DependentUpon>Add Fuel.xaml</DependentUpon>
     </Compile>
@@ -154,6 +158,10 @@
     <Compile Include="View\UserDisplay.xaml.cs">
       <DependentUpon>UserDisplay.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\AddFingerPrint.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Add Fuel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

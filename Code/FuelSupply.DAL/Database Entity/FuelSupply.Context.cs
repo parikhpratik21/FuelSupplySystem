@@ -42,6 +42,7 @@ namespace FuelSupply.DAL.Database_Entity
         public virtual DbSet<UserType> UserTypes { get; set; }
         public virtual DbSet<CreditHistory> CreditHistories { get; set; }
         public virtual DbSet<CustomerFingerPrint> CustomerFingerPrints { get; set; }
+        public virtual DbSet<FingerPrintType> FingerPrintTypes { get; set; }
     
         public virtual ObjectResult<CreditHistory> Fetch_CreditHistoryBy_KeyCustomer(Nullable<int> keyCustomerId, Nullable<System.DateTime> startTime, Nullable<System.DateTime> endTime)
         {
