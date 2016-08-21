@@ -71,6 +71,8 @@ namespace FuelSupply.APP.View
 
             AddFingerPrint oFingerPrint = new AddFingerPrint(oMainWindow, oViewmodel);
             oFingerPrint.ShowDialog();
+
+            oViewmodel.DeregisterFingerPrinttouchEvent();
         }
     }
 }

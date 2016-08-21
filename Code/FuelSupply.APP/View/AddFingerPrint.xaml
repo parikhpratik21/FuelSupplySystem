@@ -78,7 +78,7 @@
             <Label Name="lblNoOfFingerprint" Grid.Column="2" Grid.Row="3" Style="{StaticResource LableStyle}"  Content="{Binding NoOfFingerPrint}" ></Label>
 
             <Border Margin="20,5,20,0" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
-                <Image Name="imgFingerPrint"  Stretch="UniformToFill"></Image>
+                <Image Name="imgFingerPrint" Stretch="Fill" Source="{Binding FingerPrintImage}"></Image>
             </Border>
             
         </Grid>

@@ -32,6 +32,7 @@ namespace FuelSupply.APP.View
             oMainWindow = (MainWindow)pOwnerWindow;
             customerDisplayModel = pViewModel;
             this.DataContext = customerDisplayModel;
+            customerDisplayModel.openAddFuelForSelectedCustomer += OpenAddFuelForm;
         }
 
         private void btnAddCustomer_Click(object sender, RoutedEventArgs e)
@@ -44,6 +45,8 @@ namespace FuelSupply.APP.View
             oAddEditForm.DataContext = oAddCustomerViewModel;
 
             oMainWindow.mainModel.ContentWindow = oAddEditForm;
+
+            customerDisplayModel.DeregisterFingerPrinttouchEvent();
         }
 
         private void btnEditCustomer_Click(object sender, RoutedEventArgs e)
@@ -56,6 +59,8 @@ namespace FuelSupply.APP.View
             oAddEditForm.DataContext = oAddCustomerViewModel;
 
             oMainWindow.mainModel.ContentWindow = oAddEditForm;
+
+            customerDisplayModel.DeregisterFingerPrinttouchEvent();
         }
 
         private void btnDeleteCustomer_Click(object sender, RoutedEventArgs e)
@@ -77,9 +82,14 @@ namespace FuelSupply.APP.View
 
         private void btnAddFuel_Click(object sender, RoutedEventArgs e)
         {
-            Add_Fuel oAddFuel = new Add_Fuel(customerDisplayModel.SelectedCustomer,oMainWindow);
+            customerDisplayModel.DeregisterFingerPrinttouchEvent();
+
+            AddFuelViewModel oViewModel = new AddFuelViewModel(oMainWindow);
+            Add_Fuel oAddFuel = new Add_Fuel(customerDisplayModel.SelectedCustomer, oMainWindow, oViewModel);
             oAddFuel.Owner = oMainWindow;
-            oAddFuel.ShowDialog();
+            oAddFuel.ShowDialog();           
+
+            customerDisplayModel.RegisterFingerPrinttouchEvent();
         }
 
         private void dgCustomerList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -113,6 +123,11 @@ namespace FuelSupply.APP.View
         {
             Color col = (Color)ColorConverter.ConvertFromString("#c5c5c5");
             txtSearch.Background = new SolidColorBrush(col);
+        }
+       
+        private void OpenAddFuelForm()
+        {
+            btnAddFuel_Click(null, null);
         }
     }
 }

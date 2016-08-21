@@ -45,10 +45,13 @@ namespace FuelSupply.APP.View
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             string pErrorString = string.Empty;
-            oViewModel.AddFingerPrint(ref pErrorString);
+            bool result = oViewModel.AddFingerPrint(ref pErrorString);
             if (pErrorString != string.Empty)
             {
-                MessageManager.ShowErrorMessage(pErrorString, this);
+                if (result == false)
+                    MessageManager.ShowErrorMessage(pErrorString, this);
+                else
+                    MessageManager.ShowInformationMessage(pErrorString, this);                
             }
         }
 

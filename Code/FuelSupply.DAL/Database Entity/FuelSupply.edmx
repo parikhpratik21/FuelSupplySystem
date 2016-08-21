@@ -43,7 +43,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CustomerID" Type="int" />
           <Property Name="Policy" Type="nvarchar" MaxLength="10" />
-          <Property Name="FingerPrint" Type="nvarchar" MaxLength="200" />
+          <Property Name="FingerPrint" Type="nvarchar" MaxLength="3000" />
           <Property Name="FingerPrintType" Type="int" />
         </EntityType>
         <EntityType Name="CustomerType">
@@ -789,7 +789,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustomerID" Type="Int32" />
           <Property Name="Policy" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="FingerPrint" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FingerPrint" Type="String" MaxLength="3000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Customer" Relationship="FuelSupplySystemModel.FK_CustomerFingerPrint_Customer" FromRole="CustomerFingerPrint" ToRole="Customer" />
           <Property Name="FingerPrintType" Type="Int32" />
           <NavigationProperty Name="FingerPrintType1" Relationship="FuelSupplySystemModel.FK_CustomerFingerPrint_FingerPrintType" FromRole="CustomerFingerPrint" ToRole="FingerPrintType" />

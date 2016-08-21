@@ -110,7 +110,9 @@ namespace FuelSupply.DAL.Provider
             }
             else
             {
-                if (customerDbObject.Customers.Where(x => (x.Code == pCustomer.Code || x.Name == pCustomer.Name) && x.Id != pCustomer.Id).Count() > 0)
+                Customer oCustomer = customerDbObject.Customers.Where(x => (x.Code == pCustomer.Code || x.Name == pCustomer.Name) && x.Id != pCustomer.Id).FirstOrDefault();
+
+                if (oCustomer != null)
                 {
                     return false;
                 }
@@ -124,19 +126,36 @@ namespace FuelSupply.DAL.Provider
             Customer oCustomer = customerDbObject.Customers.Where(x => x.Id == pCustomer.Id).FirstOrDefault();
             if (oCustomer != null)
             {
-                oCustomer.Address = pCustomer.Address;
-                oCustomer.City = pCustomer.City;
-                oCustomer.Code = pCustomer.Code;
-                oCustomer.KeyCustomerId = pCustomer.KeyCustomerId;
-                oCustomer.Country = pCustomer.Country;
-                oCustomer.Name = pCustomer.Name;
-                oCustomer.Pincode = pCustomer.Pincode;
-                oCustomer.State = pCustomer.State;
-                oCustomer.PaymentLimit = pCustomer.PaymentLimit;
+                try
+                {
+                    oCustomer.Address = pCustomer.Address;
+                    oCustomer.City = pCustomer.City;
+                    oCustomer.Code = pCustomer.Code;
+                    oCustomer.KeyCustomerId = pCustomer.KeyCustomerId;
+                    oCustomer.Country = pCustomer.Country;
+                    oCustomer.Name = pCustomer.Name;
+                    oCustomer.Pincode = pCustomer.Pincode;
+                    oCustomer.State = pCustomer.State;
+                    oCustomer.PaymentLimit = pCustomer.PaymentLimit;
 
-                oCustomer.CustomerFingerPrints = pCustomer.CustomerFingerPrints;
+                    oCustomer.CustomerFingerPrints = pCustomer.CustomerFingerPrints;
 
-                customerDbObject.SaveChanges();
+                    if (pCustomer.CustomerFingerPrints != null && pCustomer.CustomerFingerPrints.Count > 0)
+                    {
+                        foreach (CustomerFingerPrint oFingerPrint in pCustomer.CustomerFingerPrints)
+                        {
+                            if (oFingerPrint.ID <= 0)
+                            {
+                                customerDbObject.CustomerFingerPrints.Add(oFingerPrint);
+                            }
+                        }
+                    }
+                    customerDbObject.SaveChanges();
+                }
+               catch(Exception ex)
+                {
+                   string sErrorMsg = ex.ToString();
+                }
 
                 return true;
             }

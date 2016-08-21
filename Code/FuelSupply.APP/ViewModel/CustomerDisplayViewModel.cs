@@ -2,6 +2,7 @@
 using FuelSupply.BAL.Manager;
 using FuelSupply.BAL.Manager.Common;
 using FuelSupply.DAL.Entity.CustomerEntity;
+using Ofis;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +23,16 @@ namespace FuelSupply.APP.ViewModel
         private MainWindow oMainWindow;
         private ICommand _searchCommand;
         private string _SearchTerms;
+
+        public delegate void OpenAddFuelForm();
+        public event OpenAddFuelForm openAddFuelForSelectedCustomer;
+
+        public static OfisMain ofisFingerPrintSensor;
+        public static int FingerPrintSensorVersion = 10;
+
+        public List<CustomerFingerPrint> _AllCustomerFingerPrintList;
+
+        private delegate void FingerPrintScan(string pFingerPrint);
         #endregion
           
         public CustomerDisplayViewModel(Window pOwnerWindow)
@@ -31,7 +42,57 @@ namespace FuelSupply.APP.ViewModel
             oMainWindow = (MainWindow)pOwnerWindow;
 
             SearchCommand = new RelayCommand(SearchText);
+
+            _AllCustomerFingerPrintList = CustomerManager.GetAllCustomerFingerPrint();
+
+            if(ofisFingerPrintSensor == null)
+            {
+                ofisFingerPrintSensor = new OfisMain();                
+            }
+
+            SetUpFingerPrintDevice();
         }
+
+        public void DeregisterFingerPrinttouchEvent()
+        {
+            ofisFingerPrintSensor.OnFingerTouching -= ofisFingerPrintSensor_OnFingerTouching;
+        }
+
+        public void RegisterFingerPrinttouchEvent()
+        {
+            ofisFingerPrintSensor.OnFingerTouching += ofisFingerPrintSensor_OnFingerTouching;
+        }
+
+        private void SetUpFingerPrintDevice()
+        {           
+            ofisFingerPrintSensor.SetFPEngineVersion(FingerPrintSensorVersion);
+
+            int InitSensorResult = ofisFingerPrintSensor.InitSensor();
+            if(InitSensorResult == 1)
+            {
+                MessageManager.ShowErrorMessage("Driver not install for fingerprint sensor, Please install driver.", oMainWindow);
+            }
+            else if (InitSensorResult == 2)
+            {
+                MessageManager.ShowErrorMessage("Fingerprint sensor not connected, Please connect fingerprint sensor", oMainWindow);
+            }
+
+            ofisFingerPrintSensor.OnFingerTouching += ofisFingerPrintSensor_OnFingerTouching;
+        }
+
+        private void ofisFingerPrintSensor_OnFingerTouching()
+        {
+            ofisFingerPrintSensor.OnFingerTouching -= ofisFingerPrintSensor_OnFingerTouching;
+
+            if (ofisFingerPrintSensor.GetVerTemplate() == true)
+            {
+                string sFingerPrint = ofisFingerPrintSensor.VerifyTemplate;
+
+                OnReceiveFingerPrint(sFingerPrint);
+
+                ofisFingerPrintSensor.OnFingerTouching += ofisFingerPrintSensor_OnFingerTouching;
+            }           
+        }       
 
         #region "Property"
         public string LoggedUserName
@@ -139,6 +200,31 @@ namespace FuelSupply.APP.ViewModel
 
             CustomerList = _OriginalCustomerList.Where(x => x.Name.ToLower().Contains(searchString) == true || (x.Customer2 != null && x.Customer2.Name.ToLower().Contains(searchString) == true)).ToList();
             OnPropertyChanged("CustomerList");
+        }
+
+        public void OnReceiveFingerPrint(string pFingerPrint)
+        {
+            if (oMainWindow.Dispatcher.CheckAccess())
+            {
+                foreach (CustomerFingerPrint oFingerPrint in _AllCustomerFingerPrintList)
+                {
+                    if (ofisFingerPrintSensor.MatchFinger(oFingerPrint.FingerPrint, pFingerPrint) == true)
+                    {
+                        Customer oSelectedCustomer = _OriginalCustomerList.Where(x => x.Id == oFingerPrint.CustomerID).FirstOrDefault();
+                        if (oSelectedCustomer != null)
+                        {
+                            _selectedCustomer = oSelectedCustomer;
+                            openAddFuelForSelectedCustomer();
+                        }
+
+                        return;
+                    }
+                }
+
+                MessageManager.ShowErrorMessage("Fingerprint doesn't exist, Please register.", oMainWindow);
+            }
+            else
+                oMainWindow.Dispatcher.Invoke(new FingerPrintScan(OnReceiveFingerPrint), new object[] { pFingerPrint });            
         }
         #endregion
     }

@@ -5,6 +5,8 @@ using FuelSupply.DAL.Entity.FuelEntity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +22,22 @@ namespace FuelSupply.APP.ViewModel
         private MainWindow oMainWindow;
         private int _FingerPrintType;        
         private string _CurrentFingerPrint;
+        private string _FingerPrintImage;
         #endregion
 
         #region "Property"
+        public string FingerPrintImage
+        {
+            get
+            {
+                return _FingerPrintImage;
+            }
+            set
+            {
+                _FingerPrintImage = value;
+                OnPropertyChanged("FingerPrintImage");
+            }
+        }
         public Customer SelectedCustomer
         {
             get
@@ -113,7 +128,43 @@ namespace FuelSupply.APP.ViewModel
 
             oMainWindow = (MainWindow)pOwnerWindow;
 
-            _SelectedCustomer = pCustomer;            
+            _SelectedCustomer = pCustomer;
+
+            CustomerDisplayViewModel.ofisFingerPrintSensor.OnFingerTouching += ofisFingerPrintSensor_OnFingerTouching;
+        }
+
+        public void DeregisterFingerPrinttouchEvent()
+        {
+            CustomerDisplayViewModel.ofisFingerPrintSensor.OnFingerTouching -= ofisFingerPrintSensor_OnFingerTouching;
+        }
+
+        private void ofisFingerPrintSensor_OnFingerTouching()
+        {
+            CustomerDisplayViewModel.ofisFingerPrintSensor.OnFingerTouching -= ofisFingerPrintSensor_OnFingerTouching;
+
+            if (CustomerDisplayViewModel.ofisFingerPrintSensor.GetVerTemplate() == true)
+            {
+                FingerPrintImage = null;
+
+                CurrentFingerPrint = CustomerDisplayViewModel.ofisFingerPrintSensor.VerifyTemplate;
+
+                DisplayFingerPrint();
+
+                CustomerDisplayViewModel.ofisFingerPrintSensor.OnFingerTouching += ofisFingerPrintSensor_OnFingerTouching;
+            }
+        }  
+
+        private void DisplayFingerPrint()
+        {
+            string filePath;
+            filePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\FingerPrint";
+            if (System.IO.Directory.Exists(filePath) == false)
+                System.IO.Directory.CreateDirectory(filePath);
+
+            string sImagePath = filePath + "\\FingerPrint.bmp";
+            CustomerDisplayViewModel.ofisFingerPrintSensor.SaveFingerTemplateAsBMP(sImagePath);
+
+            FingerPrintImage = sImagePath;
         }
 
         public bool AddFingerPrint(ref string pErrorString)
@@ -146,6 +197,7 @@ namespace FuelSupply.APP.ViewModel
             }
 
             OnPropertyChanged("NoOfFingerPrint");
+            pErrorString = "Fingerprint added successfully.";  
             return true;
         }
 

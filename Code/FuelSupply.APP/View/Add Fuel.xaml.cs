@@ -26,10 +26,10 @@ namespace FuelSupply.APP.View
         private AddFuelViewModel oViewModel;
         private MainWindow oMainWindow; 
         #endregion
-        public Add_Fuel(Customer pSelectedCustomer, Window pOwnerWindow)
+        public Add_Fuel(Customer pSelectedCustomer, Window pOwnerWindow, AddFuelViewModel pViewModel)
         {
             InitializeComponent();
-            oViewModel = new AddFuelViewModel(pOwnerWindow);
+            oViewModel = pViewModel;
             oViewModel.SelectedCustomer = pSelectedCustomer;
             this.DataContext = oViewModel;
 

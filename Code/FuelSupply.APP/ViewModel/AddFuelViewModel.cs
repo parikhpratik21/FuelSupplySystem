@@ -22,6 +22,8 @@ namespace FuelSupply.APP.ViewModel
         private List<Customer> _KeyCustomerList;
         private MainWindow oMainWindow;
         private int _FuelType;
+
+        private delegate bool FingerPrintScan(string pFingerPrint);
         #endregion
 
         #region "Property"
@@ -139,7 +141,7 @@ namespace FuelSupply.APP.ViewModel
 
             _FuelType = _FuelTypeList.FirstOrDefault().Id;
 
-            oMainWindow = (MainWindow)pOwnerWindow;
+            oMainWindow = (MainWindow)pOwnerWindow;            
         }
 
         public bool AddFuel()
@@ -168,7 +170,19 @@ namespace FuelSupply.APP.ViewModel
                         MessageManager.ShowErrorMessage("Error while adding the fuel, Please try again", oMainWindow);
                     }
                     else
-                    {
+                    {                       
+                        if (CustomerDisplayViewModel.ofisFingerPrintSensor.GetVerTemplate() == true)
+                        {
+                            string CurrentFingerPrint = CustomerDisplayViewModel.ofisFingerPrintSensor.VerifyTemplate;
+
+                            bool matchResult = MatchFingerPrint(CurrentFingerPrint); 
+                            if(matchResult == false)
+                            {
+                                MessageManager.ShowErrorMessage("Fingerprint doesn't match, Please try again.", oMainWindow);
+                                return false;
+                            }
+                        }
+
                         FuelHistory oFuelHistory = new FuelHistory();
                         oFuelHistory.CustomerId = _SelectedCustomer.Id;
                         oFuelHistory.CustomerName = _SelectedCustomer.Name;
@@ -197,7 +211,29 @@ namespace FuelSupply.APP.ViewModel
                 }
             }
             return false;
+        }       
+
+        private bool MatchFingerPrint(string pFingerPrint)
+        {
+            if (oMainWindow.Dispatcher.CheckAccess())
+            {
+                if (_SelectedCustomer.CustomerFingerPrints != null && _SelectedCustomer.CustomerFingerPrints.Count > 0)
+                {
+                    foreach (CustomerFingerPrint oFingerPrint in _SelectedCustomer.CustomerFingerPrints)
+                    {
+                        if (CustomerDisplayViewModel.ofisFingerPrintSensor.MatchFinger(oFingerPrint.FingerPrint, pFingerPrint) == true)
+                        {
+                            return true;
+                        }
+                    }
+                }                               
+            }
+            else
+                oMainWindow.Dispatcher.Invoke(new FingerPrintScan(MatchFingerPrint), new object[] { pFingerPrint });
+
+            return false;
         }
+
         #endregion
     }
 }

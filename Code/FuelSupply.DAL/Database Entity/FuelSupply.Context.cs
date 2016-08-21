@@ -16,8 +16,8 @@ namespace FuelSupply.DAL.Database_Entity
     using System.Linq;
     using FuelSupply.DAL.Entity.CustomerEntity;
     using FuelSupply.DAL.Entity.FuelEntity;
-    using FuelSupply.DAL.Entity.UserEntity;
     using FuelSupply.DAL.Entity.CreditEntity;
+    using FuelSupply.DAL.Entity.UserEntity;
     
     public partial class FuelSupplySystemEntities1 : DbContext
     {
