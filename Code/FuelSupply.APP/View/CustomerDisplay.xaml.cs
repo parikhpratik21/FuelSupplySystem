@@ -87,9 +87,10 @@ namespace FuelSupply.APP.View
             AddFuelViewModel oViewModel = new AddFuelViewModel(oMainWindow);
             Add_Fuel oAddFuel = new Add_Fuel(customerDisplayModel.SelectedCustomer, oMainWindow, oViewModel);
             oAddFuel.Owner = oMainWindow;
-            oAddFuel.ShowDialog();           
+            oAddFuel.ShowDialog();
 
-            customerDisplayModel.RegisterFingerPrinttouchEvent();
+            if (sender != null)
+                customerDisplayModel.RegisterFingerPrinttouchEvent();
         }
 
         private void dgCustomerList_MouseDoubleClick(object sender, MouseButtonEventArgs e)

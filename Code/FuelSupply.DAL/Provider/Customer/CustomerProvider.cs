@@ -178,8 +178,8 @@ namespace FuelSupply.DAL.Provider
         {
             Customer oCustomer = customerDbObject.Customers.Where(x => x.Id == pCustomerId).FirstOrDefault();
             if (oCustomer != null)
-            {
-                oCustomer.PaymentLimit = oCustomer.PaymentLimit + pAmount;
+            {                
+                oCustomer.AvailablePay = oCustomer.AvailablePay + pAmount;
                 customerDbObject.SaveChanges();
                 return true;
             }

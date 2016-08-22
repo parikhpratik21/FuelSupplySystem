@@ -25,7 +25,7 @@ namespace FuelSupply.APP.ViewModel
         private string _SearchTerms;
 
         public delegate void OpenAddFuelForm();
-        public event OpenAddFuelForm openAddFuelForSelectedCustomer;
+        public event OpenAddFuelForm openAddFuelForSelectedCustomer;               
 
         public static OfisMain ofisFingerPrintSensor;
         public static int FingerPrintSensorVersion = 10;
@@ -33,6 +33,7 @@ namespace FuelSupply.APP.ViewModel
         public List<CustomerFingerPrint> _AllCustomerFingerPrintList;
 
         private delegate void FingerPrintScan(string pFingerPrint);
+        public delegate void SetupFingerPrintSensor();
         #endregion
           
         public CustomerDisplayViewModel(Window pOwnerWindow)
@@ -60,24 +61,34 @@ namespace FuelSupply.APP.ViewModel
 
         public void RegisterFingerPrinttouchEvent()
         {
+            ofisFingerPrintSensor.SetFPEngineVersion(CustomerDisplayViewModel.FingerPrintSensorVersion);
+
             ofisFingerPrintSensor.OnFingerTouching += ofisFingerPrintSensor_OnFingerTouching;
         }
 
         private void SetUpFingerPrintDevice()
-        {           
-            ofisFingerPrintSensor.SetFPEngineVersion(FingerPrintSensorVersion);
-
-            int InitSensorResult = ofisFingerPrintSensor.InitSensor();
-            if(InitSensorResult == 1)
+        {
+            if (oMainWindow.Dispatcher.CheckAccess())
             {
-                MessageManager.ShowErrorMessage("Driver not install for fingerprint sensor, Please install driver.", oMainWindow);
-            }
-            else if (InitSensorResult == 2)
-            {
-                MessageManager.ShowErrorMessage("Fingerprint sensor not connected, Please connect fingerprint sensor", oMainWindow);
-            }
+                ofisFingerPrintSensor.SetFPEngineVersion(FingerPrintSensorVersion);
 
-            ofisFingerPrintSensor.OnFingerTouching += ofisFingerPrintSensor_OnFingerTouching;
+                int InitSensorResult = ofisFingerPrintSensor.InitSensor();                
+                
+                if (InitSensorResult == 1)
+                {
+                    MessageManager.ShowErrorMessage("Driver not install for fingerprint sensor, Please install driver.", oMainWindow);
+                }
+                else if (InitSensorResult == 2)
+                {
+                    MessageManager.ShowErrorMessage("Fingerprint sensor not connected, Please connect fingerprint sensor", oMainWindow);                                
+                }
+
+                ofisFingerPrintSensor.OnFingerTouching += ofisFingerPrintSensor_OnFingerTouching;
+            }
+            else
+                oMainWindow.Dispatcher.Invoke(new SetupFingerPrintSensor(SetUpFingerPrintDevice));   
+
+           
         }
 
         private void ofisFingerPrintSensor_OnFingerTouching()
@@ -88,10 +99,10 @@ namespace FuelSupply.APP.ViewModel
             {
                 string sFingerPrint = ofisFingerPrintSensor.VerifyTemplate;
 
-                OnReceiveFingerPrint(sFingerPrint);
+                OnReceiveFingerPrint(sFingerPrint);                
+            }            
 
-                ofisFingerPrintSensor.OnFingerTouching += ofisFingerPrintSensor_OnFingerTouching;
-            }           
+            ofisFingerPrintSensor.OnFingerTouching += ofisFingerPrintSensor_OnFingerTouching;
         }       
 
         #region "Property"

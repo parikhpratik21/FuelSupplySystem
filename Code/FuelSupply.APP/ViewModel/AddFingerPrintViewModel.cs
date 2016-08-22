@@ -2,6 +2,7 @@
 using FuelSupply.BAL.Manager.Common;
 using FuelSupply.DAL.Entity.CustomerEntity;
 using FuelSupply.DAL.Entity.FuelEntity;
+using FuelSupply.DAL.Provider.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -101,6 +102,7 @@ namespace FuelSupply.APP.ViewModel
             {
                 _FingerPrintType = value;
                 OnPropertyChanged("FingerPrintType");
+                OnPropertyChanged("NoOfFingerPrint");
             }
         }       
         #endregion
@@ -130,6 +132,8 @@ namespace FuelSupply.APP.ViewModel
 
             _SelectedCustomer = pCustomer;
 
+            CustomerDisplayViewModel.ofisFingerPrintSensor.SetFPEngineVersion(CustomerDisplayViewModel.FingerPrintSensorVersion);
+
             CustomerDisplayViewModel.ofisFingerPrintSensor.OnFingerTouching += ofisFingerPrintSensor_OnFingerTouching;
         }
 
@@ -145,26 +149,43 @@ namespace FuelSupply.APP.ViewModel
             if (CustomerDisplayViewModel.ofisFingerPrintSensor.GetVerTemplate() == true)
             {
                 FingerPrintImage = null;
-
+                OnPropertyChanged("FingerPrintImage");
                 CurrentFingerPrint = CustomerDisplayViewModel.ofisFingerPrintSensor.VerifyTemplate;
 
-                DisplayFingerPrint();
+                DisplayFingerPrint();                
+            }            
 
-                CustomerDisplayViewModel.ofisFingerPrintSensor.OnFingerTouching += ofisFingerPrintSensor_OnFingerTouching;
-            }
+            CustomerDisplayViewModel.ofisFingerPrintSensor.OnFingerTouching += ofisFingerPrintSensor_OnFingerTouching;
         }  
 
         private void DisplayFingerPrint()
         {
-            string filePath;
-            filePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\FingerPrint";
-            if (System.IO.Directory.Exists(filePath) == false)
-                System.IO.Directory.CreateDirectory(filePath);
+            try
+            {
+                string filePath;
+                filePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\FingerPrint";
+                if (System.IO.Directory.Exists(filePath) == false)
+                    System.IO.Directory.CreateDirectory(filePath);
 
-            string sImagePath = filePath + "\\FingerPrint.bmp";
-            CustomerDisplayViewModel.ofisFingerPrintSensor.SaveFingerTemplateAsBMP(sImagePath);
+                string sImagePath = filePath + "\\FingerPrint.bmp";
+                try
+                {
+                    if (System.IO.File.Exists(sImagePath) == true)
+                        System.IO.File.Delete(sImagePath);
+                }
+                catch(Exception ex)
+                {
+                    sImagePath = sImagePath.Replace("FingerPrint.bmp", "FingerPrint1.bmp");
+                }
 
-            FingerPrintImage = sImagePath;
+                CustomerDisplayViewModel.ofisFingerPrintSensor.SaveFingerTemplateAsBMP(sImagePath);
+
+                FingerPrintImage = sImagePath;
+            }
+            catch(Exception ex)
+            {
+                LogManager.logExceptionMessage("AddFingerPrintViewModel", "DisplayFingerPrint", ex);
+            }
         }
 
         public bool AddFingerPrint(ref string pErrorString)

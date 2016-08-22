@@ -77,5 +77,11 @@ namespace FuelSupply.APP.View
         {
             cmbFuelType.SelectedIndex = 0;
         }
+
+        private void cmbFuelType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //if (cmbFuelType.SelectedIndex >= 0)
+            //    oViewModel.FingerPrintType = (int)cmbFuelType.SelectedValue;
+        }
     }
 }

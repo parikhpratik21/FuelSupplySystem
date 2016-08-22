@@ -1,4 +1,5 @@
 ﻿using FuelSupply.APP.ViewModel;
+using FuelSupply.BAL.Manager.Common;
 using FuelSupply.DAL.Entity.CustomerEntity;
 using MahApps.Metro.Controls;
 using System;
@@ -24,7 +25,10 @@ namespace FuelSupply.APP.View
     {
          #region "Declaration"
         private AddFuelViewModel oViewModel;
-        private MainWindow oMainWindow; 
+        private MainWindow oMainWindow;
+
+        public delegate void DisplayErrorMessage(string sErrorMsg);
+        public event DisplayErrorMessage showErrorMessage; 
         #endregion
         public Add_Fuel(Customer pSelectedCustomer, Window pOwnerWindow, AddFuelViewModel pViewModel)
         {
@@ -43,12 +47,30 @@ namespace FuelSupply.APP.View
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            bool result = oViewModel.AddFuel();
+            string sErrorString = string.Empty;
+            bool result = oViewModel.AddFuel(ref sErrorString);
             if (result == true)
             {
                 this.Close();
                 oMainWindow.btnCustomer_Click(null, null);
             }
+            else
+            {
+                ShowErrorMessage(sErrorString);
+            }
+        }
+
+        public void ShowErrorMessage(string pErrorMsg)
+        {
+            if (oMainWindow.Dispatcher.CheckAccess())
+            {
+                if (pErrorMsg != string.Empty)
+                    MessageManager.ShowErrorMessage(pErrorMsg, oMainWindow);
+            }
+            else
+                oMainWindow.Dispatcher.Invoke(new DisplayErrorMessage(ShowErrorMessage), new object[] { pErrorMsg }); 
+
+           
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

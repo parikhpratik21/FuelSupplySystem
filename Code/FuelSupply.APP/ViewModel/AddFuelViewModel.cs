@@ -144,15 +144,15 @@ namespace FuelSupply.APP.ViewModel
             oMainWindow = (MainWindow)pOwnerWindow;            
         }
 
-        public bool AddFuel()
+        public bool AddFuel(ref string pErrorString)
         {
             if (FuelAmount <= 0)
             {
-                MessageManager.ShowErrorMessage("Please enter valid fuel amount", oMainWindow);
+                pErrorString = "Please enter valid fuel amount.";                
             }
             else if (FuelTaken <= 0)
             {
-                MessageManager.ShowErrorMessage("Please enter valid fuel taken", oMainWindow);
+                pErrorString = "Please enter valid fuel taken.";                
             }
             else
             {
@@ -160,17 +160,21 @@ namespace FuelSupply.APP.ViewModel
                 bool bCheckAvailibility = CustomerManager.CheckDeductionAvailibility(_SelectedCustomer.Id, FuelAmount);
                 if (bCheckAvailibility == false)
                 {
-                    MessageManager.ShowErrorMessage("Available amount is low can not add fuel, Please add credit", oMainWindow);
+                    pErrorString = "Available amount is low, Fuel can not be added. Please add credit.";                        
                 }
                 else
                 {
                     bool bDeductAmount = CustomerManager.DeductAmount(_SelectedCustomer.Id, FuelAmount);
                     if (bDeductAmount == false)
                     {
-                        MessageManager.ShowErrorMessage("Error while adding the fuel, Please try again", oMainWindow);
+                        pErrorString = "Error while adding the fuel, Please try again.";                            
                     }
                     else
-                    {                       
+                    {                        
+                        CustomerDisplayViewModel.ofisFingerPrintSensor.SetFPEngineVersion(CustomerDisplayViewModel.FingerPrintSensorVersion);
+
+                        CustomerDisplayViewModel.ofisFingerPrintSensor.InitSensor();
+
                         if (CustomerDisplayViewModel.ofisFingerPrintSensor.GetVerTemplate() == true)
                         {
                             string CurrentFingerPrint = CustomerDisplayViewModel.ofisFingerPrintSensor.VerifyTemplate;
@@ -178,35 +182,35 @@ namespace FuelSupply.APP.ViewModel
                             bool matchResult = MatchFingerPrint(CurrentFingerPrint); 
                             if(matchResult == false)
                             {
-                                MessageManager.ShowErrorMessage("Fingerprint doesn't match, Please try again.", oMainWindow);
+                                pErrorString = "Fingerprint doesn't match, Please try again.";                                                            
                                 return false;
                             }
-                        }
 
-                        FuelHistory oFuelHistory = new FuelHistory();
-                        oFuelHistory.CustomerId = _SelectedCustomer.Id;
-                        oFuelHistory.CustomerName = _SelectedCustomer.Name;
-                        oFuelHistory.FuelAmount = FuelAmount;
-                        oFuelHistory.FuelStationId = SharedData.CurrentFuelStation.Id;
-                        oFuelHistory.FuelType = FuelType;
-                        oFuelHistory.FuelVolume = FuelTaken;
-                        oFuelHistory.KeyCustomerId = _SelectedCustomer.KeyCustomerId;
-                        oFuelHistory.Id = 0;
-                        if(_SelectedCustomer.KeyCustomerId != null && _SelectedCustomer.KeyCustomerId >0)
-                        {
-                            oFuelHistory.KeyCustomerName = _SelectedCustomer.Customer2.Name;
-                        }
-                        oFuelHistory.Time = DateTime.Now;
-                        oFuelHistory.UserId = SharedData.LoggedUser.Id;
-                        oFuelHistory.UserName = SharedData.LoggedUser.Name;
+                            FuelHistory oFuelHistory = new FuelHistory();
+                            oFuelHistory.CustomerId = _SelectedCustomer.Id;
+                            oFuelHistory.CustomerName = _SelectedCustomer.Name;
+                            oFuelHistory.FuelAmount = FuelAmount;
+                            oFuelHistory.FuelStationId = SharedData.CurrentFuelStation.Id;
+                            oFuelHistory.FuelType = FuelType;
+                            oFuelHistory.FuelVolume = FuelTaken;
+                            oFuelHistory.KeyCustomerId = _SelectedCustomer.KeyCustomerId;
+                            oFuelHistory.Id = 0;
+                            if (_SelectedCustomer.KeyCustomerId != null && _SelectedCustomer.KeyCustomerId > 0)
+                            {
+                                oFuelHistory.KeyCustomerName = _SelectedCustomer.Customer2.Name;
+                            }
+                            oFuelHistory.Time = DateTime.Now;
+                            oFuelHistory.UserId = SharedData.LoggedUser.Id;
+                            oFuelHistory.UserName = SharedData.LoggedUser.Name;
 
-                        bool result = FuelManager.AddFuelHistory(oFuelHistory);
-                        if (result == false)
-                        {
-                            MessageManager.ShowErrorMessage("Error while adding the fuel, Please try again", oMainWindow);
-                        }
-                        else
-                            return true;
+                            bool result = FuelManager.AddFuelHistory(oFuelHistory);
+                            if (result == false)
+                            {
+                                pErrorString = "Error while adding the fuel, Please try again.";                                
+                            }
+                            else
+                                return true;
+                        }                       
                     }
                 }
             }
