@@ -11,11 +11,11 @@ using FuelSupply.BAL.Manager.Common;
 namespace FuelSupply.BAL.Manager
 {
     public class CustomerManager
-    {
+    {       
         #region "Methods"
         public static List<Customer> GetAllCustomers()
         {
-            return CustomerProvider.GetAllCustomers();
+            return CustomerProvider.GetAllCustomers();           
         }
 
         public static List<CustomerType> GetAllCustomerTypes()
@@ -141,7 +141,8 @@ namespace FuelSupply.BAL.Manager
         public static Customer GetCustomerByFingerPrint(string pFingerPrint)
         {
             return CustomerProvider.GetCustomerByFingerPrint(pFingerPrint);
-        }
+        }     
+
         #endregion
     }
 }

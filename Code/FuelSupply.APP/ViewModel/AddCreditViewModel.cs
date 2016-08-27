@@ -87,6 +87,10 @@ namespace FuelSupply.APP.ViewModel
             {
                 MessageManager.ShowErrorMessage("Please enter valid amount", oMainWindow);
             }            
+            else if((int)_SelectedCustomer.PaymentType <= 0)
+            {
+                MessageManager.ShowErrorMessage("Please select valid credit type", oMainWindow);
+            }
             else
             {
                 bool result = CustomerManager.IncreaseCredit(_SelectedCustomer.Id, Credit,(int)_SelectedCustomer.PaymentType);

@@ -14,7 +14,7 @@ using System.Windows.Input;
 
 namespace FuelSupply.APP.ViewModel
 {
-    public class CustomerDisplayViewModel : INotifyPropertyChanged
+    public class CustomerDisplayViewModel : INotifyPropertyChanged, IDisposable
     {
         #region "Declaration"
         private List<Customer> _OriginalCustomerList;
@@ -70,17 +70,19 @@ namespace FuelSupply.APP.ViewModel
         {
             if (oMainWindow.Dispatcher.CheckAccess())
             {
+                ofisFingerPrintSensor.IsAutoRegister = true;
+
                 ofisFingerPrintSensor.SetFPEngineVersion(FingerPrintSensorVersion);
 
-                int InitSensorResult = ofisFingerPrintSensor.InitSensor();                
-                
+                int InitSensorResult = ofisFingerPrintSensor.InitSensor();
+
                 if (InitSensorResult == 1)
                 {
                     MessageManager.ShowErrorMessage("Driver not install for fingerprint sensor, Please install driver.", oMainWindow);
                 }
                 else if (InitSensorResult == 2)
                 {
-                    MessageManager.ShowErrorMessage("Fingerprint sensor not connected, Please connect fingerprint sensor", oMainWindow);                                
+                    MessageManager.ShowErrorMessage("Fingerprint sensor not connected, Please connect fingerprint sensor", oMainWindow);
                 }
 
                 ofisFingerPrintSensor.OnFingerTouching += ofisFingerPrintSensor_OnFingerTouching;
@@ -173,6 +175,20 @@ namespace FuelSupply.APP.ViewModel
                 }
             }
         }
+
+        public bool IsAdminUser
+        {
+            get
+            {
+                if (SharedData.LoggedUser != null && SharedData.LoggedUser.UserType != null && SharedData.LoggedUser.UserType == (int)SharedData.UserType.Admin)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+        }
+
         #endregion
 
         #region EventHandlers (1)
@@ -238,5 +254,10 @@ namespace FuelSupply.APP.ViewModel
                 oMainWindow.Dispatcher.Invoke(new FingerPrintScan(OnReceiveFingerPrint), new object[] { pFingerPrint });            
         }
         #endregion
+
+        public void Dispose()
+        {
+            DeregisterFingerPrinttouchEvent();
+        }
     }
 }

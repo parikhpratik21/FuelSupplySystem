@@ -257,7 +257,7 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Name="btnAddCustomer" Margin="0" Grid.Row="0" Grid.Column="1" Click="btnAddCustomer_Click" HorizontalContentAlignment="Stretch">
+            <Button Name="btnAddCustomer" Margin="0" Grid.Row="0" Grid.Column="1" IsEnabled="{Binding IsAdminUser}" Click="btnAddCustomer_Click" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -267,7 +267,7 @@
                     <TextBlock Text="Add"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>
-            <Button Name="btnEditCustomer" Grid.Row="0" Grid.Column="3"  Click="btnEditCustomer_Click" HorizontalContentAlignment="Stretch">
+            <Button Name="btnEditCustomer" Grid.Row="0" Grid.Column="3" IsEnabled="{Binding IsAdminUser}" Click="btnEditCustomer_Click" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -277,7 +277,7 @@
                     <TextBlock Text="Edit"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>
-            <Button Name="btnDeleteCustomer" Grid.Row="0" Grid.Column="5" Click="btnDeleteCustomer_Click" HorizontalContentAlignment="Stretch">
+            <Button Name="btnDeleteCustomer" Grid.Row="0" Grid.Column="5" IsEnabled="{Binding IsAdminUser}" Click="btnDeleteCustomer_Click" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -287,7 +287,7 @@
                     <TextBlock Text="Delete"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>
-            <Button Name="btnAddCredit" Grid.Row="0" Grid.Column="7" Click="btnAddCredit_Click" HorizontalContentAlignment="Stretch">
+            <Button Name="btnAddCredit" Grid.Row="0" Grid.Column="7" Click="btnAddCredit_Click" IsEnabled="{Binding IsAdminUser}" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

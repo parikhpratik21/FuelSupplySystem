@@ -95,7 +95,8 @@ namespace FuelSupply.APP.View
 
         private void dgCustomerList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            btnEditCustomer_Click(null, null);
+            if(customerDisplayModel.IsAdminUser == true)
+                btnEditCustomer_Click(null, null);
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
