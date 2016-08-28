@@ -13,7 +13,10 @@ namespace FuelSupply.BAL.Manager
     public class UserManager
     {
         #region "Property"
-        private const string EncryptionKey = "PBPKP21222290";
+        //private const string EncryptionKey = "PBPKP21222290";
+        static readonly string PasswordHash = "dbp@akl7";
+        static readonly string SaltKey = "kpp_1@#$";
+        static readonly string VIKey = "PBPKPP21@#222290";
         #endregion
 
         #region "Methods"
@@ -112,49 +115,47 @@ namespace FuelSupply.BAL.Manager
             return UserProvider.DeleteUser(pUserId);
         }
 
-        private static string Encrypt(string clearText)
+        private static string Encrypt(string pEncryptText)
         {
-            return clearText;
-            //byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
-            //using (Aes encryptor = Aes.Create())
-            //{
-            //    Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
-            //    encryptor.Key = pdb.GetBytes(32);
-            //    encryptor.IV = pdb.GetBytes(16);
-            //    using (MemoryStream ms = new MemoryStream())
-            //    {
-            //        using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
-            //        {
-            //            cs.Write(clearBytes, 0, clearBytes.Length);
-            //            cs.Close();
-            //        }
-            //        clearText = Convert.ToBase64String(ms.ToArray());
-            //    }
-            //}
             //return clearText;
+            byte[] plainTextBytes = Encoding.UTF8.GetBytes(pEncryptText);
+
+            byte[] keyBytes = new Rfc2898DeriveBytes(PasswordHash, Encoding.ASCII.GetBytes(SaltKey)).GetBytes(256 / 8);
+            var symmetricKey = new RijndaelManaged() { Mode = CipherMode.CBC, Padding = PaddingMode.Zeros };
+            var encryptor = symmetricKey.CreateEncryptor(keyBytes, Encoding.ASCII.GetBytes(VIKey));
+
+            byte[] cipherTextBytes;
+
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
+                {
+                    cryptoStream.Write(plainTextBytes, 0, plainTextBytes.Length);
+                    cryptoStream.FlushFinalBlock();
+                    cipherTextBytes = memoryStream.ToArray();
+                    cryptoStream.Close();
+                }
+                memoryStream.Close();
+            }
+            return Convert.ToBase64String(cipherTextBytes);
         }
 
-        private static string Decrypt(string cipherText)
+        private static string Decrypt(string pDecryptText)
         {
-            return cipherText;
-            //string EncryptionKey = "MAKV2SPBNI99212";
-            //byte[] cipherBytes = Convert.FromBase64String(cipherText);
-            //using (Aes encryptor = Aes.Create())
-            //{
-            //    Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
-            //    encryptor.Key = pdb.GetBytes(32);
-            //    encryptor.IV = pdb.GetBytes(16);
-            //    using (MemoryStream ms = new MemoryStream())
-            //    {
-            //        using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
-            //        {
-            //            cs.Write(cipherBytes, 0, cipherBytes.Length);
-            //            cs.Close();
-            //        }
-            //        cipherText = Encoding.Unicode.GetString(ms.ToArray());
-            //    }
-            //}
-            //return cipherText;
+           // return cipherText;
+            byte[] cipherTextBytes = Convert.FromBase64String(pDecryptText);
+            byte[] keyBytes = new Rfc2898DeriveBytes(PasswordHash, Encoding.ASCII.GetBytes(SaltKey)).GetBytes(256 / 8);
+            var symmetricKey = new RijndaelManaged() { Mode = CipherMode.CBC, Padding = PaddingMode.None };
+
+            var decryptor = symmetricKey.CreateDecryptor(keyBytes, Encoding.ASCII.GetBytes(VIKey));
+            var memoryStream = new MemoryStream(cipherTextBytes);
+            var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read);
+            byte[] plainTextBytes = new byte[cipherTextBytes.Length];
+
+            int decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
+            memoryStream.Close();
+            cryptoStream.Close();
+            return Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount).TrimEnd("\0".ToCharArray());
         }
 
         #endregion

@@ -38,10 +38,9 @@ namespace FuelSupply.DAL.Provider
             return creditDbObject.CreditHistories.Where(x => x.CustomerId == pCustomerId && (x.Time > pStartDate && x.Time < pEndDate)).ToList();
         }
 
-        public static List<CreditHistory> GetCreditHistoryByKeyCustomerId(int pCustomerId, DateTime? pStartDate, DateTime? pEndDate)
+        public static List<CreditHistory> GetCreditHistoryByKeyCustomerId(int pKeyCustomerId, DateTime? pStartDate, DateTime? pEndDate)
         {
-            List<CreditHistory> oHistoryListByKeyCustomer = creditDbObject.Fetch_CreditHistoryBy_KeyCustomer(pCustomerId, pStartDate, pEndDate).ToList();
-            return oHistoryListByKeyCustomer;
+            return creditDbObject.CreditHistories.Where(x => (x.KeyCustomerId == pKeyCustomerId || x.CustomerId == pKeyCustomerId) && (x.Time > pStartDate && x.Time < pEndDate)).ToList();           
         }
         
         public static List<CreditHistory> FetCreditHistoryByUserId(int pUserId, DateTime? pStartDate, DateTime? pEndDate)

@@ -19,6 +19,7 @@ namespace FuelSupply.DAL.Entity.CreditEntity
         public Nullable<int> UserId { get; set; }
         public Nullable<int> PaymentType { get; set; }
         public Nullable<decimal> CreditAmount { get; set; }
+        public Nullable<int> KeyCustomerId { get; set; }
 
         public virtual Customer Customer { get; set; }
         public virtual FuelStation FuelStation { get; set; }

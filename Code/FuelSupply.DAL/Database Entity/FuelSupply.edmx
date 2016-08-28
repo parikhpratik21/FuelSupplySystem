@@ -16,6 +16,7 @@
           <Property Name="UserId" Type="int" />
           <Property Name="PaymentType" Type="int" />
           <Property Name="CreditAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="KeyCustomerId" Type="int" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -315,10 +316,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="Fetch_CreditHistoryBy_KeyCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="Fetch_CreditHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="KeyCustomerId" Type="int" Mode="In" />
           <Parameter Name="StartTime" Type="date" Mode="In" />
           <Parameter Name="EndTime" Type="date" Mode="In" />
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="CustomerId" Type="int" Mode="In" />
+          <Parameter Name="PaymentId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Fetch_FuelHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="KeyCustomerId" Type="int" Mode="In" />
+          <Parameter Name="StartTime" Type="date" Mode="In" />
+          <Parameter Name="EndTime" Type="date" Mode="In" />
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="CustomerId" Type="int" Mode="In" />
+          <Parameter Name="FuelId" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="FuelSupplySystemModelStoreContainer">
           <EntitySet Name="CreditHistory" EntityType="Self.CreditHistory" Schema="dbo" store:Type="Tables" />
@@ -681,11 +693,6 @@
             <End Role="User" EntitySet="Users" />
             <End Role="CreditHistory" EntitySet="CreditHistories" />
           </AssociationSet>
-          <FunctionImport Name="Fetch_CreditHistoryBy_KeyCustomer" EntitySet="CreditHistories" ReturnType="Collection(FuelSupplySystemModel.CreditHistory)">
-            <Parameter Name="KeyCustomerId" Mode="In" Type="Int32" />
-            <Parameter Name="StartTime" Mode="In" Type="DateTime" />
-            <Parameter Name="EndTime" Mode="In" Type="DateTime" />
-          </FunctionImport>
           <EntitySet Name="CustomerFingerPrints" EntityType="FuelSupplySystemModel.CustomerFingerPrint" />
           <AssociationSet Name="FK_CustomerFingerPrint_Customer" Association="FuelSupplySystemModel.FK_CustomerFingerPrint_Customer">
             <End Role="Customer" EntitySet="Customers" />
@@ -696,6 +703,22 @@
             <End Role="FingerPrintType" EntitySet="FingerPrintTypes" />
             <End Role="CustomerFingerPrint" EntitySet="CustomerFingerPrints" />
           </AssociationSet>
+          <FunctionImport Name="Fetch_CreditHistory" EntitySet="CreditHistories" ReturnType="Collection(FuelSupplySystemModel.CreditHistory)">
+            <Parameter Name="KeyCustomerId" Mode="In" Type="Int32" />
+            <Parameter Name="StartTime" Mode="In" Type="DateTime" />
+            <Parameter Name="EndTime" Mode="In" Type="DateTime" />
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+            <Parameter Name="PaymentId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Fetch_FuelHistory" EntitySet="FuelHistories" ReturnType="Collection(FuelSupplySystemModel.FuelHistory)">
+            <Parameter Name="KeyCustomerId" Mode="In" Type="Int32" />
+            <Parameter Name="StartTime" Mode="In" Type="DateTime" />
+            <Parameter Name="EndTime" Mode="In" Type="DateTime" />
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+            <Parameter Name="FuelId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <Association Name="FK_Customer_Customer">
           <End Type="FuelSupplySystemModel.Customer" Role="Customer" Multiplicity="0..1" />
@@ -724,6 +747,7 @@
           <NavigationProperty Name="FuelStation" Relationship="FuelSupplySystemModel.FK_CreditHistory_FuelStation" FromRole="CreditHistory" ToRole="FuelStation" />
           <NavigationProperty Name="PaymentType1" Relationship="FuelSupplySystemModel.FK_CreditHistory_PaymentType" FromRole="CreditHistory" ToRole="PaymentType" />
           <NavigationProperty Name="User" Relationship="FuelSupplySystemModel.FK_CreditHistory_User" FromRole="CreditHistory" ToRole="User" />
+          <Property Name="KeyCustomerId" Type="Int32" />
         </EntityType>
         <Association Name="FK_CreditHistory_Customer">
           <End Type="FuelSupplySystemModel.Customer" Role="Customer" Multiplicity="0..1" />
@@ -826,6 +850,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="Fetch_CreditHistory_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="DateTime" Name="Time" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="FuelStationId" Nullable="true" />
+          <Property Type="Int32" Name="CustomerId" Nullable="true" />
+          <Property Type="Int32" Name="UserId" Nullable="true" />
+          <Property Type="Int32" Name="PaymentType" Nullable="true" />
+          <Property Type="Decimal" Name="CreditAmount" Nullable="true" Precision="18" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="Fetch_FuelHistory_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="DateTime" Name="Time" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="FuelStationId" Nullable="true" />
+          <Property Type="Int32" Name="CustomerId" Nullable="true" />
+          <Property Type="Int32" Name="UserId" Nullable="true" />
+          <Property Type="Int32" Name="FuelType" Nullable="true" />
+          <Property Type="Decimal" Name="FuelVolume" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="FuelAmount" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="KeyCustomerId" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -945,6 +989,7 @@
           <EntitySetMapping Name="CreditHistories">
             <EntityTypeMapping TypeName="FuelSupplySystemModel.CreditHistory">
               <MappingFragment StoreEntitySet="CreditHistory">
+                <ScalarProperty Name="KeyCustomerId" ColumnName="KeyCustomerId" />
                 <ScalarProperty Name="CreditAmount" ColumnName="CreditAmount" />
                 <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -955,8 +1000,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="Fetch_CreditHistoryBy_KeyCustomer" FunctionName="FuelSupplySystemModel.Store.Fetch_CreditHistoryBy_KeyCustomer">
-          </FunctionImportMapping>
           <EntitySetMapping Name="CustomerFingerPrints">
             <EntityTypeMapping TypeName="FuelSupplySystemModel.CustomerFingerPrint">
               <MappingFragment StoreEntitySet="CustomerFingerPrint">
@@ -976,6 +1019,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Fetch_CreditHistory" FunctionName="FuelSupplySystemModel.Store.Fetch_CreditHistory">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Fetch_FuelHistory" FunctionName="FuelSupplySystemModel.Store.Fetch_FuelHistory">
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

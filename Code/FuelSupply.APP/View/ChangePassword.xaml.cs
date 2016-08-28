@@ -51,5 +51,10 @@ namespace FuelSupply.APP.View
         {
             this.Close();
         }
+
+        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            txtNewPassword.Focus();
+        }
     }
 }
