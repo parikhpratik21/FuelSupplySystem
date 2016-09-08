@@ -177,7 +177,16 @@ namespace FuelSupply.APP.ViewModel
 
                         if (CustomerDisplayViewModel.ofisFingerPrintSensor.GetVerTemplate() == true)
                         {
+                            if (Properties.Settings.Default.IsBeepEnable == true)
+                                CustomerDisplayViewModel.ofisFingerPrintSensor.PlayBeep(true);
+
+                            CustomerDisplayViewModel.ofisFingerPrintSensor.PlayGreenLight(true);
+
                             string CurrentFingerPrint = CustomerDisplayViewModel.ofisFingerPrintSensor.VerifyTemplate;
+
+                            if (Properties.Settings.Default.IsBeepEnable == true)
+                                CustomerDisplayViewModel.ofisFingerPrintSensor.PlayBeep(false);
+                            CustomerDisplayViewModel.ofisFingerPrintSensor.PlayGreenLight(false);
 
                             bool matchResult = MatchFingerPrint(CurrentFingerPrint); 
                             if(matchResult == false)
@@ -210,7 +219,13 @@ namespace FuelSupply.APP.ViewModel
                             }
                             else
                                 return true;
-                        }                       
+                        }
+                        else
+                        {
+                            CustomerDisplayViewModel.ofisFingerPrintSensor.PlayRedLight(true);
+
+                            CustomerDisplayViewModel.ofisFingerPrintSensor.PlayRedLight(false);
+                        }
                     }
                 }
             }

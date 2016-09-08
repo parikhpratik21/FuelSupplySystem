@@ -150,10 +150,25 @@ namespace FuelSupply.APP.ViewModel
             {
                 FingerPrintImage = null;
                 OnPropertyChanged("FingerPrintImage");
+
+                if (Properties.Settings.Default.IsBeepEnable == true)
+                    CustomerDisplayViewModel.ofisFingerPrintSensor.PlayBeep(true);
+                CustomerDisplayViewModel.ofisFingerPrintSensor.PlayGreenLight(true);
+
                 CurrentFingerPrint = CustomerDisplayViewModel.ofisFingerPrintSensor.VerifyTemplate;
 
+                if (Properties.Settings.Default.IsBeepEnable == true)
+                    CustomerDisplayViewModel.ofisFingerPrintSensor.PlayBeep(false);
+                CustomerDisplayViewModel.ofisFingerPrintSensor.PlayGreenLight(false);
+
                 DisplayFingerPrint();                
-            }            
+            }
+            else
+            {
+                CustomerDisplayViewModel.ofisFingerPrintSensor.PlayRedLight(true);
+
+                CustomerDisplayViewModel.ofisFingerPrintSensor.PlayRedLight(false);
+            }
 
             CustomerDisplayViewModel.ofisFingerPrintSensor.OnFingerTouching += ofisFingerPrintSensor_OnFingerTouching;
         }  

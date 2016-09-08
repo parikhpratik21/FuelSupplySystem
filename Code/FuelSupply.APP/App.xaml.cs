@@ -54,7 +54,10 @@ namespace FuelSupply.APP
              oMainWindow = new MainWindow();
              oMainWindow.ShowDialog();
 
-             Environment.Exit(1);
+             FuelSupply.APP.ViewModel.CustomerDisplayViewModel.ofisFingerPrintSensor.EndOfis();            
+             FuelSupply.APP.ViewModel.CustomerDisplayViewModel.ofisFingerPrintSensor = null;
+
+             Environment.Exit(1);                         
         }
                 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)

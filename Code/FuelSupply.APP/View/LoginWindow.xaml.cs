@@ -49,7 +49,7 @@ namespace FuelSupply.APP.View
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            Environment.Exit(0);
+            Environment.Exit(1);
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
