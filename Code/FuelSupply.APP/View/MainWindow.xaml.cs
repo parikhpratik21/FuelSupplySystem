@@ -80,7 +80,10 @@ namespace FuelSupply.APP
         {
             CloseLoginPopup();
             mainModel.OnPropertyChanged("IsAdminUser");
-            btnProfile_Click(null, null);
+
+            HomeScreen oHomeScreen = new HomeScreen();
+            SetUserContentandData("Home", oHomeScreen);
+            //btnProfile_Click(null, null);
             this.Focus();
         }
 
@@ -302,6 +305,12 @@ namespace FuelSupply.APP
 
         private void btnLogOut_Click(object sender, RoutedEventArgs e)
         {
+            SharedData.LoggedUser = null;
+
+            HomeScreen oHomeScreen = new HomeScreen();
+
+            SetUserContentandData("Home", oHomeScreen);
+
             OpenLoginWindows();
             SetUserContentandData("LogOut", null);
         }
@@ -387,6 +396,15 @@ namespace FuelSupply.APP
                     btnFuelHistory.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
                     btnCreditHistory.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
                     break;
+                case "Home":
+                    btnProfile.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+                    btnLogOut.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+                    btnUser.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+                    btnCustomer.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+                    btnFuelHistory.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+                    btnCreditHistory.Style = (System.Windows.Style)this.FindResource("ButtonStyle");
+                    break;
+
             }
 
             if (pData != null)

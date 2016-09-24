@@ -119,6 +119,7 @@
     <Compile Include="ViewModel\FuelHistoryViewModel.cs" />
     <Compile Include="ViewModel\CreditHistoryViewModel.cs" />
     <Compile Include="ViewModel\CustomerDisplayViewModel.cs" />
+    <Compile Include="ViewModel\HomeScreenViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ProfileViewModel.cs" />
@@ -150,6 +151,9 @@
     </Compile>
     <Compile Include="View\FuelHistory.xaml.cs">
       <DependentUpon>FuelHistory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HomeScreen.xaml.cs">
+      <DependentUpon>HomeScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\LoadingWindow.xaml.cs">
       <DependentUpon>LoadingWindow.xaml</DependentUpon>
@@ -196,6 +200,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\FuelHistory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HomeScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

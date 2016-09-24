@@ -54,7 +54,8 @@ namespace FuelSupply.APP
              oMainWindow = new MainWindow();
              oMainWindow.ShowDialog();
 
-             FuelSupply.APP.ViewModel.CustomerDisplayViewModel.ofisFingerPrintSensor.EndOfis();            
+             if (FuelSupply.APP.ViewModel.CustomerDisplayViewModel.ofisFingerPrintSensor != null)
+                FuelSupply.APP.ViewModel.CustomerDisplayViewModel.ofisFingerPrintSensor.EndOfis();            
              FuelSupply.APP.ViewModel.CustomerDisplayViewModel.ofisFingerPrintSensor = null;
 
              Environment.Exit(1);                         

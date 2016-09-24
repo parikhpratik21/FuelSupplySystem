@@ -158,22 +158,22 @@
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn> 
-                    <DataGridTextColumn Header="User Name" Binding="{Binding User.Name}" Width="1*">
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="User Name" Binding="{Binding UserName}" Width="1*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Customer Name" Binding="{Binding Customer.Name}" Width="1*">
+                    <DataGridTextColumn Header="Customer Name" Binding="{Binding CustomerName}" Width="1*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Key Customer" Binding="{Binding Customer.Customer2.Name}" Width="1.3*">
+                    <DataGridTextColumn Header="Key Customer" Binding="{Binding KeyCustomerName}" Width="1.3*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />

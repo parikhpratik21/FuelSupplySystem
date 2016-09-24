@@ -23,10 +23,10 @@ namespace FuelSupply.BAL.Manager
         public static List<User> GetAllUser()
         {
             List<User> oUserList =  UserProvider.GetAllUser();
-            foreach(User oUser in oUserList)
-            {
-                oUser.Password = Decrypt(oUser.Password);
-            }
+            //foreach(User oUser in oUserList)
+            //{
+            //    oUser.Password = Decrypt(oUser.Password);
+            //}
             return oUserList;
         }
 
@@ -38,17 +38,17 @@ namespace FuelSupply.BAL.Manager
         public static User GetUserById(int pUserId)
         {
             User oUser = UserProvider.GetUserById(pUserId);
-            oUser.Password = Decrypt(oUser.Password);
+            //oUser.Password = Decrypt(oUser.Password);
             return oUser;
         }
 
         public static List<User> GetUserListByType(int pType)
         {            
             List<User> oUserList = UserProvider.GetUserListByType(pType);
-            foreach (User oUser in oUserList)
-            {
-                oUser.Password = Decrypt(oUser.Password);
-            }
+            //foreach (User oUser in oUserList)
+            //{
+            //    oUser.Password = Decrypt(oUser.Password);
+            //}
             return oUserList;
         }
 
@@ -99,6 +99,7 @@ namespace FuelSupply.BAL.Manager
             }
             else
             {
+                pUser.Password = Encrypt(pUser.Password);
                 bool result = UserProvider.UpdateUser(pUser);
                 if (result == false)
                 {
@@ -116,8 +117,7 @@ namespace FuelSupply.BAL.Manager
         }
 
         private static string Encrypt(string pEncryptText)
-        {
-            //return clearText;
+        {           
             byte[] plainTextBytes = Encoding.UTF8.GetBytes(pEncryptText);
 
             byte[] keyBytes = new Rfc2898DeriveBytes(PasswordHash, Encoding.ASCII.GetBytes(SaltKey)).GetBytes(256 / 8);
@@ -141,8 +141,7 @@ namespace FuelSupply.BAL.Manager
         }
 
         private static string Decrypt(string pDecryptText)
-        {
-           // return cipherText;
+        {           
             byte[] cipherTextBytes = Convert.FromBase64String(pDecryptText);
             byte[] keyBytes = new Rfc2898DeriveBytes(PasswordHash, Encoding.ASCII.GetBytes(SaltKey)).GetBytes(256 / 8);
             var symmetricKey = new RijndaelManaged() { Mode = CipherMode.CBC, Padding = PaddingMode.None };
