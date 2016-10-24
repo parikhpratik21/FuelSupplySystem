@@ -78,6 +78,30 @@ namespace FuelSupply.DAL.Provider
             return false;              
         }
 
+        public static bool DeleteCreditHistoryByUserId(int pUserId)
+        {
+            List<CreditHistory> oHistoryList = creditDbObject.CreditHistories.Where(x => x.UserId == pUserId).ToList();
+            if (oHistoryList != null && oHistoryList.Count > 0)
+            {
+                creditDbObject.CreditHistories.RemoveRange(oHistoryList);
+                creditDbObject.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public static bool DeleteCreditHistoryByCustomerId(int pCustomerId)
+        {
+            List<CreditHistory> oHistoryList = creditDbObject.CreditHistories.Where(x => x.CustomerId == pCustomerId).ToList();
+            if (oHistoryList != null && oHistoryList.Count > 0)
+            {
+                creditDbObject.CreditHistories.RemoveRange(oHistoryList);
+                creditDbObject.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
         public static bool UpdateCreditHistory(CreditHistory pHistory)
         {
             CreditHistory oHistory = creditDbObject.CreditHistories.Where(x => x.Id == pHistory.Id).FirstOrDefault();

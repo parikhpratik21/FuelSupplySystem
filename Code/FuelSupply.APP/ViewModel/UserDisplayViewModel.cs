@@ -122,7 +122,9 @@ namespace FuelSupply.APP.ViewModel
             bool result = MessageManager.ShowConfirmationMessage("Are you sure you want to delete selected user?", oMainWindow);
             if(result == true)
             {
-                bool deleteResult = UserManager.DeleteUser(_selectedUser.Id);
+                bool bHistoryDelete = MessageManager.ShowConfirmationMessage("Do you want to delete all history related to user?", oMainWindow);
+
+                bool deleteResult = UserManager.DeleteUser(_selectedUser.Id, bHistoryDelete);
                 if(deleteResult == false)
                 {
                     MessageManager.ShowErrorMessage("Error while deleting user, Please try again.", oMainWindow);

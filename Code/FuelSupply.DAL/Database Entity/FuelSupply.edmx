@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FuelSupplySystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FuelSupplySystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CreditHistory">
           <Key>
             <PropertyRef Name="Id" />
@@ -318,16 +318,16 @@
         </Association>
         <Function Name="Fetch_CreditHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="KeyCustomerId" Type="int" Mode="In" />
-          <Parameter Name="StartTime" Type="date" Mode="In" />
-          <Parameter Name="EndTime" Type="date" Mode="In" />
+          <Parameter Name="StartTime" Type="datetime" Mode="In" />
+          <Parameter Name="EndTime" Type="datetime" Mode="In" />
           <Parameter Name="UserId" Type="int" Mode="In" />
           <Parameter Name="CustomerId" Type="int" Mode="In" />
           <Parameter Name="PaymentId" Type="int" Mode="In" />
         </Function>
         <Function Name="Fetch_FuelHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="KeyCustomerId" Type="int" Mode="In" />
-          <Parameter Name="StartTime" Type="date" Mode="In" />
-          <Parameter Name="EndTime" Type="date" Mode="In" />
+          <Parameter Name="StartTime" Type="datetime" Mode="In" />
+          <Parameter Name="EndTime" Type="datetime" Mode="In" />
           <Parameter Name="UserId" Type="int" Mode="In" />
           <Parameter Name="CustomerId" Type="int" Mode="In" />
           <Parameter Name="FuelId" Type="int" Mode="In" />

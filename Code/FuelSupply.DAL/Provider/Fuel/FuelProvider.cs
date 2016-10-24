@@ -89,6 +89,29 @@ namespace FuelSupply.DAL.Provider
             return false;              
         }
 
+        public static bool DeleteFuelHistoryByUserId(int pUserId)
+        {
+            List<FuelHistory> oHistoryList = fuelDbObject.FuelHistories.Where(x => x.UserId == pUserId).ToList();
+            if (oHistoryList != null && oHistoryList.Count > 0)
+            {
+                fuelDbObject.FuelHistories.RemoveRange(oHistoryList);
+                fuelDbObject.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public static bool DeleteFuelHistoryByCustomerId(int pCustomerId)
+        {
+            List<FuelHistory> oHistoryList = fuelDbObject.FuelHistories.Where(x => x.CustomerId == pCustomerId).ToList();
+            if (oHistoryList != null && oHistoryList.Count > 0)
+            {
+                fuelDbObject.FuelHistories.RemoveRange(oHistoryList);
+                fuelDbObject.SaveChanges();
+                return true;
+            }
+            return false;
+        }
         public static bool UpdateFuelHistory(FuelHistory pHistory)
         {
             FuelHistory oHistory = fuelDbObject.FuelHistories.Where(x => x.Id == pHistory.Id).FirstOrDefault();

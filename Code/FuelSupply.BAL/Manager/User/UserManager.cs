@@ -111,13 +111,26 @@ namespace FuelSupply.BAL.Manager
             }               
         }
 
-        public static bool DeleteUser(int pUserId)
+        public static bool DeleteUser(int pUserId, bool pDeleteHistory)
         {
-            return UserProvider.DeleteUser(pUserId);
+            bool result = UserProvider.DeleteUser(pUserId);
+            if(result == true)
+            {
+                if (pDeleteHistory == true)
+                {
+                    //delete cfuel and credit history
+                    CreditManager.DeleteCreditHistoryByUserId(pUserId);
+                    FuelManager.DeleteFuelHistoryByUserId(pUserId);
+                }
+                return true;
+            }
+            
+            return false;
         }
 
         private static string Encrypt(string pEncryptText)
-        {           
+        {
+            return pEncryptText;
             byte[] plainTextBytes = Encoding.UTF8.GetBytes(pEncryptText);
 
             byte[] keyBytes = new Rfc2898DeriveBytes(PasswordHash, Encoding.ASCII.GetBytes(SaltKey)).GetBytes(256 / 8);
@@ -141,7 +154,8 @@ namespace FuelSupply.BAL.Manager
         }
 
         private static string Decrypt(string pDecryptText)
-        {           
+        {
+            return pDecryptText;
             byte[] cipherTextBytes = Convert.FromBase64String(pDecryptText);
             byte[] keyBytes = new Rfc2898DeriveBytes(PasswordHash, Encoding.ASCII.GetBytes(SaltKey)).GetBytes(256 / 8);
             var symmetricKey = new RijndaelManaged() { Mode = CipherMode.CBC, Padding = PaddingMode.None };

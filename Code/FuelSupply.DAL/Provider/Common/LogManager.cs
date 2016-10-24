@@ -122,7 +122,7 @@ namespace FuelSupply.DAL.Provider.Common
         {
             try
             {
-                if (IsLogEnable == true)
+               // if (IsLogEnable == true)
                 {
                     System.IO.TextWriter integrationLog = default(System.IO.TextWriter);
 
@@ -141,11 +141,16 @@ namespace FuelSupply.DAL.Provider.Common
                     string fullFilePath = path + "\\Log" + folderName + ".log";
                     integrationLog = new System.IO.StreamWriter(fullFilePath, true);
 
-                    string writelogmessage = "# T: [ " + currentTime.ToString("hh:mm:ss:fff tt") + " ] ::  C: " + pclassname + " ::  M: " + pmethodname;
+                    string writelogmessage = "Pratik_# T: [ " + currentTime.ToString("hh:mm:ss:fff tt") + " ] ::  C: " + pclassname + " ::  M: " + pmethodname;
 
                     if (pex != null)
                     {
                         writelogmessage += " ::  exMsg: " + pex.Message + " ::  exStack: " + pex.StackTrace;
+                    }
+
+                    if(pex.InnerException != null)
+                    {
+                        writelogmessage += Environment.NewLine + " :: exInnerMsg: " + pex.InnerException.ToString();
                     }
 
                     integrationLog.WriteLine(writelogmessage);

@@ -1,3 +1,4 @@
+
 [Setup]
 AppName=FuelSupply
 AppVerName=FuelSupply version 1.0.0
@@ -48,8 +49,8 @@ Source: symbol.ico; DestDir: {app}\FuelSupply; Permissions: everyone-full; Compo
 ;Fonts:
 Source: Fonts\arial.ttf; DestDir: {fonts}; Flags: onlyifdoesntexist uninsneveruninstall; FontInstall: Arial; Components: FuelSupply
 ;Install ReportViewer:
-Source: FingerPrint\FingerTec_OFIS_Scanner_Driver_3.1_Setup.exe; DestDir: {app}\FuelSupply; Flags: deleteafterinstall; Permissions: everyone-full; Components: FuelSupply
-Source: FingerPrint\ofisclient3.2setup.exe; DestDir: {app}\FuelSupply; Flags: deleteafterinstall; Permissions: everyone-full; Components: FuelSupply
+;Source: FingerPrint\FingerTec_OFIS_Scanner_Driver_3.1_Setup.exe; DestDir: {app}\FuelSupply; Flags: deleteafterinstall; Permissions: everyone-full; Components: FuelSupply
+;Source: FingerPrint\ofisclient3.2setup.exe; DestDir: {app}\FuelSupply; Flags: deleteafterinstall; Permissions: everyone-full; Components: FuelSupply
 
 
 ;Source: WebService\*; DestDir: {app}\FuelSupply; Permissions: everyone-full; Components: WebService
@@ -72,8 +73,8 @@ Name: {commondesktop}\FuelSupply; Filename: {app}\FuelSupply\FuelSupply.exe; Wor
 ;Filename: {app}\FuelSupply\SQLSetup.exe; Parameters: """emenu_new"" ""FuelSupplyINSTANCE"" ""eMenuDB"" "".\\"" "".\\SQLEXPR\\setup.exe"" ""India20@20"" "".\\7z.exe"""; WorkingDir: {app}\FuelSupply; Components: Database; StatusMsg: It may take a while to install Database. Please wait.; Flags: runhidden runminimized
 ;Filename: cmd.exe; Parameters: "/c rmdir /s /q ""SQLEXPR"""; WorkingDir: {app}\FuelSupply; Components: Database; Flags: runminimized runhidden
 
-FileName: {app}\FuelSupply\ofisclient3.2setup.exe; parameters: /q /norestart; Components: FuelSupply; StatusMsg: Configuring finger print driver. Please wait...; Flags: runhidden runminimized
-FileName: {app}\FuelSupply\FingerTec_OFIS_Scanner_Driver_3.1_Setup.exe; parameters: /q /norestart; Components: FuelSupply; StatusMsg: Configuring finger print driver. Please wait...; Flags: runhidden runminimized
+;FileName: {app}\FuelSupply\ofisclient3.2setup.exe; parameters: /q /norestart; Components: FuelSupply; StatusMsg: Configuring finger print driver. Please wait...; Flags: runhidden runminimized
+;FileName: {app}\FuelSupply\FingerTec_OFIS_Scanner_Driver_3.1_Setup.exe; parameters: /q /norestart; Components: FuelSupply; StatusMsg: Configuring finger print driver. Please wait...; Flags: runhidden runminimized
 Filename: {app}\FuelSupply\rebuildIconCache.bat; StatusMsg: Refreshing windows. Please wait...;   Components: FuelSupply; Flags: runminimized runhidden
 
 [InstallDelete]

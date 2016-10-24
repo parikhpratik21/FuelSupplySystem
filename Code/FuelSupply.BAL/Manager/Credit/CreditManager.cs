@@ -56,6 +56,16 @@ namespace FuelSupply.BAL.Manager
             return CreditProvider.DeleteCreditHistory(pCreditHistoryId);
         }
 
+        public static bool DeleteCreditHistoryByUserId(int pUserId)
+        {
+            return CreditProvider.DeleteCreditHistoryByUserId(pUserId);
+        }
+
+        public static bool DeleteCreditHistoryByCustomerId(int pCustomerId)
+        {
+            return CreditProvider.DeleteCreditHistoryByCustomerId(pCustomerId);
+        }
+
         public static bool UpdateCreditHistory(CreditHistory pHistory)
         {
             return CreditProvider.UpdateCreditHistory(pHistory);

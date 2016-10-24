@@ -74,6 +74,16 @@ namespace FuelSupply.BAL.Manager
             return FuelProvider.DeleteFuelHistory(pFuelHistoryId);
         }
 
+        public static bool DeleteFuelHistoryByUserId(int pUserId)
+        {
+            return FuelProvider.DeleteFuelHistoryByUserId(pUserId);
+        }
+
+        public static bool DeleteFuelHistoryByCustomerId(int pCustomerId)
+        {
+            return FuelProvider.DeleteFuelHistoryByCustomerId(pCustomerId);
+        }
+
         public static bool UpdateFuelHistory(FuelHistory pHistory)
         {
             return FuelProvider.UpdateFuelHistory(pHistory);
