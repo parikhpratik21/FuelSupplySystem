@@ -78,6 +78,8 @@ namespace FuelSupply.APP.View
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             customerDisplayModel.SelectedCustomer = (Customer)dgCustomerList.SelectedItem;
+
+            customerDisplayModel.OnPropertyChanged("IsAddCreditVisible");
         }
 
         private void btnAddFuel_Click(object sender, RoutedEventArgs e)

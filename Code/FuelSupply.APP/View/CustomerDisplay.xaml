@@ -287,7 +287,7 @@
                     <TextBlock Text="Delete"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>
-            <Button Name="btnAddCredit" Grid.Row="0" Grid.Column="7" Click="btnAddCredit_Click" IsEnabled="{Binding IsAdminUser}" HorizontalContentAlignment="Stretch">
+            <Button Name="btnAddCredit" Grid.Row="0" Grid.Column="7" Click="btnAddCredit_Click" IsEnabled="{Binding IsAddCreditVisible}" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

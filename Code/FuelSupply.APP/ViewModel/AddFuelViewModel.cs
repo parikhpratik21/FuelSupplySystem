@@ -40,6 +40,23 @@ namespace FuelSupply.APP.ViewModel
             }
         }
 
+        public decimal? AvailableAmount
+        {
+            get
+            {
+                if(_SelectedCustomer.CustomerType == (int)FuelSupply.DAL.Entity.Comman.Constants.eCustomerType.KeyCustomer)
+                {
+                    return SelectedCustomer.AvailablePay;
+                }
+                else
+                {
+                    if (SelectedCustomer.Customer2 != null)
+                        return SelectedCustomer.Customer2.AvailablePay;
+                    else
+                        return 0;
+                }
+            }
+        }
         public List<FuelType> FuelTypeList
         {
             get
@@ -163,70 +180,77 @@ namespace FuelSupply.APP.ViewModel
                     pErrorString = "Available amount is low, Fuel can not be added. Please add credit.";                        
                 }
                 else
-                {
-                    bool bDeductAmount = CustomerManager.DeductAmount(_SelectedCustomer.Id, FuelAmount);
-                    if (bDeductAmount == false)
+                {                                       
+                    CustomerDisplayViewModel.ofisFingerPrintSensor.SetFPEngineVersion(CustomerDisplayViewModel.FingerPrintSensorVersion);
+
+                    CustomerDisplayViewModel.ofisFingerPrintSensor.InitSensor();
+
+                    if (CustomerDisplayViewModel.ofisFingerPrintSensor.GetVerTemplate() == true)
                     {
-                        pErrorString = "Error while adding the fuel, Please try again.";                            
-                    }
-                    else
-                    {                        
-                        CustomerDisplayViewModel.ofisFingerPrintSensor.SetFPEngineVersion(CustomerDisplayViewModel.FingerPrintSensorVersion);
+                        if (Properties.Settings.Default.IsBeepEnable == true)
+                            CustomerDisplayViewModel.ofisFingerPrintSensor.PlayBeep(true);
 
-                        CustomerDisplayViewModel.ofisFingerPrintSensor.InitSensor();
+                        CustomerDisplayViewModel.ofisFingerPrintSensor.PlayGreenLight(true);
 
-                        if (CustomerDisplayViewModel.ofisFingerPrintSensor.GetVerTemplate() == true)
+                        string CurrentFingerPrint = CustomerDisplayViewModel.ofisFingerPrintSensor.VerifyTemplate;
+
+                        if (Properties.Settings.Default.IsBeepEnable == true)
+                            CustomerDisplayViewModel.ofisFingerPrintSensor.PlayBeep(false);
+                        CustomerDisplayViewModel.ofisFingerPrintSensor.PlayGreenLight(false);
+
+                        bool matchResult = MatchFingerPrint(CurrentFingerPrint); 
+                        if(matchResult == false)
                         {
-                            if (Properties.Settings.Default.IsBeepEnable == true)
-                                CustomerDisplayViewModel.ofisFingerPrintSensor.PlayBeep(true);
-
-                            CustomerDisplayViewModel.ofisFingerPrintSensor.PlayGreenLight(true);
-
-                            string CurrentFingerPrint = CustomerDisplayViewModel.ofisFingerPrintSensor.VerifyTemplate;
-
-                            if (Properties.Settings.Default.IsBeepEnable == true)
-                                CustomerDisplayViewModel.ofisFingerPrintSensor.PlayBeep(false);
-                            CustomerDisplayViewModel.ofisFingerPrintSensor.PlayGreenLight(false);
-
-                            bool matchResult = MatchFingerPrint(CurrentFingerPrint); 
-                            if(matchResult == false)
-                            {
-                                pErrorString = "Fingerprint doesn't match, Please try again.";                                                            
-                                return false;
-                            }
-
-                            FuelHistory oFuelHistory = new FuelHistory();
-                            oFuelHistory.CustomerId = _SelectedCustomer.Id;
-                            oFuelHistory.CustomerName = _SelectedCustomer.Name;
-                            oFuelHistory.FuelAmount = FuelAmount;
-                            oFuelHistory.FuelStationId = SharedData.CurrentFuelStation.Id;
-                            oFuelHistory.FuelType = FuelType;
-                            oFuelHistory.FuelVolume = FuelTaken;
-                            oFuelHistory.KeyCustomerId = _SelectedCustomer.KeyCustomerId;
-                            oFuelHistory.Id = 0;
-                            if (_SelectedCustomer.KeyCustomerId != null && _SelectedCustomer.KeyCustomerId > 0)
-                            {
-                                oFuelHistory.KeyCustomerName = _SelectedCustomer.Customer2.Name;
-                            }
-                            oFuelHistory.Time = DateTime.Now;
-                            oFuelHistory.UserId = SharedData.LoggedUser.Id;
-                            oFuelHistory.UserName = SharedData.LoggedUser.Name;
-
-                            bool result = FuelManager.AddFuelHistory(oFuelHistory);
-                            if (result == false)
-                            {
-                                pErrorString = "Error while adding the fuel, Please try again.";                                
-                            }
-                            else
-                                return true;
+                            pErrorString = "Fingerprint doesn't match, Please try again.";                                                            
+                            return false;
                         }
+
+                        int iCustomerId = 0;
+                        if (_SelectedCustomer.CustomerType == (int)FuelSupply.DAL.Entity.Comman.Constants.eCustomerType.KeyCustomer)
+                            iCustomerId = _SelectedCustomer.Id;
                         else
                         {
-                            CustomerDisplayViewModel.ofisFingerPrintSensor.PlayRedLight(true);
-
-                            CustomerDisplayViewModel.ofisFingerPrintSensor.PlayRedLight(false);
+                            if (_SelectedCustomer.Customer2 != null)
+                                iCustomerId = _SelectedCustomer.Customer2.Id;
                         }
+                        bool bDeductAmount = CustomerManager.DeductAmount(iCustomerId, FuelAmount);
+                        if (bDeductAmount == false)
+                        {
+                            pErrorString = "Error while adding the fuel, Please try again.";  
+                            return false;
+                        }
+
+                        FuelHistory oFuelHistory = new FuelHistory();
+                        oFuelHistory.CustomerId = _SelectedCustomer.Id;
+                        oFuelHistory.CustomerName = _SelectedCustomer.Name;
+                        oFuelHistory.FuelAmount = FuelAmount;
+                        oFuelHistory.FuelStationId = SharedData.CurrentFuelStation.Id;
+                        oFuelHistory.FuelType = FuelType;
+                        oFuelHistory.FuelVolume = FuelTaken;
+                        oFuelHistory.KeyCustomerId = _SelectedCustomer.KeyCustomerId;
+                        oFuelHistory.Id = 0;
+                        if (_SelectedCustomer.KeyCustomerId != null && _SelectedCustomer.KeyCustomerId > 0)
+                        {
+                            oFuelHistory.KeyCustomerName = _SelectedCustomer.Customer2.Name;
+                        }
+                        oFuelHistory.Time = DateTime.Now;
+                        oFuelHistory.UserId = SharedData.LoggedUser.Id;
+                        oFuelHistory.UserName = SharedData.LoggedUser.Name;
+
+                        bool result = FuelManager.AddFuelHistory(oFuelHistory);
+                        if (result == false)
+                        {
+                            pErrorString = "Error while adding the fuel, Please try again.";                                
+                        }
+                        else
+                            return true;                        
                     }
+                    else
+                    {
+                        CustomerDisplayViewModel.ofisFingerPrintSensor.PlayRedLight(true);
+
+                        CustomerDisplayViewModel.ofisFingerPrintSensor.PlayRedLight(false);
+                    }                    
                 }
             }
             return false;

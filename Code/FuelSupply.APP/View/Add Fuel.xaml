@@ -81,7 +81,7 @@
             <ComboBox Name="cmbFuelType" Margin="5,5,5,5" ItemsSource="{Binding FuelTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding FuelType, Mode=TwoWay}" Style="{StaticResource ComboBoxFlatStyle}" Grid.Column="2" Grid.Row="3" ></ComboBox>
 
             <Label Name="lblAvailableAmountHeader" Grid.Column="1" Grid.Row="4" Content="Available Amount:" Style="{StaticResource LabelHeaderStyle}"  ></Label>
-            <Label Name="lblAvailableAmount"  Grid.Column="2" Grid.Row="4" Style="{StaticResource LableStyle}" Content="{Binding SelectedCustomer.AvailablePay}"></Label>
+            <Label Name="lblAvailableAmount"  Grid.Column="2" Grid.Row="4" Style="{StaticResource LableStyle}" Content="{Binding AvailableAmount}"></Label>
             
             <Label Name="lblFuleInLiter" Content="Fuel(In Liter):" Grid.Column="1" Grid.Row="5" Style="{StaticResource LabelHeaderStyle}"></Label>
             <TextBox Name="txtFuelLiter" Grid.Column="2" Grid.Row="5" Style="{StaticResource TextBoxStyle}"  Text="{Binding FuelTaken, Mode=TwoWay}" Controls:TextBoxHelper.Watermark="In Liter"></TextBox>

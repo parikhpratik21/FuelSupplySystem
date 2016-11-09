@@ -1,6 +1,7 @@
 ﻿using FuelSupply.APP.Helper;
 using FuelSupply.BAL.Manager;
 using FuelSupply.BAL.Manager.Common;
+using FuelSupply.DAL.Entity.Comman;
 using FuelSupply.DAL.Entity.CustomerEntity;
 using Ofis;
 using System;
@@ -160,6 +161,27 @@ namespace FuelSupply.APP.ViewModel
             }
         }
 
+        public bool IsAddCreditVisible
+        {
+            get
+            {
+                if (IsAdminUser == false)
+                    return false;
+                else
+                {
+                    if (_selectedCustomer != null)
+                    {
+                        if (_selectedCustomer.CustomerType == (int)Constants.eCustomerType.Driver)
+                        {
+                            return false;
+                        }
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+            }
+        }
         public ICommand SearchCommand
         {
             get

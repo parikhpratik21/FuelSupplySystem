@@ -60,6 +60,14 @@ namespace FuelSupply.APP.ViewModel
             }
         }
 
+        public bool IsDriverFieldDisable
+        {
+            get
+            {
+                return !IsKeyCustomerListEnable;
+            }
+        }
+
         public bool IsKeyCustomerListEnable
         {
             get
@@ -160,20 +168,37 @@ namespace FuelSupply.APP.ViewModel
         }
         private bool ValidateCustomer()
         {
-            if (_SelectedCustomer.Code == null || _SelectedCustomer.Code.Length <= 0)
-                MessageManager.ShowErrorMessage("Please select valid customer code", oMainWindow);
-            else if (_SelectedCustomer.Name == null || _SelectedCustomer.Name.Length <= 0)
-                MessageManager.ShowErrorMessage("Please select valid customer name", oMainWindow);
-            else if (_SelectedCustomer.CustomerType == null || _SelectedCustomer.CustomerType == 0)
-                MessageManager.ShowErrorMessage("Please select valid customer type", oMainWindow);
-            else if (_SelectedCustomer.CustomerType == (int)Constants.eCustomerType.Driver && (_SelectedCustomer.KeyCustomerId == null || _SelectedCustomer.KeyCustomerId <= 0))
-                MessageManager.ShowErrorMessage("Please select valid key customer", oMainWindow);
-            else if (_SelectedCustomer.PaymentType == null || _SelectedCustomer.PaymentType <= 0)
-                MessageManager.ShowErrorMessage("Please select valid key payment type", oMainWindow);
-            else if (_SelectedCustomer.PaymentLimit == null || _SelectedCustomer.PaymentLimit <= 0)
-                MessageManager.ShowErrorMessage("Please select valid key payment limit", oMainWindow);
+            if (_SelectedCustomer.CustomerType == (int)Constants.eCustomerType.Driver)
+            {
+                if (_SelectedCustomer.Code == null || _SelectedCustomer.Code.Length <= 0)
+                    MessageManager.ShowErrorMessage("Please select valid customer code", oMainWindow);
+                else if (_SelectedCustomer.Name == null || _SelectedCustomer.Name.Length <= 0)
+                    MessageManager.ShowErrorMessage("Please select valid customer name", oMainWindow);
+                else if (_SelectedCustomer.CustomerType == null || _SelectedCustomer.CustomerType == 0)
+                    MessageManager.ShowErrorMessage("Please select valid customer type", oMainWindow);
+                else if (_SelectedCustomer.CustomerType == (int)Constants.eCustomerType.Driver && (_SelectedCustomer.KeyCustomerId == null || _SelectedCustomer.KeyCustomerId <= 0))
+                    MessageManager.ShowErrorMessage("Please select valid key customer", oMainWindow);               
+                else
+                    return true;
+            }
             else
-                return true;
+            {
+                if (_SelectedCustomer.Code == null || _SelectedCustomer.Code.Length <= 0)
+                    MessageManager.ShowErrorMessage("Please select valid customer code", oMainWindow);
+                else if (_SelectedCustomer.Name == null || _SelectedCustomer.Name.Length <= 0)
+                    MessageManager.ShowErrorMessage("Please select valid customer name", oMainWindow);
+                else if (_SelectedCustomer.CustomerType == null || _SelectedCustomer.CustomerType == 0)
+                    MessageManager.ShowErrorMessage("Please select valid customer type", oMainWindow);
+                else if (_SelectedCustomer.CustomerType == (int)Constants.eCustomerType.Driver && (_SelectedCustomer.KeyCustomerId == null || _SelectedCustomer.KeyCustomerId <= 0))
+                    MessageManager.ShowErrorMessage("Please select valid key customer", oMainWindow);
+                else if (_SelectedCustomer.PaymentType == null || _SelectedCustomer.PaymentType <= 0)
+                    MessageManager.ShowErrorMessage("Please select valid key payment type", oMainWindow);
+                else if (_SelectedCustomer.PaymentLimit == null || _SelectedCustomer.PaymentLimit <= 0)
+                    MessageManager.ShowErrorMessage("Please select valid key payment limit", oMainWindow);
+                else
+                    return true;
+            }
+           
 
             return false;
         }

@@ -112,20 +112,16 @@ namespace FuelSupply.BAL.Manager
         }
 
         public static bool DeleteUser(int pUserId, bool pDeleteHistory)
-        {
-            bool result = UserProvider.DeleteUser(pUserId);
-            if(result == true)
+        {           
+            if (pDeleteHistory == true)
             {
-                if (pDeleteHistory == true)
-                {
-                    //delete cfuel and credit history
-                    CreditManager.DeleteCreditHistoryByUserId(pUserId);
-                    FuelManager.DeleteFuelHistoryByUserId(pUserId);
-                }
-                return true;
+                //delete cfuel and credit history
+                CreditManager.DeleteCreditHistoryByUserId(pUserId);
+                FuelManager.DeleteFuelHistoryByUserId(pUserId);
             }
-            
-            return false;
+
+            bool result = UserProvider.DeleteUser(pUserId);
+            return result;
         }
 
         private static string Encrypt(string pEncryptText)

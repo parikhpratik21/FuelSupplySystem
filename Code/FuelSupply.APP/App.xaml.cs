@@ -30,35 +30,44 @@ namespace FuelSupply.APP
         #endregion
         protected override void OnStartup(StartupEventArgs e)
         {
- 	         base.OnStartup(e);
+            try
+            {
+                base.OnStartup(e);
 
-             Process thisProc = Process.GetCurrentProcess();
-             Process[] existingProcessList = Process.GetProcessesByName(thisProc.ProcessName);
-             if (existingProcessList.Length > 1)
-             {
-                 IntPtr Handle = FindWindow(null, "FuelSupply");
-                 ShowWindow(Handle, 9);
-                 Environment.Exit(1);
-             }
+                Process thisProc = Process.GetCurrentProcess();
+                Process[] existingProcessList = Process.GetProcessesByName(thisProc.ProcessName);
+                if (existingProcessList.Length > 1)
+                {
+                    IntPtr Handle = FindWindow(null, "FuelSupply");
+                    ShowWindow(Handle, 9);
+                    Environment.Exit(1);
+                }
 
-             System.Windows.Forms.Application.ThreadException += new ThreadExceptionEventHandler(LogUnhandledThreadException);
+                System.Windows.Forms.Application.ThreadException += new ThreadExceptionEventHandler(LogUnhandledThreadException);
 
-             // Set the unhandled exception mode to force all Windows Forms errors to go through 
-             // our handler.
-             System.Windows.Forms.Application.SetUnhandledExceptionMode(System.Windows.Forms.UnhandledExceptionMode.CatchException);
+                // Set the unhandled exception mode to force all Windows Forms errors to go through 
+                // our handler.
+                System.Windows.Forms.Application.SetUnhandledExceptionMode(System.Windows.Forms.UnhandledExceptionMode.CatchException);
 
-             // Add the event handler for handling non-UI thread exceptions to the event. 
-             AppDomain.CurrentDomain.UnhandledException +=
-                 new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+                // Add the event handler for handling non-UI thread exceptions to the event. 
+                AppDomain.CurrentDomain.UnhandledException +=
+                    new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
-             oMainWindow = new MainWindow();
-             oMainWindow.ShowDialog();
+                oMainWindow = new MainWindow();
+                oMainWindow.ShowDialog();
 
-             if (FuelSupply.APP.ViewModel.CustomerDisplayViewModel.ofisFingerPrintSensor != null)
-                FuelSupply.APP.ViewModel.CustomerDisplayViewModel.ofisFingerPrintSensor.EndOfis();            
-             FuelSupply.APP.ViewModel.CustomerDisplayViewModel.ofisFingerPrintSensor = null;
+                if (FuelSupply.APP.ViewModel.CustomerDisplayViewModel.ofisFingerPrintSensor != null)
+                    FuelSupply.APP.ViewModel.CustomerDisplayViewModel.ofisFingerPrintSensor.EndOfis();
+                FuelSupply.APP.ViewModel.CustomerDisplayViewModel.ofisFingerPrintSensor = null;
 
-             Environment.Exit(1);                         
+                Process.GetCurrentProcess().Kill();
+                //Application.Current.Shutdown();
+               // Environment.Exit(0);           
+            }
+            catch(Exception ex)
+            {
+                LogManager.logExceptionMessage("FuelSupplySystem", "OnStartup", ex);
+            }                         
         }
                 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
@@ -66,7 +75,7 @@ namespace FuelSupply.APP
             e.Handled = true;          
             LogManager.logExceptionMessage("FuelSupplySystem", "Application_DispatcherUnhandledException", e.Exception);
 
-            MessageManager.ShowErrorMessage(e.Exception.Message, oMainWindow);
+           // MessageManager.ShowErrorMessage(e.Exception.Message, oMainWindow);
         }
 
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -74,14 +83,14 @@ namespace FuelSupply.APP
             Exception ex = (Exception)e.ExceptionObject;
             LogManager.logExceptionMessage("FuelSupplySystem", "CurrentDomain_UnhandledException", ex);
 
-            MessageManager.ShowErrorMessage(ex.Message, oMainWindow);
+           // MessageManager.ShowErrorMessage(ex.Message, oMainWindow);
         }
 
         private void LogUnhandledThreadException(object sender, ThreadExceptionEventArgs ex)
         {
             LogManager.logExceptionMessage("FuelSupplySystem", "LogUnhandledThreadException", ex.Exception);
 
-            MessageManager.ShowErrorMessage(ex.Exception.Message, oMainWindow);
+           // MessageManager.ShowErrorMessage(ex.Exception.Message, oMainWindow);
         }      
     }
 }

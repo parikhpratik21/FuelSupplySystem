@@ -94,19 +94,15 @@ namespace FuelSupply.BAL.Manager
         }
 
         public static bool DeleteCustomer(int pCustomerId, bool pDeleteHistory)
-        {
-            bool bResult = CustomerProvider.DeleteCustomer(pCustomerId);
-
-            if(bResult == true)
+        {           
+            if (pDeleteHistory == true)
             {
-                if (pDeleteHistory == true)
-                {
-                    CreditManager.DeleteCreditHistoryByCustomerId(pCustomerId);
-                    FuelManager.DeleteFuelHistoryByCustomerId(pCustomerId);
-                }
-                return true;
+                CreditManager.DeleteCreditHistoryByCustomerId(pCustomerId);
+                FuelManager.DeleteFuelHistoryByCustomerId(pCustomerId);                
             }
-            return false;
+
+            bool bResult = CustomerProvider.DeleteCustomer(pCustomerId);
+            return bResult;
         }
 
         public static bool IncreaseCredit(int pCustomerId, decimal pAmount, int pPaymentType)

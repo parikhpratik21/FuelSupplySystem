@@ -48,8 +48,13 @@ namespace FuelSupply.APP.View
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            Environment.Exit(1);
+        {          
+            this.Close();           
+
+            if(oMainWindows != null)
+            {
+                oMainWindows.Close();
+            }
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
