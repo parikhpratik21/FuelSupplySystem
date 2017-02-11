@@ -68,7 +68,7 @@ namespace FuelSupply.DAL.Provider
         {
             return fuelDbObject.FuelHistories.Where(x => x.FuelType == pFuelTypeId).ToList();
         }
-
+        
         public static bool AddFuelHistory(FuelHistory pHistory)
         {
             pHistory.Time = DateTime.Now;

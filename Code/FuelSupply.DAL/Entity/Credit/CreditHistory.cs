@@ -20,11 +20,14 @@ namespace FuelSupply.DAL.Entity.CreditEntity
         public Nullable<int> PaymentType { get; set; }
         public Nullable<decimal> CreditAmount { get; set; }
         public Nullable<int> KeyCustomerId { get; set; }
+        public Nullable<int> ShiftId { get; set; }
+        public string ShiftName { get; set; }
 
         public virtual Customer Customer { get; set; }
         public virtual FuelStation FuelStation { get; set; }
         public virtual PaymentType PaymentType1 { get; set; }
         public virtual User User { get; set; }
+        public virtual Shift Shift { get; set; }
     }
 
     public class CreditHistoryList : List<CreditHistory> { }

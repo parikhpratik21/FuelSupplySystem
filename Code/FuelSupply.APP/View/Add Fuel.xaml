@@ -7,7 +7,7 @@
         WindowTitleBrush="{StaticResource AppTitleBarColor}" TitleCaps="False" TitleForeground="White" BorderThickness="2.0" 
         BorderBrush="{StaticResource AppTitleBarColor}" ShowMaxRestoreButton="False" ShowCloseButton="True" ShowMinButton="False" Closing="MetroWindow_Closing" 
         ShowIconOnTitleBar="False" IconTemplate="{StaticResource LoginIconTemplate}" WindowStartupLocation="CenterOwner" 
-        ShowInTaskbar="False" Title="Add Fuel" Height="350" Width="380">
+        ShowInTaskbar="False" Title="Add Fuel" Height="420" Width="380">
     <Window.CommandBindings>
         <CommandBinding Command="Close" Executed="btnSave_Click" />
     </Window.CommandBindings>
@@ -21,6 +21,11 @@
             <Setter Property="Margin" Value="5,0,5,0"/>
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />                        
+        </Style>
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource MetroTextBlock}">
+            <Setter Property="Margin" Value="5,0,5,0"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
         </Style>
         <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
             <Setter Property="Margin" Value="5,0,5,0"/>
@@ -62,6 +67,8 @@
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.3*" />
@@ -76,18 +83,24 @@
             <Label Name="lblKeyCustomerHeader" Content="Key Customer:" Grid.Column="1" Grid.Row="2" Style="{StaticResource LabelHeaderStyle}"></Label>           
             <!--<ComboBox ItemsSource="{Binding KeyCustomerList}" Margin="5,5,5,5" IsEnabled="{Binding IsKeyCustomerListEnable}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedCustomer.Customer2.Id}" Name="cmbKeyCustomer" Style="{StaticResource ComboBoxFlatStyle}" Grid.Column="2" Grid.Row="2"></ComboBox>-->
             <Label Name="lblKeyCustomerName" Content="{Binding SelectedCustomer.Customer2.Name}" Margin="5,5,5,5" Grid.Column="2" Grid.Row="2" Style="{StaticResource LableStyle}"></Label>
-            
-            <Label Name="lblFuelType" Content="Fuel Type:" Grid.Column="1" Grid.Row="3" Style="{StaticResource LabelHeaderStyle}"></Label>
-            <ComboBox Name="cmbFuelType" Margin="5,5,5,5" ItemsSource="{Binding FuelTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding FuelType, Mode=TwoWay}" Style="{StaticResource ComboBoxFlatStyle}" Grid.Column="2" Grid.Row="3" ></ComboBox>
 
-            <Label Name="lblAvailableAmountHeader" Grid.Column="1" Grid.Row="4" Content="Available Amount:" Style="{StaticResource LabelHeaderStyle}"  ></Label>
-            <Label Name="lblAvailableAmount"  Grid.Column="2" Grid.Row="4" Style="{StaticResource LableStyle}" Content="{Binding AvailableAmount}"></Label>
-            
-            <Label Name="lblFuleInLiter" Content="Fuel(In Liter):" Grid.Column="1" Grid.Row="5" Style="{StaticResource LabelHeaderStyle}"></Label>
-            <TextBox Name="txtFuelLiter" Grid.Column="2" Grid.Row="5" Style="{StaticResource TextBoxStyle}"  Text="{Binding FuelTaken, Mode=TwoWay}" Controls:TextBoxHelper.Watermark="In Liter"></TextBox>
+            <Label Name="lblInvoiceNo" Content="Invoice No:" Grid.Column="1" Grid.Row="3" Style="{StaticResource LabelHeaderStyle}"></Label>
+            <TextBox Name="txtInvoiceNo" Grid.Column="2" Grid.Row="3" Style="{StaticResource TextBoxStyle}"  Text="{Binding InvoiceNo, Mode=TwoWay}" />
 
-            <Label Name="lblFuleAmount" Content="Amount:" Grid.Column="1" Grid.Row="6" Style="{StaticResource LabelHeaderStyle}"></Label>
-            <TextBox Name="txtFuelAmount" Grid.Column="2" Grid.Row="6" Style="{StaticResource TextBoxStyle}"  Text="{Binding FuelAmount, Mode=TwoWay}" Controls:TextBoxHelper.Watermark="In Rupees"></TextBox>
+            <Label Name="lblFuelType" Content="Fuel Type:" Grid.Column="1" Grid.Row="4" Style="{StaticResource LabelHeaderStyle}"></Label>
+            <ComboBox Name="cmbFuelType" Margin="5,5,5,5" ItemsSource="{Binding FuelTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding FuelType, Mode=TwoWay}" Style="{StaticResource ComboBoxFlatStyle}" Grid.Column="2" Grid.Row="4" ></ComboBox>
+
+            <Label Name="lblFuelRate" Content="Fuel Rate:" Grid.Column="1" Grid.Row="5" Style="{StaticResource LabelHeaderStyle}"></Label>
+            <TextBlock Name="txtFuelRate" Grid.Column="2" Grid.Row="5" Style="{StaticResource TextBlockStyle}"  Text="{Binding CurrentFuelRate}" />
+
+            <Label Name="lblAvailableAmountHeader" Grid.Column="1" Grid.Row="6" Content="Available Amount:" Style="{StaticResource LabelHeaderStyle}"  ></Label>
+            <Label Name="lblAvailableAmount"  Grid.Column="2" Grid.Row="6" Style="{StaticResource LableStyle}" Content="{Binding AvailableAmount}"></Label>
+            
+            <Label Name="lblFuleInLiter" Content="Fuel(In Liter):" Grid.Column="1" Grid.Row="7" Style="{StaticResource LabelHeaderStyle}"></Label>
+            <TextBox Name="txtFuelLiter" Grid.Column="2" Grid.Row="7" Style="{StaticResource TextBoxStyle}"  Text="{Binding FuelTaken, Mode=TwoWay}" Controls:TextBoxHelper.Watermark="In Liter"></TextBox>
+
+            <Label Name="lblFuleAmount" Content="Amount:" Grid.Column="1" Grid.Row="8" Style="{StaticResource LabelHeaderStyle}"></Label>
+            <TextBox Name="txtFuelAmount" Grid.Column="2" Grid.Row="8" Style="{StaticResource TextBoxStyle}"  Text="{Binding FuelAmount, Mode=TwoWay}" Controls:TextBoxHelper.Watermark="In Rupees"></TextBox>
 
         </Grid>
 

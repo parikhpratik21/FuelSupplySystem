@@ -34,6 +34,12 @@ namespace FuelSupply.DAL.Provider
             return userTypeList;
         }
 
+        public static List<Shift> GetAllShift()
+        {
+            List<Shift> shiftTypeList = userDbObject.Shifts.ToList();
+            return shiftTypeList;
+        }
+
         public static User GetUserById(int pUserId)
         {
             return userDbObject.Users.Where(x=> x.Id == pUserId).FirstOrDefault();

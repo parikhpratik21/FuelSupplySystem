@@ -21,29 +21,19 @@ namespace FuelSupply.APP.View
     /// <summary>
     /// Interaction logic for ChangePassword.xaml
     /// </summary>
-    public partial class ChangePassword : MetroWindow
+    public partial class PasswordBox : MetroWindow
     {
         #region "Declaration"
         private MainWindow oMainWindow;
-        private ChangePasswordViewModel oViewModel;
+        private PasswordViewModel oViewModel;
         #endregion
-        public ChangePassword(Window pOwner, User pSelectedUser)
+        public PasswordBox(Window pOwner, PasswordViewModel pViewModel)
         {
             InitializeComponent();
 
-            oViewModel = new ChangePasswordViewModel(pOwner);
-            oViewModel.SelectedUser = pSelectedUser;
+            oViewModel = pViewModel;            
             this.DataContext = oViewModel;
-        }
-
-        public ChangePassword(Window pOwner, Customer pSelectedCustomer)
-        {
-            InitializeComponent();
-
-            oViewModel = new ChangePasswordViewModel(pOwner);
-            oViewModel.SelectedCustomer = pSelectedCustomer;
-            this.DataContext = oViewModel;
-        }
+        }       
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -52,10 +42,15 @@ namespace FuelSupply.APP.View
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            bool result = oViewModel.ChangePassword(txtNewPassword.Password,txtConfirmPassword.Password);
+            bool result = oViewModel.GetPassword(txtNewPassword.Password);
             if (result == true)
             {
+                this.DialogResult = true;
                 this.Close();
+            }    
+            else
+            {
+                txtNewPassword.Password = string.Empty;
             }
         }
 

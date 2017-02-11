@@ -178,7 +178,10 @@ namespace FuelSupply.DAL.Provider
         {
             Customer oCustomer = customerDbObject.Customers.Where(x => x.Id == pCustomerId).FirstOrDefault();
             if (oCustomer != null)
-            {                
+            {
+                if (oCustomer.AvailablePay == null)
+                    oCustomer.AvailablePay = 0;
+
                 oCustomer.AvailablePay = oCustomer.AvailablePay + pAmount;
                 customerDbObject.SaveChanges();
                 return true;
@@ -191,6 +194,9 @@ namespace FuelSupply.DAL.Provider
             Customer oCustomer = customerDbObject.Customers.Where(x => x.Id == pCustomerId).FirstOrDefault();
             if (oCustomer != null)
             {
+                if (oCustomer.AvailablePay == null)
+                    oCustomer.AvailablePay = 0;
+
                 if ((oCustomer.AvailablePay - pAmount) < 0)
                     return false;
 
@@ -206,6 +212,9 @@ namespace FuelSupply.DAL.Provider
             Customer oCustomer = customerDbObject.Customers.Where(x => x.Id == pCustomerId).FirstOrDefault();
             if (oCustomer != null)
             {
+                if (oCustomer.AvailablePay == null)
+                    oCustomer.AvailablePay = 0;
+
                 if (oCustomer.AvailablePay >= pAmount)
                     return true;
                 else
@@ -214,6 +223,19 @@ namespace FuelSupply.DAL.Provider
             return false;
         }
 
+        public static bool ChangePassword(int pCustomerId, string pNewPassword)
+        {
+            Customer oCustomer = customerDbObject.Customers.Where(x => x.Id == pCustomerId).FirstOrDefault();
+            if (oCustomer != null)
+            {
+                oCustomer.Password = pNewPassword;
+                customerDbObject.SaveChanges();
+
+                return true;
+            }
+
+            return false;
+        }
         #endregion
     }
 }

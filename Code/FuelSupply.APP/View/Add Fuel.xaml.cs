@@ -28,7 +28,10 @@ namespace FuelSupply.APP.View
         private MainWindow oMainWindow;
 
         public delegate void DisplayErrorMessage(string sErrorMsg);
-        public event DisplayErrorMessage showErrorMessage; 
+        public event DisplayErrorMessage showErrorMessage;
+
+        public delegate bool DisplayConfirmationMessage(string sErrorMsg);
+        public event DisplayConfirmationMessage showConfirmationMessage; 
         #endregion
         public Add_Fuel(Customer pSelectedCustomer, Window pOwnerWindow, AddFuelViewModel pViewModel)
         {
@@ -56,7 +59,38 @@ namespace FuelSupply.APP.View
             }
             else
             {
-                ShowErrorMessage(sErrorString);
+                if (sErrorString == AddFuelViewModel.FingerPrintNotMatchMessage)
+                {
+                    bool confirmationResult = ShowConfirmationMessage("Fingerprint doesn't match, Do you want to continue with password?");
+                    if(confirmationResult == true)
+                    {
+                        //open password box and ask for password
+                        PasswordViewModel oPasswordViewModel = new PasswordViewModel(this);
+                        oPasswordViewModel.CustomerPassword = oViewModel.SelectedCustomer.Password;
+                        PasswordBox oPassword = new PasswordBox(this, oPasswordViewModel);
+                        oPasswordViewModel.MainWindow = oPassword;
+                        bool? passwordResult = oPassword.ShowDialog();
+                        if(passwordResult == true)
+                        {
+                            string sErrorMsg = string.Empty;
+                            oViewModel.AddFuelByPassword(ref sErrorMsg);
+                            if(sErrorMsg != string.Empty)
+                            {
+                                ShowErrorMessage(sErrorString); 
+                            }
+                            else
+                            {
+                                this.Close();
+                                oMainWindow.btnCustomer_Click(null, null);
+                            }
+
+                        }                       
+                    }
+                }
+                else
+                {
+                    ShowErrorMessage(sErrorString);  
+                }                              
             }
         }
 
@@ -68,9 +102,21 @@ namespace FuelSupply.APP.View
                     MessageManager.ShowErrorMessage(pErrorMsg, oMainWindow);
             }
             else
-                oMainWindow.Dispatcher.Invoke(new DisplayErrorMessage(ShowErrorMessage), new object[] { pErrorMsg }); 
+                oMainWindow.Dispatcher.Invoke(new DisplayErrorMessage(ShowErrorMessage), new object[] { pErrorMsg });            
+        }
 
-           
+        public bool ShowConfirmationMessage(string pErrorMsg)
+        {
+            if (oMainWindow.Dispatcher.CheckAccess())
+            {
+                if (pErrorMsg != string.Empty)
+                    return MessageManager.ShowConfirmationMessage(pErrorMsg, oMainWindow);
+                else
+                    return false;
+            }
+            else
+                return (bool)oMainWindow.Dispatcher.Invoke(new DisplayConfirmationMessage(ShowConfirmationMessage), new object[] { pErrorMsg });
+
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

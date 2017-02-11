@@ -37,6 +37,7 @@ namespace FuelSupply.BAL.Manager.Common
         #region "Declaration"
         public static User LoggedUser {get;set;}
         public static FuelStation CurrentFuelStation { get; set; }
+        public static Shift CurrentShift { get; set; }
         #endregion
     }
 }

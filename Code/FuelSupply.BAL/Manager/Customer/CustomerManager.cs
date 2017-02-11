@@ -82,6 +82,10 @@ namespace FuelSupply.BAL.Manager
             }
             else
             {
+                if(pCustomer.CustomerType == (int)FuelSupply.DAL.Entity.Comman.Constants.eCustomerType.Driver)
+                {
+                    pCustomer.KeyCustomerId = 0;
+                }
                 bool result = CustomerProvider.UpdateCustomer(pCustomer);
                 if (result == false)
                 {
@@ -118,6 +122,13 @@ namespace FuelSupply.BAL.Manager
                 oHistory.PaymentType = pPaymentType;
                 oHistory.Id = 0;
                 oHistory.FuelStationId = SharedData.CurrentFuelStation.Id;
+
+                if (SharedData.CurrentShift != null)
+                {
+                    oHistory.ShiftId = SharedData.CurrentShift.ShiftId;
+                    oHistory.ShiftName = SharedData.CurrentShift.ShiftName;
+                }
+
                 bool oHistoryResult = CreditManager.AddCreditHistory(oHistory);
                 return oHistoryResult;
             }
@@ -148,7 +159,13 @@ namespace FuelSupply.BAL.Manager
         public static Customer GetCustomerByFingerPrint(string pFingerPrint)
         {
             return CustomerProvider.GetCustomerByFingerPrint(pFingerPrint);
-        }     
+        }
+
+        public static bool ChangePassword(int pUserId, string pNewPassword)
+        {
+            pNewPassword = UserManager.Encrypt(pNewPassword);
+            return CustomerProvider.ChangePassword(pUserId, pNewPassword);
+        }
 
         #endregion
     }

@@ -92,6 +92,7 @@
     <Compile Include="Entity\Fuel\FuelStation.cs" />
     <Compile Include="Entity\Fuel\FuelType.cs" />
     <Compile Include="Entity\Customer\PaymentType.cs" />
+    <Compile Include="Entity\User\Shift.cs" />
     <Compile Include="Entity\User\User.cs" />
     <Compile Include="Entity\User\UserType.cs" />
     <Compile Include="Provider\Common\LogManager.cs" />

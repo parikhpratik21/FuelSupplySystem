@@ -22,10 +22,14 @@ namespace FuelSupply.DAL.Entity.FuelEntity
         public string KeyCustomerName { get; set; }
         public string CustomerName { get; set; }
         public string UserName { get; set; }
+        public Nullable<int> ShiftId { get; set; }
+        public string ShiftName { get; set; }
+        public string InvoiceNo { get; set; }
 
         public virtual Customer Customer { get; set; }
         public virtual FuelStation FuelStation { get; set; }
         public virtual FuelType FuelType1 { get; set; }
         public virtual User User { get; set; }
+        public virtual Shift Shift { get; set; }
     }   
 }

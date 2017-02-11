@@ -136,6 +136,18 @@ namespace FuelSupply.APP.ViewModel
                     return string.Empty;
             }
         }
+        public string CurrentShiftName
+        {
+            get
+            {
+                if (SharedData.CurrentShift != null)
+                {
+                    return SharedData.CurrentShift.ShiftName;
+                }
+                else
+                    return string.Empty;
+            }
+        }
         public List<Customer> CustomerList
         {
             get {
@@ -213,6 +225,20 @@ namespace FuelSupply.APP.ViewModel
             }
         }
 
+        public Visibility AdminUserVisibility
+        {
+            get
+            {
+                if(IsAdminUser == true)
+                {
+                    return Visibility.Visible;
+                }
+                else
+                {
+                    return Visibility.Collapsed;
+                }
+            }
+        }
         public bool IsAdminUser
         {
             get

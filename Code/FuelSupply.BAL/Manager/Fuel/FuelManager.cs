@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FuelSupply.DAL.Provider;
 using FuelSupply.DAL.Entity.FuelEntity;
+using FuelSupply.BAL.Manager.Common;
 
 namespace FuelSupply.BAL.Manager
 {
@@ -65,7 +66,7 @@ namespace FuelSupply.BAL.Manager
         }
 
         public static bool AddFuelHistory(FuelHistory pHistory)
-        {
+        {            
             return FuelProvider.AddFuelHistory(pHistory);
         }
 

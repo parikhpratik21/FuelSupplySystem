@@ -12,7 +12,7 @@ namespace FuelSupply.APP.ExportEntity
         [Description("ID")]
         public int ID { get; set; }
 
-        [Description("User Name")]
+        [Description("Attendant Name")]
         public string UserName { get; set; }
 
         [Description("Customer Name")]

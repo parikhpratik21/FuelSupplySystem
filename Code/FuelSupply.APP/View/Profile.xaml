@@ -10,7 +10,7 @@
             <Setter Property="Foreground" Value="Black"/>
         </Style>
         <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
-            <Setter Property="Margin" Value="10,0,10,0"/>
+            <Setter Property="Margin" Value="10,5,10,5"/>
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="Foreground" Value="Black"/>
@@ -60,7 +60,9 @@
 
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
                 <Label Name="lblLoggedUserNameHeader" Content="Welcome" Foreground="Black" Style="{StaticResource WelcomeLableStyle}"></Label>
-                <Label Name="lblLoggedUserNameValue" Content="{Binding LoggedUserName}" Foreground="Black"  Style="{StaticResource LableStyle}"></Label>
+                <Label Name="lblLoggedUserNameValue" Content="{Binding LoggedUserName}" Foreground="Black"  Style="{StaticResource LableStyle}" Margin="-5,0,-5,0"></Label>
+                <Label Name="lblCurrentShiftHeaderHeader" Content=", Current Shift: " Foreground="Black" Style="{StaticResource WelcomeLableStyle}"></Label>
+                <Label Name="lblCurrentShiftHeaderValue" Content="{Binding CurrentShiftName}" Foreground="Black"  Style="{StaticResource LableStyle}" Margin="-5,0,-5,0"></Label>
             </StackPanel>
             
         </Grid>        
@@ -93,7 +95,7 @@
                 <TextBox Name="txtUserName" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="2" IsEnabled="False" Text="{Binding SelectedUser.UserName}"></TextBox>
 
                 <Label Name="lblUserType" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="3" Content="User Type: "></Label>
-                <ComboBox Name="txtUserType" ItemsSource="{Binding UserTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" Style="{StaticResource ComboBoxStyle}" Grid.Column="1" Grid.Row="3" SelectedValue="{Binding SelectedUser.UserType}" ></ComboBox>
+                <ComboBox Name="txtUserType" Margin="10,5,10,5" ItemsSource="{Binding UserTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" Style="{StaticResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="3" SelectedValue="{Binding SelectedUser.UserType}" ></ComboBox>
                 
                 <Label Name="lblContactNo" Style="{StaticResource LableStyle}" Grid.Column="0" Grid.Row="4" Content="Contact No: "></Label>
                 <TextBox Name="txtContactNo" Style="{StaticResource TextBoxStyle}" Grid.Column="1" Grid.Row="4" Text="{Binding SelectedUser.ContactNo}"></TextBox>

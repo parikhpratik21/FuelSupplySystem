@@ -33,6 +33,7 @@ namespace FuelSupply.DAL.Entity.CustomerEntity
         public Nullable<int> FuelLimitType { get; set; }
         public Nullable<decimal> PaymentLimit { get; set; }
         public Nullable<decimal> AvailablePay { get; set; }
+        public string Password { get; set; }
 
         public virtual CustomerType CustomerType1 { get; set; }
         public virtual FuelLimitType FuelLimitType1 { get; set; }

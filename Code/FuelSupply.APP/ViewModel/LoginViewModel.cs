@@ -20,6 +20,8 @@ namespace FuelSupply.APP.ViewModel
         private string _UserName;        
         private ICommand _LogInButtonCommand;
         private User _LogedUser;
+        private List<Shift> _shiftTypeList;
+        private Shift _currentShift;
         #endregion
 
         #region "Property"
@@ -37,6 +39,32 @@ namespace FuelSupply.APP.ViewModel
         {
             get { return _LogedUser; }
             set { _LogedUser = value; OnPropertyChanged("Loggeduser"); }
+        }
+
+        public List<Shift> ShiftTypeList
+        {
+            get
+            {
+                return _shiftTypeList;
+            }
+            set
+            {
+                _shiftTypeList = value;
+                OnPropertyChanged("ShiftTypeList");
+            }
+        }
+
+        public Shift CurrentShift
+        {
+            get
+            {
+                return _currentShift;
+            }
+            set
+            {
+                _currentShift = value;
+                OnPropertyChanged("CurrentShift");
+            }
         }
         #region LogInButtonCommand
         /// <summary>
@@ -67,6 +95,7 @@ namespace FuelSupply.APP.ViewModel
             oWindow = (MainWindow)pOwnerWindow;
 
             //_LogInButtonCommand = new RelayCommand(Login);
+            ShiftTypeList = UserManager.GetAllTypeList();
         }
 
         public async Task<bool> Login(string pPassword)
@@ -80,6 +109,11 @@ namespace FuelSupply.APP.ViewModel
             else if (pPassword == null)
             {
                 pErrorMsg = "Please enter password.";
+                MessageManager.ShowErrorMessage(pErrorMsg, oWindow);
+            }
+            else if (CurrentShift == null || CurrentShift.ShiftId == 0)
+            {
+                pErrorMsg = "Please select shift.";
                 MessageManager.ShowErrorMessage(pErrorMsg, oWindow);
             }
             else
@@ -100,7 +134,7 @@ namespace FuelSupply.APP.ViewModel
                 {
                     _LogedUser = oUser;
                     SharedData.LoggedUser = oUser;
-
+                    SharedData.CurrentShift = CurrentShift;
                     oWindow.SuccessLogIn();  
                 }                                                          
             }

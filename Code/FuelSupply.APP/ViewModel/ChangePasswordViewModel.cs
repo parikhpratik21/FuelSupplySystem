@@ -1,5 +1,6 @@
 ﻿using FuelSupply.BAL.Manager;
 using FuelSupply.BAL.Manager.Common;
+using FuelSupply.DAL.Entity.CustomerEntity;
 using FuelSupply.DAL.Entity.UserEntity;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,42 @@ namespace FuelSupply.APP.ViewModel
     {
          #region "Declaration"
         private User _SelectedUser;
+        private Customer _SelectedCustomer;
         MainWindow oMainWindow;      
         #endregion
 
         #region "Property"
+
+        public string Code
+        {
+            get
+            {
+                if(SelectedUser != null)
+                {
+                    return SelectedUser.Code;
+                }
+                else
+                {
+                    return SelectedCustomer.Code;
+                }
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                if (SelectedUser != null)
+                {
+                    return SelectedUser.Name;
+                }
+                else
+                {
+                    return SelectedCustomer.Name;
+                }
+            }
+        }
+
         public User SelectedUser
         {
             get
@@ -31,7 +64,20 @@ namespace FuelSupply.APP.ViewModel
                 OnPropertyChanged("SelectedUser");
             }
         }
-       
+
+        public Customer SelectedCustomer
+        {
+            get
+            {
+                return _SelectedCustomer;
+            }
+            set
+            {
+                _SelectedCustomer = value;
+                OnPropertyChanged("SelectedCustomer");
+            }
+        }
+
         #endregion
 
         #region EventHandlers (1)
@@ -63,7 +109,15 @@ namespace FuelSupply.APP.ViewModel
             }
             else
             {
-                bool result = UserManager.ChangePassword(_SelectedUser.Id,pNewPassword);
+                bool result = true;
+                if (_SelectedUser != null)
+                {
+                    UserManager.ChangePassword(_SelectedUser.Id, pNewPassword);
+                }
+                else
+                {
+                    CustomerManager.ChangePassword(_SelectedCustomer.Id, pNewPassword);
+                }
                 if (result == false)
                 {
                     MessageManager.ShowErrorMessage("Error while changing the password, Please try again", oMainWindow);

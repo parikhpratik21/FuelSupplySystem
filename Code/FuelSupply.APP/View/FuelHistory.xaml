@@ -50,7 +50,9 @@
 
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
                 <Label Name="lblLoggedUserNameHeader" Content="Welcome" Foreground="Black" Style="{StaticResource WelcomeLableStyle}"></Label>
-                <Label Name="lblLoggedUserNameValue" Content="{Binding LoggedUserName}" Foreground="Black" FontWeight="Bold" Style="{StaticResource LableStyle}"></Label>
+                <Label Name="lblLoggedUserNameValue" Content="{Binding LoggedUserName}" Foreground="Black" FontWeight="Bold" Style="{StaticResource LableStyle}" Margin="-5,0,-5,0"></Label>
+                <Label Name="lblCurrentShiftHeaderHeader" Content=", Current Shift: " Foreground="Black" Style="{StaticResource WelcomeLableStyle}"></Label>
+                <Label Name="lblCurrentShiftHeaderValue" Content="{Binding CurrentShiftName}" FontWeight="Bold" Foreground="Black"  Style="{StaticResource LableStyle}" Margin="-5,0,-5,0"></Label>
             </StackPanel>
 
         </Grid>
@@ -159,7 +161,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="User Name" Binding="{Binding UserName}" Width="1*">
+                    <DataGridTextColumn Header="Attendant Name" Binding="{Binding UserName}" Width="1*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -195,6 +197,20 @@
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="Fuel Amount" Binding="{Binding FuelAmount}" Width="1.3*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Invoice No" Binding="{Binding InvoiceNo}" Width="0.8*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Shift" Binding="{Binding ShiftName}" Width="0.8*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />

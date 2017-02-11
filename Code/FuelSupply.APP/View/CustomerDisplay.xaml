@@ -92,7 +92,9 @@
 
             <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="0">
                 <Label Name="lblLoggedUserNameHeader" Content="Welcome" Foreground="Black" Style="{StaticResource WelcomeLableStyle}"></Label>
-                <Label Name="lblLoggedUserNameValue" Content="{Binding LoggedUserName}" Foreground="Black"  Style="{StaticResource LableStyle}"></Label>
+                <Label Name="lblLoggedUserNameValue" Content="{Binding LoggedUserName}" Foreground="Black"  Style="{StaticResource LableStyle}" Margin="-5,0,-5,0"></Label>
+                <Label Name="lblCurrentShiftHeaderHeader" Content=", Current Shift: " Foreground="Black" Style="{StaticResource WelcomeLableStyle}"></Label>
+                <Label Name="lblCurrentShiftHeaderValue" Content="{Binding CurrentShiftName}" Foreground="Black"  Style="{StaticResource LableStyle}" Margin="-5,0,-5,0"></Label>
             </StackPanel>
 
         </Grid>
@@ -196,35 +198,35 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="2*">
+                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="2*" Visibility="{Binding Source={x:Reference dummyElement}, Path=Visibility}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Pincode" Binding="{Binding Pincode}" Width="1*">
+                    <DataGridTextColumn Header="Pincode" Binding="{Binding Pincode}" Width="1*" Visibility="{Binding Source={x:Reference dummyElement}, Path=Visibility}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>                        
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="City" Binding="{Binding City}" Width="1*">
+                    <DataGridTextColumn Header="City" Binding="{Binding City}" Width="1*" Visibility="{Binding Source={x:Reference dummyElement}, Path=Visibility}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="State" Binding="{Binding State}" Width="1*">
+                    <DataGridTextColumn Header="State" Binding="{Binding State}" Width="1*" Visibility="{Binding Source={x:Reference dummyElement}, Path=Visibility}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="1*">
+                    <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="1*" Visibility="{Binding Source={x:Reference dummyElement}, Path=Visibility}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -239,6 +241,7 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
+        <FrameworkElement x:Name="dummyElement" Visibility="{Binding AdminUserVisibility}"/>
         <Grid Name="grdOption" Grid.Column="0" Grid.Row="3" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -255,9 +258,11 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2.4*"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Name="btnAddCustomer" Margin="0" Grid.Row="0" Grid.Column="1" IsEnabled="{Binding IsAdminUser}" Click="btnAddCustomer_Click" HorizontalContentAlignment="Stretch">
+            <Button Name="btnAddCustomer" Margin="0" Grid.Row="0" Grid.Column="3" IsEnabled="{Binding IsAdminUser}" Click="btnAddCustomer_Click" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -267,7 +272,7 @@
                     <TextBlock Text="Add"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>
-            <Button Name="btnEditCustomer" Grid.Row="0" Grid.Column="3" IsEnabled="{Binding IsAdminUser}" Click="btnEditCustomer_Click" HorizontalContentAlignment="Stretch">
+            <Button Name="btnEditCustomer" Grid.Row="0" Grid.Column="5" IsEnabled="{Binding IsAdminUser}" Click="btnEditCustomer_Click" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -277,7 +282,7 @@
                     <TextBlock Text="Edit"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>
-            <Button Name="btnDeleteCustomer" Grid.Row="0" Grid.Column="5" IsEnabled="{Binding IsAdminUser}" Click="btnDeleteCustomer_Click" HorizontalContentAlignment="Stretch">
+            <Button Name="btnDeleteCustomer" Grid.Row="0" Grid.Column="7" IsEnabled="{Binding IsAdminUser}" Click="btnDeleteCustomer_Click" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -287,7 +292,7 @@
                     <TextBlock Text="Delete"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>
-            <Button Name="btnAddCredit" Grid.Row="0" Grid.Column="7" Click="btnAddCredit_Click" IsEnabled="{Binding IsAddCreditVisible}" HorizontalContentAlignment="Stretch">
+            <Button Name="btnAddCredit" Grid.Row="0" Grid.Column="9" Click="btnAddCredit_Click" IsEnabled="{Binding IsAddCreditVisible}" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -297,7 +302,7 @@
                     <TextBlock Text="Add Credit"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>
-            <Button Name="btnAddFuel" Grid.Row="0" Grid.Column="9" Click="btnAddFuel_Click" HorizontalContentAlignment="Stretch">
+            <Button Name="btnAddFuel" Grid.Row="0" Grid.Column="1" Click="btnAddFuel_Click" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -305,6 +310,17 @@
                     </Grid.ColumnDefinitions>
                     <Image Source="..\Images\AddFuel.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
                     <TextBlock Text="Add Fuel"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                </Grid>
+            </Button>
+
+            <Button Name="btnChangePassword" Grid.Row="0" Grid.Column="11" Click="btnChangePassword_Click" HorizontalContentAlignment="Stretch">
+                <Grid  HorizontalAlignment="Stretch" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="..\Images\changepassword.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
+                    <TextBlock Text="Change Password"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>
         </Grid>

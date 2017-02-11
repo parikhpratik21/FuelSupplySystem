@@ -57,6 +57,19 @@ namespace FuelSupply.APP.ViewModel
             }
         }
 
+        public string CurrentShiftName
+        {
+            get
+            {
+                if (SharedData.CurrentShift != null)
+                {
+                    return SharedData.CurrentShift.ShiftName;
+                }
+                else
+                    return string.Empty;
+            }
+        }
+
         public bool IsProfileEnable
         {
             get

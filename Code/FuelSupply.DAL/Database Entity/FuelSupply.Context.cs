@@ -16,8 +16,8 @@ namespace FuelSupply.DAL.Database_Entity
     using System.Linq;
     using FuelSupply.DAL.Entity.CustomerEntity;
     using FuelSupply.DAL.Entity.FuelEntity;
-    using FuelSupply.DAL.Entity.UserEntity;
     using FuelSupply.DAL.Entity.CreditEntity;
+    using FuelSupply.DAL.Entity.UserEntity;
     
     public partial class FuelSupplySystemEntities1 : DbContext
     {
@@ -43,6 +43,7 @@ namespace FuelSupply.DAL.Database_Entity
         public virtual DbSet<CreditHistory> CreditHistories { get; set; }
         public virtual DbSet<CustomerFingerPrint> CustomerFingerPrints { get; set; }
         public virtual DbSet<FingerPrintType> FingerPrintTypes { get; set; }
+        public virtual DbSet<Shift> Shifts { get; set; }
     
         public virtual ObjectResult<CreditHistory> Fetch_CreditHistory(Nullable<int> keyCustomerId, Nullable<System.DateTime> startTime, Nullable<System.DateTime> endTime, Nullable<int> userId, Nullable<int> customerId, Nullable<int> paymentId)
         {
@@ -102,19 +103,11 @@ namespace FuelSupply.DAL.Database_Entity
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CreditHistory>("Fetch_CreditHistory", mergeOption, keyCustomerIdParameter, startTimeParameter, endTimeParameter, userIdParameter, customerIdParameter, paymentIdParameter);
         }
     
-        public virtual ObjectResult<FuelHistory> Fetch_FuelHistory(Nullable<int> keyCustomerId, Nullable<System.DateTime> startTime, Nullable<System.DateTime> endTime, Nullable<int> userId, Nullable<int> customerId, Nullable<int> fuelId)
+        public virtual ObjectResult<FuelHistory> Fetch_FuelHistory(Nullable<int> keyCustomerId, Nullable<int> userId, Nullable<int> customerId, Nullable<int> fuelId)
         {
             var keyCustomerIdParameter = keyCustomerId.HasValue ?
                 new ObjectParameter("KeyCustomerId", keyCustomerId) :
                 new ObjectParameter("KeyCustomerId", typeof(int));
-    
-            var startTimeParameter = startTime.HasValue ?
-                new ObjectParameter("StartTime", startTime) :
-                new ObjectParameter("StartTime", typeof(System.DateTime));
-    
-            var endTimeParameter = endTime.HasValue ?
-                new ObjectParameter("EndTime", endTime) :
-                new ObjectParameter("EndTime", typeof(System.DateTime));
     
             var userIdParameter = userId.HasValue ?
                 new ObjectParameter("UserId", userId) :
@@ -128,22 +121,14 @@ namespace FuelSupply.DAL.Database_Entity
                 new ObjectParameter("FuelId", fuelId) :
                 new ObjectParameter("FuelId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FuelHistory>("Fetch_FuelHistory", keyCustomerIdParameter, startTimeParameter, endTimeParameter, userIdParameter, customerIdParameter, fuelIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FuelHistory>("Fetch_FuelHistory", keyCustomerIdParameter, userIdParameter, customerIdParameter, fuelIdParameter);
         }
     
-        public virtual ObjectResult<FuelHistory> Fetch_FuelHistory(Nullable<int> keyCustomerId, Nullable<System.DateTime> startTime, Nullable<System.DateTime> endTime, Nullable<int> userId, Nullable<int> customerId, Nullable<int> fuelId, MergeOption mergeOption)
+        public virtual ObjectResult<FuelHistory> Fetch_FuelHistory(Nullable<int> keyCustomerId, Nullable<int> userId, Nullable<int> customerId, Nullable<int> fuelId, MergeOption mergeOption)
         {
             var keyCustomerIdParameter = keyCustomerId.HasValue ?
                 new ObjectParameter("KeyCustomerId", keyCustomerId) :
                 new ObjectParameter("KeyCustomerId", typeof(int));
-    
-            var startTimeParameter = startTime.HasValue ?
-                new ObjectParameter("StartTime", startTime) :
-                new ObjectParameter("StartTime", typeof(System.DateTime));
-    
-            var endTimeParameter = endTime.HasValue ?
-                new ObjectParameter("EndTime", endTime) :
-                new ObjectParameter("EndTime", typeof(System.DateTime));
     
             var userIdParameter = userId.HasValue ?
                 new ObjectParameter("UserId", userId) :
@@ -157,7 +142,7 @@ namespace FuelSupply.DAL.Database_Entity
                 new ObjectParameter("FuelId", fuelId) :
                 new ObjectParameter("FuelId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FuelHistory>("Fetch_FuelHistory", mergeOption, keyCustomerIdParameter, startTimeParameter, endTimeParameter, userIdParameter, customerIdParameter, fuelIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FuelHistory>("Fetch_FuelHistory", mergeOption, keyCustomerIdParameter, userIdParameter, customerIdParameter, fuelIdParameter);
         }
     }
 }

@@ -32,6 +32,9 @@
         <AssociationConnector Association="FuelSupplySystemModel.FK_CustomerFingerPrint_Customer" />
         <EntityTypeShape EntityType="FuelSupplySystemModel.FingerPrintType" Width="1.5" PointX="7.375" PointY="0.875" />
         <AssociationConnector Association="FuelSupplySystemModel.FK_CustomerFingerPrint_FingerPrintType" />
+        <EntityTypeShape EntityType="FuelSupplySystemModel.Shift" Width="1.5" PointX="7.375" PointY="3.75" />
+        <AssociationConnector Association="FuelSupplySystemModel.FK_CreditHistory_Shift" />
+        <AssociationConnector Association="FuelSupplySystemModel.FK_FuelHistory_Shift" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

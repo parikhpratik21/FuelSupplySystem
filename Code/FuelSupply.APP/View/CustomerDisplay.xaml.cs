@@ -133,5 +133,12 @@ namespace FuelSupply.APP.View
         {
             btnAddFuel_Click(null, null);
         }
+
+        private void btnChangePassword_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePassword oChangePassword = new ChangePassword(oMainWindow, customerDisplayModel.SelectedCustomer);
+            oChangePassword.Owner = oMainWindow;
+            oChangePassword.ShowDialog();
+        }
     }
 }

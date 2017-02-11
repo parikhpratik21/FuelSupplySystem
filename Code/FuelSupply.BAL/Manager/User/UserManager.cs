@@ -35,6 +35,11 @@ namespace FuelSupply.BAL.Manager
             return UserProvider.GetAllUserType();
         }
 
+        public static List<Shift> GetAllTypeList()
+        {
+            return UserProvider.GetAllShift();
+        }
+
         public static User GetUserById(int pUserId)
         {
             User oUser = UserProvider.GetUserById(pUserId);
@@ -124,9 +129,8 @@ namespace FuelSupply.BAL.Manager
             return result;
         }
 
-        private static string Encrypt(string pEncryptText)
-        {
-            return pEncryptText;
+        public static string Encrypt(string pEncryptText)
+        {            
             byte[] plainTextBytes = Encoding.UTF8.GetBytes(pEncryptText);
 
             byte[] keyBytes = new Rfc2898DeriveBytes(PasswordHash, Encoding.ASCII.GetBytes(SaltKey)).GetBytes(256 / 8);
@@ -150,8 +154,7 @@ namespace FuelSupply.BAL.Manager
         }
 
         private static string Decrypt(string pDecryptText)
-        {
-            return pDecryptText;
+        {            
             byte[] cipherTextBytes = Convert.FromBase64String(pDecryptText);
             byte[] keyBytes = new Rfc2898DeriveBytes(PasswordHash, Encoding.ASCII.GetBytes(SaltKey)).GetBytes(256 / 8);
             var symmetricKey = new RijndaelManaged() { Mode = CipherMode.CBC, Padding = PaddingMode.None };

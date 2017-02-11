@@ -106,7 +106,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Converter\Converter.cs" />
+    <Compile Include="Converter\VisibilityConverter.cs" />
+    <Compile Include="Converter\NegativeConverter.cs" />
     <Compile Include="ExportEntity\CreditHistoryExport.cs" />
     <Compile Include="ExportEntity\FuelHistoryExport.cs" />
     <Compile Include="Helper\ExportToExcel.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="ViewModel\AddEditUserViewModel.cs" />
     <Compile Include="ViewModel\AddFingerPrintViewModel.cs" />
     <Compile Include="ViewModel\AddFuelViewModel.cs" />
+    <Compile Include="ViewModel\PasswordViewModel.cs" />
     <Compile Include="ViewModel\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModel\FuelHistoryViewModel.cs" />
     <Compile Include="ViewModel\CreditHistoryViewModel.cs" />
@@ -140,6 +142,9 @@
     </Compile>
     <Compile Include="View\AddEditUser.xaml.cs">
       <DependentUpon>AddEditUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PasswordBox.xaml.cs">
+      <DependentUpon>PasswordBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ChangePassword.xaml.cs">
       <DependentUpon>ChangePassword.xaml</DependentUpon>
@@ -187,6 +192,10 @@
     <Page Include="View\AddEditUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PasswordBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\ChangePassword.xaml">
       <SubType>Designer</SubType>

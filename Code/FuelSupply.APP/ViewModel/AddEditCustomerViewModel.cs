@@ -47,6 +47,23 @@ namespace FuelSupply.APP.ViewModel
             }
         }
 
+        public int? SelectedPaymentType
+        {
+            get
+            {
+                if (SelectedCustomer != null)
+                    return SelectedCustomer.PaymentType;
+                else
+                    return 0;
+            }
+            set
+            {
+                if (SelectedCustomer != null)
+                    SelectedCustomer.PaymentType = value;
+
+                OnPropertyChanged("IsPaymentLimitEnable");
+            }
+        }
         public List<CustomerType> CustomerTypeList
         {
             get
@@ -66,6 +83,24 @@ namespace FuelSupply.APP.ViewModel
             {
                 return !IsKeyCustomerListEnable;
             }
+        }
+
+        public bool IsPaymentLimitEnable
+        {
+            get
+            {
+                if (IsKeyCustomerListEnable == false)
+                {
+                    if (SelectedCustomer.PaymentType == (int)Constants.ePaymentType.Cash)
+                    {
+                        return false;
+                    }
+                    else
+                        return true;
+                }
+                else
+                    return false;
+            }            
         }
 
         public bool IsKeyCustomerListEnable
@@ -193,7 +228,7 @@ namespace FuelSupply.APP.ViewModel
                     MessageManager.ShowErrorMessage("Please select valid key customer", oMainWindow);
                 else if (_SelectedCustomer.PaymentType == null || _SelectedCustomer.PaymentType <= 0)
                     MessageManager.ShowErrorMessage("Please select valid key payment type", oMainWindow);
-                else if (_SelectedCustomer.PaymentLimit == null || _SelectedCustomer.PaymentLimit <= 0)
+                else if (_SelectedCustomer.PaymentType == (int)Constants.ePaymentType.Credit && (_SelectedCustomer.PaymentLimit == null || _SelectedCustomer.PaymentLimit <= 0))
                     MessageManager.ShowErrorMessage("Please select valid key payment limit", oMainWindow);
                 else
                     return true;

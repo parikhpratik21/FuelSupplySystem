@@ -15,6 +15,7 @@ namespace FuelSupply.DAL.Entity.FuelEntity
 
         public int Id { get; set; }
         public string Name { get; set; }
+        public Nullable<decimal> Rate { get; set; }
 
         public virtual ICollection<FuelHistory> FuelHistories { get; set; }
     }

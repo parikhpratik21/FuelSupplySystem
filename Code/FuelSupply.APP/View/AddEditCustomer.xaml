@@ -113,10 +113,10 @@
                 <ComboBox ItemsSource="{Binding KeyCustomerList}" Margin="10,5,10,5" IsEnabled="{Binding IsKeyCustomerListEnable}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedCustomer.KeyCustomerId}" Name="cmbKeyCustomer" Style="{StaticResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="3"></ComboBox>
 
                 <Label Name="lblPaymentType" Style="{StaticResource LableHeaderStyle}" Grid.Column="0" Grid.Row="4" Content="Payment Type: "></Label>
-                <ComboBox Name="txtPaymentType" Margin="10,5,10,5" IsEnabled="{Binding IsKeyCustomerListEnable,Converter={StaticResource NegativeValueConverter}}" ItemsSource="{Binding PaymentTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedCustomer.PaymentType}" Style="{StaticResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="4" ></ComboBox>
+                <ComboBox Name="txtPaymentType" Margin="10,5,10,5" IsEnabled="{Binding IsKeyCustomerListEnable,Converter={StaticResource NegativeValueConverter}}" ItemsSource="{Binding PaymentTypeList}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedPaymentType}" Style="{StaticResource ComboBoxFlatStyle}" Grid.Column="1" Grid.Row="4" ></ComboBox>
 
                 <Label Name="lblPaymentLimit" Style="{StaticResource LableHeaderStyle}" Grid.Column="0" Grid.Row="5" Content="Payment Limit: "></Label>
-                <TextBox Name="txtpaymentLimit" Style="{StaticResource TextBoxStyle}" IsEnabled="{Binding IsKeyCustomerListEnable,Converter={StaticResource NegativeValueConverter}}" Grid.Column="1" Grid.Row="5" Text="{Binding SelectedCustomer.PaymentLimit}"></TextBox>
+                <TextBox Name="txtpaymentLimit" Style="{StaticResource TextBoxStyle}" IsEnabled="{Binding IsPaymentLimitEnable}" Grid.Column="1" Grid.Row="5" Text="{Binding SelectedCustomer.PaymentLimit}"></TextBox>
 
                 <Label Name="lblAddress" Style="{StaticResource LableHeaderStyle}" Grid.Column="0" Grid.Row="6" Content="Address: "></Label>
                 <TextBox Name="txtAddress" Height="70"  Style="{StaticResource TextBoxStyle}" IsEnabled="{Binding IsKeyCustomerListEnable,Converter={StaticResource NegativeValueConverter}}" Grid.Column="1" Grid.Row="6" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Text="{Binding SelectedCustomer.Address}"></TextBox>

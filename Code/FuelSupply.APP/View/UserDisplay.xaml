@@ -92,7 +92,9 @@
 
             <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="0">
                 <Label Name="lblLoggedUserNameHeader" Content="Welcome" Foreground="Black" Style="{StaticResource WelcomeLableStyle}"></Label>
-                <Label Name="lblLoggedUserNameValue" Content="{Binding LoggedUserName}" Foreground="Black"  Style="{StaticResource LableStyle}"></Label>
+                <Label Name="lblLoggedUserNameValue" Content="{Binding LoggedUserName}" Foreground="Black"  Style="{StaticResource LableStyle}" Margin="-5,0,-5,0"></Label>
+                <Label Name="lblCurrentShiftHeaderHeader" Content=", Current Shift: " Foreground="Black" Style="{StaticResource WelcomeLableStyle}"></Label>
+                <Label Name="lblCurrentShiftHeaderValue" Content="{Binding CurrentShiftName}" Foreground="Black"  Style="{StaticResource LableStyle}" Margin="-5,0,-5,0"></Label>
             </StackPanel>
 
         </Grid>
