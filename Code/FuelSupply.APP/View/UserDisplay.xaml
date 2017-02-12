@@ -239,6 +239,8 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
             <Button Name="btnAddUser" Margin="0" Grid.Row="0" Grid.Column="1" Click="btnAddUser_Click" HorizontalContentAlignment="Stretch">
@@ -301,6 +303,16 @@
                     </Grid.ColumnDefinitions>
                     <Image Source="..\Images\Database.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
                     <TextBlock Text="DB Restore"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                </Grid>
+            </Button>
+            <Button Name="btnFuelRate" Grid.Row="0" Grid.Column="13" Click="btnFuelRate_Click"  HorizontalContentAlignment="Stretch">
+                <Grid  HorizontalAlignment="Stretch" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="..\Images\FuelRate.jpg" Grid.Column="0" HorizontalAlignment="Center"></Image>
+                    <TextBlock Text="Fuel Rate"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>
         </Grid>

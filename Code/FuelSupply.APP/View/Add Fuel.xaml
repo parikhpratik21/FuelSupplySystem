@@ -7,7 +7,7 @@
         WindowTitleBrush="{StaticResource AppTitleBarColor}" TitleCaps="False" TitleForeground="White" BorderThickness="2.0" 
         BorderBrush="{StaticResource AppTitleBarColor}" ShowMaxRestoreButton="False" ShowCloseButton="True" ShowMinButton="False" Closing="MetroWindow_Closing" 
         ShowIconOnTitleBar="False" IconTemplate="{StaticResource LoginIconTemplate}" WindowStartupLocation="CenterOwner" 
-        ShowInTaskbar="False" Title="Add Fuel" Height="420" Width="380">
+        ShowInTaskbar="False" Title="Add Fuel" Height="450" Width="380">
     <Window.CommandBindings>
         <CommandBinding Command="Close" Executed="btnSave_Click" />
     </Window.CommandBindings>

@@ -142,6 +142,10 @@ namespace FuelSupply.APP.ViewModel
             set
             {
                 _FuelType = value;
+                if(_FuelType > 0)
+                {
+                    FuelAmount = Math.Round(CurrentFuelRate.Value * _FuelTaken, 3);
+                }
                 OnPropertyChanged("FuelType");
                 OnPropertyChanged("CurrentFuelRate");
             }

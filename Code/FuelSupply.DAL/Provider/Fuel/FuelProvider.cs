@@ -28,6 +28,18 @@ namespace FuelSupply.DAL.Provider
             return FuelHostoryList;
         }
 
+        public static bool UpdateFuelRate(int pFuelTypeId, decimal pFuelRate)
+        {
+            FuelType selectedFuelType = fuelDbObject.FuelTypes.Where(data => data.Id == pFuelTypeId).FirstOrDefault();
+            if(selectedFuelType != null)
+            {
+                selectedFuelType.Rate = pFuelRate;
+
+                fuelDbObject.SaveChanges();
+            }
+            return true;
+        }
+
         public static List<FuelType> GetAllFuelTypeList()
         {
             List<FuelType> FuelTypeList = fuelDbObject.FuelTypes.ToList();

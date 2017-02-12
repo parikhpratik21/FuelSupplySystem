@@ -152,5 +152,12 @@ namespace FuelSupply.APP.View
                     MessageManager.ShowInformationMessage("Error while database restore, Please try backup.", oMainWindow);
             }
         }
+
+        private void btnFuelRate_Click(object sender, RoutedEventArgs e)
+        {
+            FuelRateViewModel oViewModel = new FuelRateViewModel(oMainWindow);
+            FuelRate oFuelRate = new FuelRate(oMainWindow, oViewModel);
+            oFuelRate.ShowDialog();
+        }
     }
 }
