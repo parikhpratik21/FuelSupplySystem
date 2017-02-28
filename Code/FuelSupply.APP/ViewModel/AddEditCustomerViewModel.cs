@@ -21,6 +21,7 @@ namespace FuelSupply.APP.ViewModel
         private List<CustomerType> _CustomerTypeList;
         private List<Customer> _KeyCustomerList;
         private MainWindow oMainWindow;
+        private decimal? _OldPaymentLimit;
         #endregion
 
         #region "Property"
@@ -43,6 +44,10 @@ namespace FuelSupply.APP.ViewModel
             }
             set{
                 _SelectedCustomer = value;
+                if(_SelectedCustomer != null)
+                {
+                    _OldPaymentLimit = _SelectedCustomer.PaymentLimit;
+                }
                 OnPropertyChanged("SelectedCustomer");
             }
         }
@@ -254,7 +259,7 @@ namespace FuelSupply.APP.ViewModel
         private bool UpdateCustomer()
         {
             string sErrorString = string.Empty;
-            bool result = CustomerManager.UpdateCustomer(_SelectedCustomer, ref sErrorString);
+            bool result = CustomerManager.UpdateCustomer(_SelectedCustomer, _OldPaymentLimit, ref sErrorString);
             if (result == false)
             {
                 MessageManager.ShowErrorMessage(sErrorString, oMainWindow);

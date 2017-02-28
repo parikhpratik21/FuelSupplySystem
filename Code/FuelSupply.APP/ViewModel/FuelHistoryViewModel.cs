@@ -32,11 +32,23 @@ namespace FuelSupply.APP.ViewModel
         private List<Customer> _KeyCustomerList;
         private List<User> _UserList;
         private List<FuelType> _FuelTypeList;
-
+        private FuelHistory _SelectedFuelHistory;
         private List<FuelHistory> _FuelHistoryList;
         #endregion
 
         #region "Property"
+        public FuelHistory SelectedFuelHistory
+        {
+            get
+            {
+                return _SelectedFuelHistory;
+            }
+            set
+            {
+                _SelectedFuelHistory = value;
+                OnPropertyChanged("SelectedFuelHistory");
+            }
+        }
         public string LoggedUserName
         {
             get
@@ -351,6 +363,11 @@ namespace FuelSupply.APP.ViewModel
                     else
                         oExportEntity.UserName = oHistory.UserName;
 
+                    oExportEntity.ShiftName = oHistory.ShiftName;
+                    oExportEntity.InvoiceNo = oHistory.InvoiceNo;
+                    oExportEntity.ActualFuelAmount = oHistory.ActualFuelAmount.ToString();
+                    oExportEntity.ActualFuelVolume = oHistory.ActualFuelVolume.ToString();
+
                     oFuelHistoryExportList.Add(oExportEntity);
                 }
             }
@@ -414,6 +431,10 @@ namespace FuelSupply.APP.ViewModel
                         {
                             var data = typeof(FuelHistoryExport).InvokeMember(objHeaders[i].ToString(), BindingFlags.GetProperty, null, item, null);
 
+                            if (data == null)
+                            {
+                                data = string.Empty;
+                            }
                             sbHtml.AppendLine("<td align='center' valign='middle'>" + data.ToString() + "</td>");
                         }
 
@@ -438,116 +459,155 @@ namespace FuelSupply.APP.ViewModel
             return bResult;
         }
 
-        public void Export_Data_To_PDF(List<FuelHistoryExport> pHistoryList, string filename)
+        public bool Export_Data_To_PDF(List<FuelHistoryExport> pHistoryList, string filename)
         {
-            PropertyInfo[] headerInfo = typeof(FuelHistoryExport).GetProperties();
-
-            // Create an array for the headers and add it to the
-            // worksheet starting at cell A1.
-            List<string> objHeaders = new List<string>();
-            for (int index = 0; index < headerInfo.Length; index++)
+            bool bResult = false;
+            try
             {
-                object[] attrs = headerInfo[index].GetCustomAttributes(true);
+                PropertyInfo[] headerInfo = typeof(FuelHistoryExport).GetProperties();
 
-                string sColumnHeaderString = ((DescriptionAttribute)attrs[0]).Description;
+                // Create an array for the headers and add it to the
+                // worksheet starting at cell A1.
+                List<string> objHeaders = new List<string>();
+                for (int index = 0; index < headerInfo.Length; index++)
+                {
+                    object[] attrs = headerInfo[index].GetCustomAttributes(true);
 
-                objHeaders.Add(sColumnHeaderString);              
-                //objHeaders.Add(headerInfo[index].Name);
+                    string sColumnHeaderString = ((DescriptionAttribute)attrs[0]).Description;
+
+                    objHeaders.Add(sColumnHeaderString);
+                    //objHeaders.Add(headerInfo[index].Name);
+                }
+
+                PdfPTable pdfTable = new PdfPTable(objHeaders.Count);
+                pdfTable.DefaultCell.Padding = 3;
+                pdfTable.WidthPercentage = 100;
+                pdfTable.HorizontalAlignment = Element.ALIGN_CENTER;
+                pdfTable.DefaultCell.BorderWidth = 1;
+
+                //Adding Header row
+                foreach (string column in objHeaders)
+                {
+                    PdfPCell cell = new PdfPCell(new Phrase(column));
+                    Font boldFont = new Font(cell.Phrase.Font.BaseFont, 12, Font.BOLD, Color.BLACK);
+                    cell = new PdfPCell(new Phrase(column, boldFont));
+                    cell.BackgroundColor = new iTextSharp.text.Color(0, 223, 223);
+                    cell.HorizontalAlignment = 1;
+                    cell.VerticalAlignment = 1;
+                    pdfTable.AddCell(cell);
+                }
+
+                PdfPCell cellRow;
+                int rowIndex = 1;
+                //Adding DataRow           
+                foreach (FuelHistoryExport oHistory in pHistoryList)
+                {
+                    cellRow = new PdfPCell(new Phrase(oHistory.ID.ToString()));
+                    cellRow.HorizontalAlignment = 1;
+                    cellRow.VerticalAlignment = 1;
+                    if (rowIndex % 2 == 0)
+                        cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
+                    pdfTable.AddCell(cellRow);
+
+                    cellRow = new PdfPCell(new Phrase(oHistory.UserName));
+                    cellRow.HorizontalAlignment = 1;
+                    cellRow.VerticalAlignment = 1;
+                    if (rowIndex % 2 == 0)
+                        cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
+                    pdfTable.AddCell(cellRow);
+
+                    cellRow = new PdfPCell(new Phrase(oHistory.CustomerName));
+                    cellRow.HorizontalAlignment = 1;
+                    cellRow.VerticalAlignment = 1;
+                    if (rowIndex % 2 == 0)
+                        cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
+                    pdfTable.AddCell(cellRow);
+
+                    cellRow = new PdfPCell(new Phrase(oHistory.KeyCustomer));
+                    cellRow.HorizontalAlignment = 1;
+                    cellRow.VerticalAlignment = 1;
+                    if (rowIndex % 2 == 0)
+                        cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
+                    pdfTable.AddCell(cellRow);
+
+                    cellRow = new PdfPCell(new Phrase(oHistory.FuelType));
+                    cellRow.HorizontalAlignment = 1;
+                    cellRow.VerticalAlignment = 1;
+                    if (rowIndex % 2 == 0)
+                        cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
+                    pdfTable.AddCell(cellRow);
+
+                    cellRow = new PdfPCell(new Phrase(oHistory.FuelVolume.ToString()));
+                    cellRow.HorizontalAlignment = 1;
+                    cellRow.VerticalAlignment = 1;
+                    if (rowIndex % 2 == 0)
+                        cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
+                    pdfTable.AddCell(cellRow);
+
+                    cellRow = new PdfPCell(new Phrase(oHistory.FuelAmount.ToString()));
+                    cellRow.HorizontalAlignment = 1;
+                    cellRow.VerticalAlignment = 1;
+                    if (rowIndex % 2 == 0)
+                        cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
+                    pdfTable.AddCell(cellRow);
+
+                    cellRow = new PdfPCell(new Phrase(oHistory.Date));
+                    cellRow.HorizontalAlignment = 1;
+                    cellRow.VerticalAlignment = 1;
+                    if (rowIndex % 2 == 0)
+                        cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
+                    pdfTable.AddCell(cellRow);
+
+                    cellRow = new PdfPCell(new Phrase(oHistory.ShiftName));
+                    cellRow.HorizontalAlignment = 1;
+                    cellRow.VerticalAlignment = 1;
+                    if (rowIndex % 2 == 0)
+                        cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
+                    pdfTable.AddCell(cellRow);
+
+                    cellRow = new PdfPCell(new Phrase(oHistory.InvoiceNo));
+                    cellRow.HorizontalAlignment = 1;
+                    cellRow.VerticalAlignment = 1;
+                    if (rowIndex % 2 == 0)
+                        cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
+                    pdfTable.AddCell(cellRow);
+
+                    cellRow = new PdfPCell(new Phrase(oHistory.ActualFuelVolume));
+                    cellRow.HorizontalAlignment = 1;
+                    cellRow.VerticalAlignment = 1;
+                    if (rowIndex % 2 == 0)
+                        cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
+                    pdfTable.AddCell(cellRow);
+
+                    cellRow = new PdfPCell(new Phrase(oHistory.ActualFuelAmount));
+                    cellRow.HorizontalAlignment = 1;
+                    cellRow.VerticalAlignment = 1;
+                    if (rowIndex % 2 == 0)
+                        cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
+                    pdfTable.AddCell(cellRow);
+
+                    rowIndex = rowIndex + 1;
+                }
+
+                //Exporting to PDF
+                using (FileStream stream = new FileStream(filename, FileMode.Create))
+                {
+                    Document pdfDoc = new Document(PageSize.A3, 10f, 10f, 10f, 0f);
+                    PdfWriter.GetInstance(pdfDoc, stream);
+                    pdfDoc.Open();
+                    pdfDoc.Add(pdfTable);
+                    pdfDoc.Close();
+                    stream.Close();
+                }
+
+                bResult = true;
             }
-
-            PdfPTable pdfTable = new PdfPTable(objHeaders.Count);
-            pdfTable.DefaultCell.Padding = 3;
-            pdfTable.WidthPercentage = 100;
-            pdfTable.HorizontalAlignment = Element.ALIGN_CENTER;
-            pdfTable.DefaultCell.BorderWidth = 1;
-
-            //Adding Header row
-            foreach (string column in objHeaders)
+            catch (Exception ex)
             {
-                PdfPCell cell = new PdfPCell(new Phrase(column));                                                 
-                Font boldFont = new Font(cell.Phrase.Font.BaseFont, 12, Font.BOLD, Color.BLACK);
-                cell = new PdfPCell(new Phrase(column, boldFont));                
-                cell.BackgroundColor = new iTextSharp.text.Color(0, 223, 223);
-                cell.HorizontalAlignment = 1;
-                cell.VerticalAlignment = 1;                
-                pdfTable.AddCell(cell);
+                bResult = false;
+                LogManager.logExceptionMessage("FuelHistoryViewModel", "Export_Data_To_PDF", ex);
             }
-
-            PdfPCell cellRow;
-            int rowIndex = 1;
-            //Adding DataRow           
-            foreach (FuelHistoryExport oHistory in pHistoryList)
-            {
-                cellRow = new PdfPCell(new Phrase(oHistory.ID.ToString()));
-                cellRow.HorizontalAlignment = 1;
-                cellRow.VerticalAlignment = 1;
-                if (rowIndex %2 == 0)
-                    cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
-                pdfTable.AddCell(cellRow);
-
-                cellRow = new PdfPCell(new Phrase(oHistory.UserName));
-                cellRow.HorizontalAlignment = 1;
-                cellRow.VerticalAlignment = 1;
-                if (rowIndex % 2 == 0)
-                    cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
-                pdfTable.AddCell(cellRow);
-
-                cellRow = new PdfPCell(new Phrase(oHistory.CustomerName));
-                cellRow.HorizontalAlignment = 1;
-                cellRow.VerticalAlignment = 1;
-                if (rowIndex % 2 == 0)
-                    cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
-                pdfTable.AddCell(cellRow);
-
-                cellRow = new PdfPCell(new Phrase(oHistory.KeyCustomer));
-                cellRow.HorizontalAlignment = 1;
-                cellRow.VerticalAlignment = 1;
-                if (rowIndex % 2 == 0)
-                    cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
-                pdfTable.AddCell(cellRow);
-
-                cellRow = new PdfPCell(new Phrase(oHistory.FuelType));
-                cellRow.HorizontalAlignment = 1;
-                cellRow.VerticalAlignment = 1;
-                if (rowIndex % 2 == 0)
-                    cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
-                pdfTable.AddCell(cellRow);
-
-                cellRow = new PdfPCell(new Phrase(oHistory.FuelVolume.ToString()));
-                cellRow.HorizontalAlignment = 1;
-                cellRow.VerticalAlignment = 1;
-                if (rowIndex % 2 == 0)
-                    cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
-                pdfTable.AddCell(cellRow);
-
-                cellRow = new PdfPCell(new Phrase(oHistory.FuelAmount.ToString()));
-                cellRow.HorizontalAlignment = 1;
-                cellRow.VerticalAlignment = 1;
-                if (rowIndex % 2 == 0)
-                    cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
-                pdfTable.AddCell(cellRow);
-
-                cellRow = new PdfPCell(new Phrase(oHistory.Date));
-                cellRow.HorizontalAlignment = 1;
-                cellRow.VerticalAlignment = 1;
-                if (rowIndex % 2 == 0)
-                    cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
-                pdfTable.AddCell(cellRow);
-
-                rowIndex = rowIndex + 1;
-            }
-            
-            //Exporting to PDF
-
-            using (FileStream stream = new FileStream(filename, FileMode.Create))
-            {
-                Document pdfDoc = new Document(PageSize.A3, 10f, 10f, 10f, 0f);
-                PdfWriter.GetInstance(pdfDoc, stream);
-                pdfDoc.Open();
-                pdfDoc.Add(pdfTable);
-                pdfDoc.Close();
-                stream.Close();
-            }
+            return bResult;
         }
         #endregion
     }

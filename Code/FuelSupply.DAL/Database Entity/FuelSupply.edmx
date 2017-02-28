@@ -83,6 +83,8 @@
           <Property Name="ShiftId" Type="int" />
           <Property Name="ShiftName" Type="nvarchar" MaxLength="50" />
           <Property Name="InvoiceNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="ActualFuelVolume" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ActualFuelAmount" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="FuelLimitType">
           <Key>
@@ -517,6 +519,8 @@
           <NavigationProperty Name="Shift" Relationship="FuelSupplySystemModel.FK_FuelHistory_Shift" FromRole="FuelHistory" ToRole="Shift" />
           <Property Name="ShiftName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="InvoiceNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ActualFuelVolume" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ActualFuelAmount" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="FuelLimitType">
           <Key>
@@ -1006,6 +1010,8 @@
           <EntitySetMapping Name="FuelHistories">
             <EntityTypeMapping TypeName="FuelSupplySystemModel.FuelHistory">
               <MappingFragment StoreEntitySet="FuelHistory">
+                <ScalarProperty Name="ActualFuelAmount" ColumnName="ActualFuelAmount" />
+                <ScalarProperty Name="ActualFuelVolume" ColumnName="ActualFuelVolume" />
                 <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
                 <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
                 <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />

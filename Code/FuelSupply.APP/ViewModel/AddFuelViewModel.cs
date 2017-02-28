@@ -323,6 +323,8 @@ namespace FuelSupply.APP.ViewModel
                 oFuelHistory.ShiftName = SharedData.CurrentShift.ShiftName;
             }
             oFuelHistory.InvoiceNo = InvoiceNo;
+            oFuelHistory.ActualFuelAmount = 0;
+            oFuelHistory.ActualFuelVolume = 0;
 
             bool result = FuelManager.AddFuelHistory(oFuelHistory);
             if (result == false)

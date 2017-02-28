@@ -80,7 +80,7 @@ namespace FuelSupply.APP.ViewModel
 
         public bool GetPassword(string pNewPassword)
         {
-            if(pNewPassword != null && pNewPassword.Trim() != string.Empty )
+            if(pNewPassword == null || pNewPassword.Trim() == string.Empty )
             {
                 MessageManager.ShowErrorMessage("Please enter password.", oMainWindow);
             }           

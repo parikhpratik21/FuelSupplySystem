@@ -90,31 +90,12 @@
             <DatePicker Name="dpEndTime" Grid.Row="0" Grid.Column="10" VerticalContentAlignment="Center"></DatePicker>
             <Button Name="btnApply" Content="Apply" Grid.Row="0" Grid.Column="12" Click="btnApply_Click" ></Button>
         </Grid>
-        <!--<Grid Grid.Column="0" Grid.Row="4" Background="White">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>               
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-
-            <Label Name="lblStartTime1" Content="Start Date: " Style="{StaticResource LableStyle}" Grid.Row="0" Grid.Column="0"></Label>
-            <DatePicker Name="dpStartTime1" Grid.Row="0" Grid.Column="1" Margin="0,5,0,5"></DatePicker>
-            <Label Name="lblEndTime1" Content="End Date: " Style="{StaticResource LableStyle}" Grid.Row="0" Grid.Column="3"></Label>
-            <DatePicker Name="dpEndTime1" Grid.Row="0" Grid.Column="4" Margin="0,5,0,5"></DatePicker>
-            <Button Name="btnApply1" Content="Apply" Grid.Row="0" Grid.Column="6" Margin="0,5,0,5"></Button>                        
-        </Grid>-->
-        
+       
         <Grid Grid.Column="0" Grid.Row="4" Background="White" >
             <DataGrid Name="dgHistoryList" ItemsSource="{Binding FuelHistoryList}" AutoGenerateColumns="False" 
                     VerticalGridLinesBrush="LightGray" GridLinesVisibility="Vertical" BorderThickness="0" AlternationCount="2"
-                      CanUserAddRows="False" CanUserDeleteRows="False"  SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True">
+                      CanUserAddRows="False" CanUserDeleteRows="False"  SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True"
+                      MouseDoubleClick="dgFuelHistoryList_MouseDoubleClick" SelectedItem="{Binding SelectedFuelHistory}">
                 <DataGrid.RowStyle>
                     <Style TargetType="{x:Type DataGridRow}">
                         <Style.Triggers>
@@ -175,35 +156,35 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Key Customer" Binding="{Binding KeyCustomerName}" Width="1.3*">
+                    <DataGridTextColumn Header="Key Customer" Binding="{Binding KeyCustomerName}" Width="1.2*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Fuel Type" Binding="{Binding FuelType1.Name}" Width="1.3*">
+                    <DataGridTextColumn Header="Fuel Type" Binding="{Binding FuelType1.Name}" Width="1.2*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Fuel Volume" Binding="{Binding FuelVolume}" Width="1.3*">
+                    <DataGridTextColumn Header="Fuel Volume" Binding="{Binding FuelVolume}" Width="1*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Fuel Amount" Binding="{Binding FuelAmount}" Width="1.3*">
+                    <DataGridTextColumn Header="Fuel Amount" Binding="{Binding FuelAmount}" Width="1*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Invoice No" Binding="{Binding InvoiceNo}" Width="0.8*">
+                    <DataGridTextColumn Header="Invoice No" Binding="{Binding InvoiceNo}" Width="1*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -217,7 +198,21 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Date" Binding="{Binding Time}" Width="1.5*">
+                    <DataGridTextColumn Header="Actual Volume" Binding="{Binding ActualFuelVolume}" Width="1*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Actual Amount" Binding="{Binding ActualFuelAmount}" Width="1*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Date" Binding="{Binding Time}" Width="1.3*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -237,18 +232,31 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="2.5*"/>
+                <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="1.5*"/>
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="1.5*"/>
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="1.5*"/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="2.5*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Name="btnExportToExcel" Margin="0" Grid.Row="0" Grid.Column="1" Click="btnExportToExcel_Click" HorizontalContentAlignment="Stretch">
+            <Button Name="btnEditHistory" Grid.Row="0" Grid.Column="1"  Click="btnEditHistory_Click" HorizontalContentAlignment="Stretch">
+                <Grid  HorizontalAlignment="Stretch" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="..\Images\edit.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
+                    <TextBlock Text="Edit"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                </Grid>
+            </Button>
+            
+            <Button Name="btnExportToExcel" Margin="0" Grid.Row="0" Grid.Column="3" Click="btnExportToExcel_Click" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -258,7 +266,7 @@
                     <TextBlock Text="Export To Excel"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
             </Button>
-            <Button Name="btnExportToWord" Grid.Row="0" Grid.Column="3"  Click="btnExportToHTML_Click" HorizontalContentAlignment="Stretch">
+            <Button Name="btnExportToWord" Grid.Row="0" Grid.Column="5"  Click="btnExportToHTML_Click" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -269,7 +277,7 @@
                 </Grid>
             </Button>
 
-            <Button Name="btnExportToCSV" Grid.Row="0" Grid.Column="5"  Click="btnExportToCSV_Click" HorizontalContentAlignment="Stretch">
+            <Button Name="btnExportToCSV" Grid.Row="0" Grid.Column="7"  Click="btnExportToCSV_Click" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -281,7 +289,7 @@
             </Button>
 
 
-            <Button Name="btnExportToPDF" Grid.Row="0" Grid.Column="7"  Click="btnExportToPDF_Click" HorizontalContentAlignment="Stretch">
+            <Button Name="btnExportToPDF" Grid.Row="0" Grid.Column="9"  Click="btnExportToPDF_Click" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

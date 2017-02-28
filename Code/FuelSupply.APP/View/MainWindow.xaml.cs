@@ -283,7 +283,7 @@ namespace FuelSupply.APP
             SetUserContentandData("Customer", oCustomer);
         }
 
-        private async void btnFuelHistory_Click(object sender, RoutedEventArgs e)
+        public async void btnFuelHistory_Click(object sender, RoutedEventArgs e)
         {
             FuelHistoryViewModel oViewModel = null;
             startProcess("Loading...");

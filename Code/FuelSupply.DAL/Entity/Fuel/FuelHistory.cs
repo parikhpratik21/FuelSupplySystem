@@ -25,6 +25,8 @@ namespace FuelSupply.DAL.Entity.FuelEntity
         public Nullable<int> ShiftId { get; set; }
         public string ShiftName { get; set; }
         public string InvoiceNo { get; set; }
+        public Nullable<decimal> ActualFuelVolume { get; set; }
+        public Nullable<decimal> ActualFuelAmount { get; set; }
 
         public virtual Customer Customer { get; set; }
         public virtual FuelStation FuelStation { get; set; }

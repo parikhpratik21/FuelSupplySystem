@@ -121,7 +121,7 @@ namespace FuelSupply.DAL.Provider
             }
         }
 
-        public static bool UpdateCustomer(Customer pCustomer)
+        public static bool UpdateCustomer(Customer pCustomer, decimal? pOldPaymentLimit)
         {
             Customer oCustomer = customerDbObject.Customers.Where(x => x.Id == pCustomer.Id).FirstOrDefault();
             if (oCustomer != null)
@@ -150,6 +150,20 @@ namespace FuelSupply.DAL.Provider
                             }
                         }
                     }
+
+                    //check if payment limit changes or not for credit type of customer
+                    if (pOldPaymentLimit != null && oCustomer.PaymentLimit != null && oCustomer.PaymentLimit != pOldPaymentLimit && oCustomer.PaymentType == (int)FuelSupply.DAL.Entity.Comman.Constants.ePaymentType.Credit)
+                    {
+                        if (pOldPaymentLimit.Value > oCustomer.PaymentLimit.Value)
+                        {
+                            oCustomer.AvailablePay = oCustomer.AvailablePay - (pOldPaymentLimit.Value - oCustomer.PaymentLimit.Value);
+                        }
+                        else
+                        {
+                            oCustomer.AvailablePay = oCustomer.AvailablePay + (oCustomer.PaymentLimit.Value - pOldPaymentLimit.Value);
+                        }
+                    }
+
                     customerDbObject.SaveChanges();
                 }
                catch(Exception ex)
@@ -201,6 +215,18 @@ namespace FuelSupply.DAL.Provider
                     return false;
 
                 oCustomer.AvailablePay = oCustomer.AvailablePay - pAmount;
+                customerDbObject.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public static bool IncreaseAmount(int pCustomerId, decimal pAmount)
+        {
+            Customer oCustomer = customerDbObject.Customers.Where(x => x.Id == pCustomerId).FirstOrDefault();
+            if (oCustomer != null)
+            {                
+                oCustomer.AvailablePay = oCustomer.AvailablePay + pAmount;
                 customerDbObject.SaveChanges();
                 return true;
             }

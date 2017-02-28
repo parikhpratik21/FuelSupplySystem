@@ -35,6 +35,11 @@ namespace FuelSupply.BAL.Manager
             return FuelProvider.UpdateFuelRate(pFuelTypeId, pFuelRate);
         }
 
+        public static bool UpdateActualFuelDetail(int pFuelTypeId, decimal pActualFuelVolume, decimal pActualFuelAmount)
+        {
+            return FuelProvider.UpdateActualFuelDetail(pFuelTypeId, pActualFuelVolume, pActualFuelAmount);
+        }
+
         public static List<FuelHistory> GetFuelHistoryByKeyCustomerId(int pKeyCustomerId, DateTime? pStartDate, DateTime? pEndDate)
         {
             return FuelProvider.GetFuelHistoryByKeyCustomerId(pKeyCustomerId,pStartDate,pEndDate);

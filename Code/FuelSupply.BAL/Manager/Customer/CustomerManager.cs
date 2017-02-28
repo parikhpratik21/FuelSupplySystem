@@ -73,7 +73,7 @@ namespace FuelSupply.BAL.Manager
             }            
         }
 
-        public static bool UpdateCustomer(Customer pCustomer, ref string pErrorString)
+        public static bool UpdateCustomer(Customer pCustomer, decimal? pOldPaymentLimit, ref string pErrorString)
         {
             if (CustomerProvider.ValidateCustomer(pCustomer) == false)
             {
@@ -86,7 +86,7 @@ namespace FuelSupply.BAL.Manager
                 {
                     pCustomer.KeyCustomerId = 0;
                 }
-                bool result = CustomerProvider.UpdateCustomer(pCustomer);
+                bool result = CustomerProvider.UpdateCustomer(pCustomer, pOldPaymentLimit);
                 if (result == false)
                 {
                     pErrorString = "Error while updating Customer, Please try again.";
@@ -139,6 +139,11 @@ namespace FuelSupply.BAL.Manager
         public static bool DeductAmount(int pCustomerId, decimal pAmount)
         {
             return CustomerProvider.DeductAmount(pCustomerId, pAmount);
+        }
+
+        public static bool IncreaseAmount(int pCustomerId, decimal pAmount)
+        {
+            return CustomerProvider.IncreaseAmount(pCustomerId, pAmount);
         }
 
         public static bool CheckDeductionAvailibility(int pCustomerId, decimal pAmount)

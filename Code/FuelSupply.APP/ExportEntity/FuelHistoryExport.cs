@@ -32,6 +32,18 @@ namespace FuelSupply.APP.ExportEntity
 
         [Description("Date")]
         public string Date { get; set; }
+
+        [Description("Shift Name")]
+        public string ShiftName { get; set; }
+
+        [Description("Invoice No")]
+        public string InvoiceNo { get; set; }
+
+        [Description("Actual Volume")]
+        public string ActualFuelVolume { get; set; }
+
+        [Description("Actual Amount")]
+        public string ActualFuelAmount { get; set; }
     }
 
     public class FuelHistoryExportList : List<FuelHistoryExport> { }

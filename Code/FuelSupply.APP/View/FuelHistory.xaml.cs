@@ -18,6 +18,7 @@ using System.Reflection;
 using FuelSupply.APP.Helper;
 using System.ComponentModel;
 using FuelSupply.APP.ExportEntity;
+using FuelSupply.BAL.Manager.Common;
 
 namespace FuelSupply.APP.View
 {
@@ -29,6 +30,9 @@ namespace FuelSupply.APP.View
         #region "Declaration"
         public FuelHistoryViewModel viewModel;
         public MainWindow oMainWindow;
+
+        public delegate void DisplayErrorMessage(string sErrorMsg);
+        public event DisplayErrorMessage showErrorMessage;
         #endregion
         public FuelHistory(Window pOwnerWindow,FuelHistoryViewModel pViewModel)
         {
@@ -57,10 +61,29 @@ namespace FuelSupply.APP.View
             if (oSaveFileDialog.ShowDialog() == true)
             {
                 List<FuelHistoryExport> oFuelHistoryExportList = viewModel.ConvertFuelHistoryToFuelHistoryExportEntity();
-                viewModel.Export_Data_To_HTML(oFuelHistoryExportList,oSaveFileDialog.FileName);
+                bool result = viewModel.Export_Data_To_HTML(oFuelHistoryExportList,oSaveFileDialog.FileName);
 
-                System.Diagnostics.Process.Start(oSaveFileDialog.FileName);
+                if (result == true)
+                {
+                    System.Diagnostics.Process.Start(oSaveFileDialog.FileName);
+                }
+                else
+                {
+                    //show warning message
+                    ShowErrorMessage("Error while exporting in HTML, please contact administrator.");
+                }
             }
+        }
+
+        public void ShowErrorMessage(string pErrorMsg)
+        {
+            if (oMainWindow.Dispatcher.CheckAccess())
+            {
+                if (pErrorMsg != string.Empty)
+                    MessageManager.ShowErrorMessage(pErrorMsg, oMainWindow);
+            }
+            else
+                oMainWindow.Dispatcher.Invoke(new DisplayErrorMessage(ShowErrorMessage), new object[] { pErrorMsg });
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -113,9 +136,17 @@ namespace FuelSupply.APP.View
             if (oSaveFileDialog.ShowDialog() == true)
             {
                 List<FuelHistoryExport> oFuelHistoryExportList = viewModel.ConvertFuelHistoryToFuelHistoryExportEntity();
-                viewModel.Export_Data_To_PDF(oFuelHistoryExportList, oSaveFileDialog.FileName);
+                var result = viewModel.Export_Data_To_PDF(oFuelHistoryExportList, oSaveFileDialog.FileName);
 
-                System.Diagnostics.Process.Start(oSaveFileDialog.FileName);
+                if (result == true)
+                {
+                    System.Diagnostics.Process.Start(oSaveFileDialog.FileName);
+                }
+                else
+                {
+                    //show warning message
+                    ShowErrorMessage("Error while exporting in PDF, please contact administrator.");
+                }                
             }
         }
 
@@ -137,7 +168,20 @@ namespace FuelSupply.APP.View
                 System.Diagnostics.Process.Start(oSaveFileDialog.FileName);
             }
         }
+
+        private void dgFuelHistoryList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            btnEditHistory_Click(null, null);
+        }
+
+        private void btnEditHistory_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateFuelHistoryViewModel oViewModel = new UpdateFuelHistoryViewModel(oMainWindow);
+            oViewModel.SelectedFuelHistory = viewModel.SelectedFuelHistory;
+            UpdateFuelHistory oUpdateHistory = new UpdateFuelHistory(oViewModel, oMainWindow);
+            oUpdateHistory.Owner = oMainWindow;
+            oUpdateHistory.ShowDialog();
+            btnApply_Click(null, null);
+        }
     }    
-
-
 }

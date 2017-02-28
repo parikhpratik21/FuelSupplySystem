@@ -40,6 +40,19 @@ namespace FuelSupply.DAL.Provider
             return true;
         }
 
+        public static bool UpdateActualFuelDetail(int pFuelTypeId, decimal pActualFuelVolume, decimal pActualFuelAmount)
+        {
+            FuelHistory selectedFuelHistory = fuelDbObject.FuelHistories.Where(data => data.Id == pFuelTypeId).FirstOrDefault();
+            if (selectedFuelHistory != null)
+            {
+                selectedFuelHistory.ActualFuelAmount = pActualFuelAmount;
+                selectedFuelHistory.ActualFuelVolume = pActualFuelVolume;
+
+                fuelDbObject.SaveChanges();
+            }
+            return true;
+        }
+
         public static List<FuelType> GetAllFuelTypeList()
         {
             List<FuelType> FuelTypeList = fuelDbObject.FuelTypes.ToList();
