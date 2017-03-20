@@ -141,9 +141,9 @@ namespace FuelSupply.BAL.Manager
             return CustomerProvider.DeductAmount(pCustomerId, pAmount);
         }
 
-        public static bool IncreaseAmount(int pCustomerId, decimal pAmount)
+        public static bool AddAmountFromCustomerAccount(int pCustomerId, decimal pAmount)
         {
-            bool result = CustomerProvider.IncreaseAmount(pCustomerId, pAmount);
+            bool result = CustomerProvider.AddAmountFromCustomerAccount(pCustomerId, pAmount);
             if (result == true)
             {
                 CreditHistory oHistory = new CreditHistory();
@@ -166,7 +166,7 @@ namespace FuelSupply.BAL.Manager
             }
             else
                 return true;           
-        }
+        }       
 
         public static bool CheckDeductionAvailibility(int pCustomerId, decimal pAmount)
         {

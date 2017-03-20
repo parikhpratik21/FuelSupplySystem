@@ -17,7 +17,7 @@ namespace FuelSupply.APP.ViewModel
         private Decimal _ActualFuel;
         private Decimal _ActualAmount;        
         private MainWindow oMainWindow;
-        public static string CreditConfirmationMessage = "Actual amount is less then paid amount." + Environment.NewLine + "Do you want to credit difference back to the customer account?";     
+        public static string CreditConfirmationMessage = "Do you want to update history?";     
         #endregion
 
         #region "Property"
@@ -84,7 +84,7 @@ namespace FuelSupply.APP.ViewModel
             oMainWindow = (MainWindow)pOwnerWindow;
         }
 
-        public bool UpdateFuelHistory(ref string pErrorString)
+        public bool ValidateUpdateFuelHistory(ref string pErrorString)
         {
             if(SelectedFuelHistory == null)
             {
@@ -103,21 +103,8 @@ namespace FuelSupply.APP.ViewModel
             }
             else
             {
-                if (ActualAmount != SelectedFuelHistory.ActualFuelAmount && ActualAmount < SelectedFuelHistory.FuelAmount)
-                {
-                    //ask for credit credit back to customer account
-                    pErrorString = CreditConfirmationMessage;
-                    return true;
-                }
-                else
-                {
-                    var result = FuelManager.UpdateActualFuelDetail(SelectedFuelHistory.Id, ActualFuel,ActualAmount);
-                    if(result == false)
-                    {
-                        pErrorString = "Error while updating fuel history, Please try again.";
-                    }
-                    return result;
-                }
+                pErrorString = CreditConfirmationMessage;
+                return true;
             }            
         }
 
@@ -134,39 +121,37 @@ namespace FuelSupply.APP.ViewModel
         public bool DebitCreditandUpdateActualAmount(ref string pErrorString)
         {
             //debit customer limit
-            decimal? difference = SelectedFuelHistory.FuelAmount - ActualAmount;
-            if(difference != null && difference > 0)
+            decimal difference = 0;
+            if(SelectedFuelHistory.ActualFuelAmount > 0)
             {
-                if (SelectedFuelHistory.CustomerId != null && difference != null)
-                {
-                    var deductResult = CustomerManager.IncreaseAmount(SelectedFuelHistory.CustomerId.Value, difference.Value);
+                difference = SelectedFuelHistory.ActualFuelAmount.Value - ActualAmount;
+            }
+            else
+            {
+                difference = SelectedFuelHistory.FuelAmount.Value - ActualAmount;
+            }
 
-                    if (deductResult == true)
-                    {
-                        var result = FuelManager.UpdateActualFuelDetail(SelectedFuelHistory.Id, ActualFuel, ActualAmount);
-                        if (result == false)
-                        {
-                            pErrorString = "Error while updating fuel history, Please try again.";
-                        }
-                        return result;
-                    }
-                    else
+            if (SelectedFuelHistory.CustomerId != null)
+            {
+                var deductResult = CustomerManager.AddAmountFromCustomerAccount(SelectedFuelHistory.CustomerId.Value, difference);
+
+                if (deductResult == true)
+                {
+                    var result = FuelManager.UpdateActualFuelDetail(SelectedFuelHistory.Id, ActualFuel, ActualAmount);
+                    if (result == false)
                     {
                         pErrorString = "Error while updating fuel history, Please try again.";
-                        return false;
                     }
+                    return result;
                 }
                 else
                 {
                     pErrorString = "Error while updating fuel history, Please try again.";
                     return false;
                 }
-            }   
-            else
-            {
-                pErrorString = "Actual amount is less then fuel amount, Please try again.";
-                return false;
-            }
+            }                  
+
+            return false;
         }
 
         #endregion

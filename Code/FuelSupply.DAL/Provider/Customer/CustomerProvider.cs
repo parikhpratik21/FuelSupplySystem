@@ -221,7 +221,7 @@ namespace FuelSupply.DAL.Provider
             return false;
         }
 
-        public static bool IncreaseAmount(int pCustomerId, decimal pAmount)
+        public static bool AddAmountFromCustomerAccount(int pCustomerId, decimal pAmount)
         {
             Customer oCustomer = customerDbObject.Customers.Where(x => x.Id == pCustomerId).FirstOrDefault();
             if (oCustomer != null)
@@ -231,7 +231,7 @@ namespace FuelSupply.DAL.Provider
                 return true;
             }
             return false;
-        }
+        }       
 
         public static bool CheckDeductionAvailibility(int pCustomerId, decimal pAmount)
         {

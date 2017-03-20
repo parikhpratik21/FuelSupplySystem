@@ -45,7 +45,7 @@ namespace FuelSupply.APP.View
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             string sErrorString = string.Empty;
-            bool result = oViewModel.UpdateFuelHistory(ref sErrorString);
+            bool result = oViewModel.ValidateUpdateFuelHistory(ref sErrorString);
             if (result == true)
             {
                 if (sErrorString == UpdateFuelHistoryViewModel.CreditConfirmationMessage)
@@ -59,16 +59,7 @@ namespace FuelSupply.APP.View
                             ShowErrorMessage(sErrorString);
                             return;
                         }
-                    }
-                    else
-                    {
-                        var deductResult = oViewModel.UpdateActualAmount(ref sErrorString);
-                        if (deductResult == false)
-                        {
-                            ShowErrorMessage(sErrorString);
-                            return;
-                        }
-                    }
+                    }                    
                 }
 
                 this.Close();
