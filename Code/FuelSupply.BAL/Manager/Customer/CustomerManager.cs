@@ -143,7 +143,29 @@ namespace FuelSupply.BAL.Manager
 
         public static bool IncreaseAmount(int pCustomerId, decimal pAmount)
         {
-            return CustomerProvider.IncreaseAmount(pCustomerId, pAmount);
+            bool result = CustomerProvider.IncreaseAmount(pCustomerId, pAmount);
+            if (result == true)
+            {
+                CreditHistory oHistory = new CreditHistory();
+                oHistory.CreditAmount = pAmount;
+                oHistory.CustomerId = pCustomerId;
+                oHistory.Time = DateTime.Now;
+                oHistory.UserId = SharedData.LoggedUser.Id;
+                oHistory.PaymentType = (int) FuelSupply.DAL.Entity.Comman.Constants.ePaymentType.Cash;
+                oHistory.Id = 0;
+                oHistory.FuelStationId = SharedData.CurrentFuelStation.Id;
+
+                if (SharedData.CurrentShift != null)
+                {
+                    oHistory.ShiftId = SharedData.CurrentShift.ShiftId;
+                    oHistory.ShiftName = SharedData.CurrentShift.ShiftName;
+                }
+
+                bool oHistoryResult = CreditManager.AddCreditHistory(oHistory);
+                return oHistoryResult;
+            }
+            else
+                return true;           
         }
 
         public static bool CheckDeductionAvailibility(int pCustomerId, decimal pAmount)

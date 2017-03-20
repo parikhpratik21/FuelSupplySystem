@@ -330,6 +330,7 @@ namespace FuelSupply.APP.ViewModel
 
                     oExportEntity.Date = DateTime.ParseExact(oHistory.Time.Value.ToString("dd/MM/yyyy hh:mm:ss tt"), "dd/MM/yyyy hh:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture).ToString("dd/MM/yyyy hh:mm:ss tt");
                     oExportEntity.CreditAmount = oHistory.CreditAmount;
+                    oExportEntity.Shift = oHistory.ShiftName;
 
                     if (oHistory.PaymentType1 != null)
                         oExportEntity.PaymentType = oHistory.PaymentType1.Name;
@@ -433,6 +434,13 @@ namespace FuelSupply.APP.ViewModel
                 pdfTable.AddCell(cellRow);               
 
                 cellRow = new PdfPCell(new Phrase(oHistory.Date));
+                cellRow.HorizontalAlignment = 1;
+                cellRow.VerticalAlignment = 1;
+                if (rowIndex % 2 == 0)
+                    cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
+                pdfTable.AddCell(cellRow);
+
+                cellRow = new PdfPCell(new Phrase(oHistory.Shift));
                 cellRow.HorizontalAlignment = 1;
                 cellRow.VerticalAlignment = 1;
                 if (rowIndex % 2 == 0)

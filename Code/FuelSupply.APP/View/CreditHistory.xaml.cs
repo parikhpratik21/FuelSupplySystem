@@ -1,6 +1,7 @@
 ﻿using FuelSupply.APP.ExportEntity;
 using FuelSupply.APP.Helper;
 using FuelSupply.APP.ViewModel;
+using FuelSupply.BAL.Manager.Common;
 using FuelSupply.DAL.Entity.Fuel;
 using Microsoft.Win32;
 using System;
@@ -28,6 +29,9 @@ namespace FuelSupply.APP.View
         #region "Declaration"
         public CreditHistoryViewModel viewModel;
         public MainWindow oMainWindow;
+
+        public delegate void DisplayErrorMessage(string sErrorMsg);
+        public event DisplayErrorMessage showErrorMessage;
         #endregion
 
         public CreditHistory(Window pOwnerWindow,CreditHistoryViewModel pViewModel)
@@ -67,10 +71,28 @@ namespace FuelSupply.APP.View
             if (oSaveFileDialog.ShowDialog() == true)
             {
                 List<CreditHistoryExport> oCreditHistoryExportList = viewModel.ConvertCreditHistoryToCreditHistoryExportEntity();
-                viewModel.Export_Data_To_HTML(oCreditHistoryExportList, oSaveFileDialog.FileName);
+                bool result =  viewModel.Export_Data_To_HTML(oCreditHistoryExportList, oSaveFileDialog.FileName);
 
-                System.Diagnostics.Process.Start(oSaveFileDialog.FileName);
+                if (result == true)
+                {
+                    System.Diagnostics.Process.Start(oSaveFileDialog.FileName);
+                }
+                else
+                {
+                    ShowErrorMessage("Error while exporting in PDF, please contact administrator.");
+                }
             }
+        }
+
+        public void ShowErrorMessage(string pErrorMsg)
+        {
+            if (oMainWindow.Dispatcher.CheckAccess())
+            {
+                if (pErrorMsg != string.Empty)
+                    MessageManager.ShowErrorMessage(pErrorMsg, oMainWindow);
+            }
+            else
+                oMainWindow.Dispatcher.Invoke(new DisplayErrorMessage(ShowErrorMessage), new object[] { pErrorMsg });
         }
 
         private void btnExportToCSV_Click(object sender, RoutedEventArgs e)

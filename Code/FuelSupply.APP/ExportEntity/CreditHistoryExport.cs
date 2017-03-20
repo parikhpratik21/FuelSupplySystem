@@ -29,6 +29,9 @@ namespace FuelSupply.APP.ExportEntity
 
         [Description("Date")]
         public string Date { get; set; }
+
+        [Description("Shift")]
+        public string Shift { get; set; }
     }
 
     public class CreditHistoryExportList : List<CreditHistoryExport> { }
