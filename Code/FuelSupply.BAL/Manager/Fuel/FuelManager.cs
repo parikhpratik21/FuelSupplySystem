@@ -40,27 +40,27 @@ namespace FuelSupply.BAL.Manager
             return FuelProvider.UpdateActualFuelDetail(pFuelTypeId, pActualFuelVolume, pActualFuelAmount);
         }
 
-        public static List<FuelHistory> GetFuelHistoryByKeyCustomerId(int pKeyCustomerId, DateTime? pStartDate, DateTime? pEndDate)
+        public static List<Fetch_FuelHistory_Result> GetFuelHistoryByKeyCustomerId(int pKeyCustomerId, DateTime? pStartDate, DateTime? pEndDate)
         {
             return FuelProvider.GetFuelHistoryByKeyCustomerId(pKeyCustomerId,pStartDate,pEndDate);
         }
 
-        public static List<FuelHistory> GetFuelHistoryByCustomerId(int pCustomerId, DateTime? pStartDate, DateTime? pEndDate)
+        public static List<Fetch_FuelHistory_Result> GetFuelHistoryByCustomerId(int pCustomerId, DateTime? pStartDate, DateTime? pEndDate)
         {
             return FuelProvider.GetFuelHistoryByCustomerId(pCustomerId,pStartDate,pEndDate);
         }
 
-        public static List<FuelHistory> GetFuelHistoryByUserId(int pUserId, DateTime? pStartDate, DateTime? pEndDate)
+        public static List<Fetch_FuelHistory_Result> GetFuelHistoryByUserId(int pUserId, DateTime? pStartDate, DateTime? pEndDate)
         {
             return FuelProvider.GetFuelHistoryByUserId(pUserId,pStartDate,pEndDate);
         }
 
-        public static List<FuelHistory> GetFuelHistoryByFuelTypeId(int pFuelTypeId, DateTime? pStartDate, DateTime? pEndDate)
+        public static List<Fetch_FuelHistory_Result> GetFuelHistoryByFuelTypeId(int pFuelTypeId, DateTime? pStartDate, DateTime? pEndDate)
         {
             return FuelProvider.GetFuelHistoryByFuelTypeId(pFuelTypeId, pStartDate, pEndDate);
 
         }
-        public static List<FuelHistory> GetFuelHistoryBetweenDates(DateTime? pStartDate, DateTime? pEndDate)
+        public static List<Fetch_FuelHistory_Result> GetFuelHistoryBetweenDates(DateTime? pStartDate, DateTime? pEndDate)
         {
             return FuelProvider.GetFuelHistoryBetweenDates(pStartDate, pEndDate);
         }

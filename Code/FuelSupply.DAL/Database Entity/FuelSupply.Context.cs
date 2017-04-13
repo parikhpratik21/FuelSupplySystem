@@ -45,7 +45,7 @@ namespace FuelSupply.DAL.Database_Entity
         public virtual DbSet<FingerPrintType> FingerPrintTypes { get; set; }
         public virtual DbSet<Shift> Shifts { get; set; }
     
-        public virtual ObjectResult<CreditHistory> Fetch_CreditHistory(Nullable<int> keyCustomerId, Nullable<System.DateTime> startTime, Nullable<System.DateTime> endTime, Nullable<int> userId, Nullable<int> customerId, Nullable<int> paymentId)
+        public virtual ObjectResult<Fetch_CreditHistory_Result> Fetch_CreditHistory(Nullable<int> keyCustomerId, Nullable<System.DateTime> startTime, Nullable<System.DateTime> endTime, Nullable<int> userId, Nullable<int> customerId, Nullable<int> paymentId)
         {
             var keyCustomerIdParameter = keyCustomerId.HasValue ?
                 new ObjectParameter("KeyCustomerId", keyCustomerId) :
@@ -71,10 +71,10 @@ namespace FuelSupply.DAL.Database_Entity
                 new ObjectParameter("PaymentId", paymentId) :
                 new ObjectParameter("PaymentId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CreditHistory>("Fetch_CreditHistory", keyCustomerIdParameter, startTimeParameter, endTimeParameter, userIdParameter, customerIdParameter, paymentIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Fetch_CreditHistory_Result>("Fetch_CreditHistory", keyCustomerIdParameter, startTimeParameter, endTimeParameter, userIdParameter, customerIdParameter, paymentIdParameter);
         }
     
-        public virtual ObjectResult<CreditHistory> Fetch_CreditHistory(Nullable<int> keyCustomerId, Nullable<System.DateTime> startTime, Nullable<System.DateTime> endTime, Nullable<int> userId, Nullable<int> customerId, Nullable<int> paymentId, MergeOption mergeOption)
+        public virtual ObjectResult<Fetch_FuelHistory_Result> Fetch_FuelHistory(Nullable<int> keyCustomerId, Nullable<System.DateTime> startTime, Nullable<System.DateTime> endTime, Nullable<int> userId, Nullable<int> customerId, Nullable<int> fuelId)
         {
             var keyCustomerIdParameter = keyCustomerId.HasValue ?
                 new ObjectParameter("KeyCustomerId", keyCustomerId) :
@@ -96,53 +96,11 @@ namespace FuelSupply.DAL.Database_Entity
                 new ObjectParameter("CustomerId", customerId) :
                 new ObjectParameter("CustomerId", typeof(int));
     
-            var paymentIdParameter = paymentId.HasValue ?
-                new ObjectParameter("PaymentId", paymentId) :
-                new ObjectParameter("PaymentId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CreditHistory>("Fetch_CreditHistory", mergeOption, keyCustomerIdParameter, startTimeParameter, endTimeParameter, userIdParameter, customerIdParameter, paymentIdParameter);
-        }
-    
-        public virtual ObjectResult<FuelHistory> Fetch_FuelHistory(Nullable<int> keyCustomerId, Nullable<int> userId, Nullable<int> customerId, Nullable<int> fuelId)
-        {
-            var keyCustomerIdParameter = keyCustomerId.HasValue ?
-                new ObjectParameter("KeyCustomerId", keyCustomerId) :
-                new ObjectParameter("KeyCustomerId", typeof(int));
-    
-            var userIdParameter = userId.HasValue ?
-                new ObjectParameter("UserId", userId) :
-                new ObjectParameter("UserId", typeof(int));
-    
-            var customerIdParameter = customerId.HasValue ?
-                new ObjectParameter("CustomerId", customerId) :
-                new ObjectParameter("CustomerId", typeof(int));
-    
             var fuelIdParameter = fuelId.HasValue ?
                 new ObjectParameter("FuelId", fuelId) :
                 new ObjectParameter("FuelId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FuelHistory>("Fetch_FuelHistory", keyCustomerIdParameter, userIdParameter, customerIdParameter, fuelIdParameter);
-        }
-    
-        public virtual ObjectResult<FuelHistory> Fetch_FuelHistory(Nullable<int> keyCustomerId, Nullable<int> userId, Nullable<int> customerId, Nullable<int> fuelId, MergeOption mergeOption)
-        {
-            var keyCustomerIdParameter = keyCustomerId.HasValue ?
-                new ObjectParameter("KeyCustomerId", keyCustomerId) :
-                new ObjectParameter("KeyCustomerId", typeof(int));
-    
-            var userIdParameter = userId.HasValue ?
-                new ObjectParameter("UserId", userId) :
-                new ObjectParameter("UserId", typeof(int));
-    
-            var customerIdParameter = customerId.HasValue ?
-                new ObjectParameter("CustomerId", customerId) :
-                new ObjectParameter("CustomerId", typeof(int));
-    
-            var fuelIdParameter = fuelId.HasValue ?
-                new ObjectParameter("FuelId", fuelId) :
-                new ObjectParameter("FuelId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FuelHistory>("Fetch_FuelHistory", mergeOption, keyCustomerIdParameter, userIdParameter, customerIdParameter, fuelIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Fetch_FuelHistory_Result>("Fetch_FuelHistory", keyCustomerIdParameter, startTimeParameter, endTimeParameter, userIdParameter, customerIdParameter, fuelIdParameter);
         }
     }
 }

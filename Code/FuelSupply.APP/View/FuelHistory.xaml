@@ -142,7 +142,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Attendant Name" Binding="{Binding UserName}" Width="1*">
+                    <DataGridTextColumn Header="Attendant Name" Binding="{Binding AttendantName}" Width="1*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -163,7 +163,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Fuel Type" Binding="{Binding FuelType1.Name}" Width="1.2*">
+                    <DataGridTextColumn Header="Fuel Type" Binding="{Binding FuelType}" Width="1.2*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />

@@ -31,7 +31,7 @@ namespace FuelSupply.APP.ViewModel
         private List<User> _UserList;
         private List<PaymentType> _PaymentTypeList;
 
-        private List<CreditHistory> _CreditHistoryList;
+        private List<Fetch_CreditHistory_Result> _CreditHistoryList;
         #endregion
 
         #region "Property"
@@ -61,7 +61,7 @@ namespace FuelSupply.APP.ViewModel
             }
         }
 
-        public List<CreditHistory> CreditHistoryList
+        public List<Fetch_CreditHistory_Result> CreditHistoryList
         {
             get
             {
@@ -319,33 +319,27 @@ namespace FuelSupply.APP.ViewModel
             if (CreditHistoryList != null && CreditHistoryList.Count > 0)
             {
                 CreditHistoryExport oExportEntity;
-                foreach (CreditHistory oHistory in CreditHistoryList)
+                foreach (Fetch_CreditHistory_Result oHistory in CreditHistoryList)
                 {
                     oExportEntity = new CreditHistoryExport();
                     oExportEntity.ID = oHistory.Id;
-                    if (oHistory.Customer != null)
-                        oExportEntity.CustomerName = oHistory.Customer.Name;
-                    else
-                        oExportEntity.CustomerName = string.Empty;
+                    oExportEntity.CustomerName = oHistory.CustomerName;
 
                     oExportEntity.Date = DateTime.ParseExact(oHistory.Time.Value.ToString("dd/MM/yyyy hh:mm:ss tt"), "dd/MM/yyyy hh:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture).ToString("dd/MM/yyyy hh:mm:ss tt");
                     oExportEntity.CreditAmount = oHistory.CreditAmount;
                     oExportEntity.Shift = oHistory.ShiftName;
-
-                    if (oHistory.PaymentType1 != null)
-                        oExportEntity.PaymentType = oHistory.PaymentType1.Name;
+                    if(oHistory.IsAdjustmentCredit == null)
+                    {
+                        oExportEntity.IsAdjustmentCreditHistory = false;
+                    }
                     else
-                        oExportEntity.PaymentType = "Cash";
-
-                    if (oHistory.Customer != null && oHistory.Customer.Customer2 != null)
-                        oExportEntity.KeyCustomer = oHistory.Customer.Customer2.Name;
-                    else
-                        oExportEntity.KeyCustomer = string.Empty;
-
-                    if (oHistory.User != null)
-                        oExportEntity.UserName = oHistory.User.Name;
-                    else
-                        oExportEntity.UserName = string.Empty;
+                    {
+                        oExportEntity.IsAdjustmentCreditHistory = oHistory.IsAdjustmentCredit.Value;
+                    }
+                    
+                    oExportEntity.PaymentType = oHistory.PaymentType;
+                    oExportEntity.KeyCustomer = oHistory.KeyCustomerName;
+                    oExportEntity.UserName = oHistory.AttendantName;
 
                     oCreditHistoryExportList.Add(oExportEntity);
                 }
@@ -364,8 +358,11 @@ namespace FuelSupply.APP.ViewModel
             for (int index = 0; index < headerInfo.Length; index++)
             {
                 object[] attrs = headerInfo[index].GetCustomAttributes(true);
-                string sColumnHeaderString = ((DescriptionAttribute)attrs[0]).Description;
-                objHeaders.Add(sColumnHeaderString);
+                if (attrs != null && attrs.Any())
+                {
+                    string sColumnHeaderString = ((DescriptionAttribute)attrs[0]).Description;
+                    objHeaders.Add(sColumnHeaderString);
+                }
             }
 
             PdfPTable pdfTable = new PdfPTable(objHeaders.Count);
@@ -422,8 +419,15 @@ namespace FuelSupply.APP.ViewModel
                 cellRow = new PdfPCell(new Phrase(oHistory.PaymentType));
                 cellRow.HorizontalAlignment = 1;
                 cellRow.VerticalAlignment = 1;
-                if (rowIndex % 2 == 0)
-                    cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
+                if (oHistory.IsAdjustmentCreditHistory == true)
+                {
+                    cellRow.BackgroundColor = new iTextSharp.text.Color(255, 255, 0);
+                }
+                else
+                {
+                    if (rowIndex % 2 == 0)
+                        cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
+                }
                 pdfTable.AddCell(cellRow);
 
                 cellRow = new PdfPCell(new Phrase(oHistory.CreditAmount.ToString()));
@@ -472,6 +476,7 @@ namespace FuelSupply.APP.ViewModel
                 {
                     string sHeaderBackColor = @"""#00DFDF""";
                     string sRowBackColor = @"""#E0FFFF""";
+                    string sAdjustMentRowbackColor = @"""#FFFF00""";
 
                     StringBuilder sbHtml = new StringBuilder();
                     //create html & table
@@ -487,13 +492,16 @@ namespace FuelSupply.APP.ViewModel
                     for (int index = 0; index < headerInfo.Length; index++)
                     {
                         object[] attrs = headerInfo[index].GetCustomAttributes(true);
-                        string sColumnHeaderString = ((DescriptionAttribute)attrs[0]).Description;
+                        if (attrs != null && attrs.Any())
+                        {
+                            string sColumnHeaderString = ((DescriptionAttribute)attrs[0]).Description;
 
-                        objHeaders.Add(headerInfo[index].Name);
+                            objHeaders.Add(headerInfo[index].Name);
 
-                        //objHeaders.Add(headerInfo[index].Name);
-                        sbHtml.AppendLine("<td align='center' valign='middle'><b>" +
-                                       sColumnHeaderString + "</b></td>");
+                            //objHeaders.Add(headerInfo[index].Name);
+                            sbHtml.AppendLine("<td align='center' valign='middle'><b>" +
+                                           sColumnHeaderString + "</b></td>");
+                        }
                     }
 
                     //create table body                   
@@ -519,7 +527,27 @@ namespace FuelSupply.APP.ViewModel
                         {
                             var data = typeof(CreditHistoryExport).InvokeMember(objHeaders[i].ToString(), BindingFlags.GetProperty, null, item, null);
 
-                            sbHtml.AppendLine("<td align='center' valign='middle'>" + data.ToString() + "</td>");
+                            string strData = string.Empty;
+                            if(data != null)
+                            {
+                                strData = data.ToString();
+                            }
+
+                            if (objHeaders[i].ToString() == "PaymentType")
+                            {
+                                if (item.IsAdjustmentCreditHistory == true)
+                                {
+                                    sbHtml.AppendLine("<td align='center' bgcolor= " + sAdjustMentRowbackColor + " valign='middle'>" + strData + "</td>");
+                                }
+                                else
+                                {
+                                    sbHtml.AppendLine("<td align='center' valign='middle'>" + strData + "</td>");
+                                }
+                            }
+                            else
+                            {
+                                sbHtml.AppendLine("<td align='center' valign='middle'>" + strData + "</td>");
+                            }
                         }
 
                         sbHtml.AppendLine("</tr>");

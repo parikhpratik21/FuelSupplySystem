@@ -32,12 +32,12 @@ namespace FuelSupply.APP.ViewModel
         private List<Customer> _KeyCustomerList;
         private List<User> _UserList;
         private List<FuelType> _FuelTypeList;
-        private FuelHistory _SelectedFuelHistory;
-        private List<FuelHistory> _FuelHistoryList;
+        private Fetch_FuelHistory_Result _SelectedFuelHistory;
+        private List<Fetch_FuelHistory_Result> _FuelHistoryList;
         #endregion
 
         #region "Property"
-        public FuelHistory SelectedFuelHistory
+        public Fetch_FuelHistory_Result SelectedFuelHistory
         {
             get
             {
@@ -75,7 +75,7 @@ namespace FuelSupply.APP.ViewModel
             }
         }
 
-        public List<FuelHistory> FuelHistoryList
+        public List<Fetch_FuelHistory_Result> FuelHistoryList
         {
             get
             {
@@ -333,35 +333,20 @@ namespace FuelSupply.APP.ViewModel
             if (FuelHistoryList != null && FuelHistoryList.Count > 0)
             {
                 FuelHistoryExport oExportEntity;
-                foreach (FuelHistory oHistory in FuelHistoryList)
+                foreach (Fetch_FuelHistory_Result oHistory in FuelHistoryList)
                 {
                     oExportEntity = new FuelHistoryExport();
                     oExportEntity.ID = oHistory.Id;
-                    if (oHistory.Customer != null)
-                        oExportEntity.CustomerName = oHistory.Customer.Name;
-                    else
-                        oExportEntity.CustomerName = oHistory.CustomerName;
+                    oExportEntity.CustomerName = oHistory.CustomerName;
 
                     oExportEntity.Date = DateTime.ParseExact(oHistory.Time.Value.ToString("dd/MM/yyyy hh:mm:ss tt"), "dd/MM/yyyy hh:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture).ToString("dd/MM/yyyy hh:mm:ss tt"); 
                     oExportEntity.FuelAmount = oHistory.FuelAmount;
 
-                    if (oHistory.FuelType1 != null)
-                        oExportEntity.FuelType = oHistory.FuelType1.Name;
-                    else
-                        oExportEntity.FuelType = "Petrol";
+                    oExportEntity.FuelType = oHistory.FuelType;
 
                     oExportEntity.FuelVolume = oHistory.FuelVolume;
-
-                    if (oHistory.Customer != null && oHistory.Customer.Customer2 != null)
-                        oExportEntity.KeyCustomer = oHistory.Customer.Customer2.Name;
-                    else
-                        oExportEntity.KeyCustomer = string.Empty;
-
-
-                    if (oHistory.User != null)
-                        oExportEntity.UserName = oHistory.User.Name;
-                    else
-                        oExportEntity.UserName = oHistory.UserName;
+                    oExportEntity.KeyCustomer = oHistory.KeyCustomerName;
+                    oExportEntity.UserName = oHistory.AttendantName;
 
                     oExportEntity.ShiftName = oHistory.ShiftName;
                     oExportEntity.InvoiceNo = oHistory.InvoiceNo;

@@ -13,7 +13,7 @@ namespace FuelSupply.APP.ViewModel
     public class UpdateFuelHistoryViewModel: INotifyPropertyChanged
     {
         #region "Declaration"
-        private FuelHistory _SelectedFuelHistory;        
+        private Fetch_FuelHistory_Result _SelectedFuelHistory;        
         private Decimal _ActualFuel;
         private Decimal _ActualAmount;        
         private MainWindow oMainWindow;
@@ -21,7 +21,7 @@ namespace FuelSupply.APP.ViewModel
         #endregion
 
         #region "Property"
-        public FuelHistory SelectedFuelHistory
+        public Fetch_FuelHistory_Result SelectedFuelHistory
         {
             get
             {
@@ -131,27 +131,22 @@ namespace FuelSupply.APP.ViewModel
                 difference = SelectedFuelHistory.FuelAmount.Value - ActualAmount;
             }
 
-            if (SelectedFuelHistory.CustomerId != null)
-            {
-                var deductResult = CustomerManager.AddAmountFromCustomerAccount(SelectedFuelHistory.CustomerId.Value, difference);
+            var deductResult = CustomerManager.AddAmountFromCustomerAccount(SelectedFuelHistory.CustomerId, difference, SelectedFuelHistory.KeyCustomerId, SelectedFuelHistory.KeyCustomerName);
 
-                if (deductResult == true)
-                {
-                    var result = FuelManager.UpdateActualFuelDetail(SelectedFuelHistory.Id, ActualFuel, ActualAmount);
-                    if (result == false)
-                    {
-                        pErrorString = "Error while updating fuel history, Please try again.";
-                    }
-                    return result;
-                }
-                else
+            if (deductResult == true)
+            {
+                var result = FuelManager.UpdateActualFuelDetail(SelectedFuelHistory.Id, ActualFuel, ActualAmount);
+                if (result == false)
                 {
                     pErrorString = "Error while updating fuel history, Please try again.";
-                    return false;
                 }
-            }                  
-
-            return false;
+                return result;
+            }
+            else
+            {
+                pErrorString = "Error while updating fuel history, Please try again.";
+                return false;
+            }                            
         }
 
         #endregion

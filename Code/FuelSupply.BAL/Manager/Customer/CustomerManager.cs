@@ -53,6 +53,11 @@ namespace FuelSupply.BAL.Manager
             return CustomerProvider.GetCustomerListByKeyCustomer(pKeyCustomerId);
         }
 
+        public static string GetKeyCustomerNameByKeyCustomerId(int? pKeyCustomerId)
+        {
+            return CustomerProvider.GetKeyCustomerNameByKeyCustomerId(pKeyCustomerId);
+        }
+
         public static bool AddCustomer(Customer pCustomer, ref string pErrorString)
         {
             if(CustomerProvider.ValidateCustomer(pCustomer) == false)
@@ -109,7 +114,7 @@ namespace FuelSupply.BAL.Manager
             return bResult;
         }
 
-        public static bool IncreaseCredit(int pCustomerId, decimal pAmount, int pPaymentType)
+        public static bool IncreaseCredit(int pCustomerId, decimal pAmount, int pPaymentType, int? pKeyCustomerId, string pKeyCustomerName)
         {
             bool result = CustomerProvider.IncreaseCredit(pCustomerId, pAmount);
             if (result == true)
@@ -122,6 +127,9 @@ namespace FuelSupply.BAL.Manager
                 oHistory.PaymentType = pPaymentType;
                 oHistory.Id = 0;
                 oHistory.FuelStationId = SharedData.CurrentFuelStation.Id;
+                oHistory.KeyCustomerId = pKeyCustomerId;
+                oHistory.KeyCustomerName = pKeyCustomerName;
+                oHistory.IsAdjustmentCredit = false;
 
                 if (SharedData.CurrentShift != null)
                 {
@@ -141,7 +149,7 @@ namespace FuelSupply.BAL.Manager
             return CustomerProvider.DeductAmount(pCustomerId, pAmount);
         }
 
-        public static bool AddAmountFromCustomerAccount(int pCustomerId, decimal pAmount)
+        public static bool AddAmountFromCustomerAccount(int pCustomerId, decimal pAmount, int? pKeyCustomerId, string pKeyCustomerName)
         {
             bool result = CustomerProvider.AddAmountFromCustomerAccount(pCustomerId, pAmount);
             if (result == true)
@@ -154,6 +162,9 @@ namespace FuelSupply.BAL.Manager
                 oHistory.PaymentType = (int) FuelSupply.DAL.Entity.Comman.Constants.ePaymentType.Cash;
                 oHistory.Id = 0;
                 oHistory.FuelStationId = SharedData.CurrentFuelStation.Id;
+                oHistory.KeyCustomerId = pKeyCustomerId;
+                oHistory.KeyCustomerName = pKeyCustomerName;
+                oHistory.IsAdjustmentCredit = true;
 
                 if (SharedData.CurrentShift != null)
                 {

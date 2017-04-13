@@ -59,29 +59,39 @@ namespace FuelSupply.DAL.Provider
             return FuelTypeList;
         }
 
-        public static List<FuelHistory> GetFuelHistoryByKeyCustomerId(int pKeyCustomerId, DateTime? pStartDate, DateTime? pEndDate)
+        public static List<Fetch_FuelHistory_Result> GetFuelHistoryByKeyCustomerId(int pKeyCustomerId, DateTime? pStartDate, DateTime? pEndDate)
         {
-            return fuelDbObject.FuelHistories.Where(x => (x.KeyCustomerId == pKeyCustomerId || x.CustomerId == pKeyCustomerId) && (x.Time > pStartDate && x.Time < pEndDate)).ToList();
+            //return fuelDbObject.FuelHistories.Where(x => (x.KeyCustomerId == pKeyCustomerId || x.CustomerId == pKeyCustomerId) && (x.Time > pStartDate && x.Time < pEndDate)).ToList();
+            var queryResult = fuelDbObject.Fetch_FuelHistory(pKeyCustomerId, pStartDate, pEndDate, 0, 0, 0);            
+            return queryResult.ToList();
         }
 
-        public static List<FuelHistory> GetFuelHistoryByCustomerId(int pCustomerId, DateTime? pStartDate, DateTime? pEndDate)
+        public static List<Fetch_FuelHistory_Result> GetFuelHistoryByCustomerId(int pCustomerId, DateTime? pStartDate, DateTime? pEndDate)
         {
-            return fuelDbObject.FuelHistories.Where(x => x.CustomerId == pCustomerId && (x.Time > pStartDate && x.Time < pEndDate)).ToList();
+            var queryResult = fuelDbObject.Fetch_FuelHistory(0,pStartDate,pEndDate,0,pCustomerId,0);
+            return queryResult.ToList();
+            //return fuelDbObject.FuelHistories.Where(x => x.CustomerId == pCustomerId && (x.Time > pStartDate && x.Time < pEndDate)).ToList();
         }
 
-        public static List<FuelHistory> GetFuelHistoryByUserId(int pUserId, DateTime? pStartDate, DateTime? pEndDate)
+        public static List<Fetch_FuelHistory_Result> GetFuelHistoryByUserId(int pUserId, DateTime? pStartDate, DateTime? pEndDate)
         {
-            return fuelDbObject.FuelHistories.Where(x => x.UserId == pUserId && (x.Time > pStartDate && x.Time < pEndDate)).ToList();
+            var queryResult = fuelDbObject.Fetch_FuelHistory(0, pStartDate, pEndDate, pUserId, 0, 0);
+            return queryResult.ToList();
+            //return fuelDbObject.FuelHistories.Where(x => x.UserId == pUserId && (x.Time > pStartDate && x.Time < pEndDate)).ToList();
         }
 
-        public static List<FuelHistory> GetFuelHistoryByFuelTypeId(int pFuelTypeId, DateTime? pStartDate, DateTime? pEndDate)
+        public static List<Fetch_FuelHistory_Result> GetFuelHistoryByFuelTypeId(int pFuelTypeId, DateTime? pStartDate, DateTime? pEndDate)
         {
-            return fuelDbObject.FuelHistories.Where(x => x.FuelType == pFuelTypeId && (x.Time > pStartDate && x.Time < pEndDate)).ToList();
+            var queryResult = fuelDbObject.Fetch_FuelHistory(0, pStartDate, pEndDate, 0, 0, pFuelTypeId);
+            return queryResult.ToList();
+            //return fuelDbObject.FuelHistories.Where(x => x.FuelType == pFuelTypeId && (x.Time > pStartDate && x.Time < pEndDate)).ToList();
         }
 
-        public static List<FuelHistory> GetFuelHistoryBetweenDates(DateTime? pStartDate, DateTime? pEndDate)
+        public static List<Fetch_FuelHistory_Result> GetFuelHistoryBetweenDates(DateTime? pStartDate, DateTime? pEndDate)
         {
-            return fuelDbObject.FuelHistories.Where(x => x.Time > pStartDate && x.Time < pEndDate).ToList();
+            var queryResult = fuelDbObject.Fetch_FuelHistory(0, pStartDate, pEndDate, 0, 0, 0);
+            return queryResult.ToList();
+            //return fuelDbObject.FuelHistories.Where(x => x.Time > pStartDate && x.Time < pEndDate).ToList();
         }
 
         public static List<FuelHistory> FetFuelHistoryByFuelStationId(int pFuelStationId)

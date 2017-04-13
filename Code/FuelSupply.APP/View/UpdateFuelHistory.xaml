@@ -81,7 +81,7 @@
             <Label Name="lblInvoiceNoValue" Grid.Column="2" Grid.Row="0" Style="{StaticResource LableStyle}" Content="{Binding SelectedFuelHistory.InvoiceNo}"></Label>
             
             <Label Name="lblUserNameHeader" Content="Attendant Name:" Grid.Column="1" Grid.Row="3" Style="{StaticResource LabelHeaderStyle}"></Label>
-            <Label Name="lblUserName" Grid.Column="2" Grid.Row="3" Style="{StaticResource LableStyle}" Content="{Binding SelectedFuelHistory.UserName}"></Label>
+            <Label Name="lblUserName" Grid.Column="2" Grid.Row="3" Style="{StaticResource LableStyle}" Content="{Binding SelectedFuelHistory.AttendantName}"></Label>
             
             <Label Name="lblCustomerNameHeader" Content="Customer Name:" Grid.Column="1" Grid.Row="1" Style="{StaticResource LabelHeaderStyle}"></Label>
             <Label Name="lblCustomerName" Grid.Column="2" Grid.Row="1" Style="{StaticResource LableStyle}"  Content="{Binding SelectedFuelHistory.CustomerName}" ></Label>
@@ -90,7 +90,7 @@
             <Label Name="lblKeyCustomerName" Content="{Binding SelectedFuelHistory.KeyCustomerName}" Margin="5,5,5,5" Grid.Column="2" Grid.Row="2" Style="{StaticResource LableStyle}"></Label>            
 
             <Label Name="lblFuelType" Content="Fuel Type:" Grid.Column="1" Grid.Row="4" Style="{StaticResource LabelHeaderStyle}"></Label>
-            <TextBlock Name="txtFuelType" Grid.Column="2" Grid.Row="4" Style="{StaticResource TextBlockStyle}"  Text="{Binding SelectedFuelHistory.FuelType1.Name}" />
+            <TextBlock Name="txtFuelType" Grid.Column="2" Grid.Row="4" Style="{StaticResource TextBlockStyle}"  Text="{Binding SelectedFuelHistory.FuelType}" />
 
             <Label Name="lblFuel" Content="Fuel:" Grid.Column="1" Grid.Row="5" Style="{StaticResource LabelHeaderStyle}"></Label>
             <TextBlock Name="txtFuel" Grid.Column="2" Grid.Row="5" Style="{StaticResource TextBlockStyle}"  Text="{Binding SelectedFuelHistory.FuelVolume}" />

@@ -32,6 +32,8 @@ namespace FuelSupply.APP.ExportEntity
 
         [Description("Shift")]
         public string Shift { get; set; }
+        
+        public bool IsAdjustmentCreditHistory { get; set; }
     }
 
     public class CreditHistoryExportList : List<CreditHistoryExport> { }

@@ -81,17 +81,19 @@
       <DependentUpon>FuelSupply.edmx</DependentUpon>
     </Compile>
     <Compile Include="Entity\Comman\Constant.cs" />
+    <Compile Include="Entity\Credit\Fetch_CreditHistory_Result.cs" />
     <Compile Include="Entity\Credit\CreditHistory.cs" />
     <Compile Include="Entity\Customer\Customer.cs" />
     <Compile Include="Entity\Customer\CustomerFingerPrint.cs" />
     <Compile Include="Entity\Customer\CustomerType.cs" />
     <Compile Include="Entity\Customer\FingerPrintType.cs" />
+    <Compile Include="Entity\Customer\PaymentType.cs" />
+    <Compile Include="Entity\Fuel\Fetch_FuelHistory_Result.cs" />
     <Compile Include="Entity\Fuel\FuelHistory.cs" />
-    <Compile Include="Entity\Fuel\HistoryType.cs" />
     <Compile Include="Entity\Fuel\FuelLimitType.cs" />
     <Compile Include="Entity\Fuel\FuelStation.cs" />
     <Compile Include="Entity\Fuel\FuelType.cs" />
-    <Compile Include="Entity\Customer\PaymentType.cs" />
+    <Compile Include="Entity\Fuel\HistoryType.cs" />
     <Compile Include="Entity\User\Shift.cs" />
     <Compile Include="Entity\User\User.cs" />
     <Compile Include="Entity\User\UserType.cs" />

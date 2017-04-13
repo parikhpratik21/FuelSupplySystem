@@ -19,6 +19,8 @@
           <Property Name="KeyCustomerId" Type="int" />
           <Property Name="ShiftId" Type="int" />
           <Property Name="ShiftName" Type="nvarchar" MaxLength="50" />
+          <Property Name="KeyCustomerName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsAdjustmentCredit" Type="bit" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -368,6 +370,8 @@
         </Function>
         <Function Name="Fetch_FuelHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="KeyCustomerId" Type="int" Mode="In" />
+          <Parameter Name="StartTime" Type="datetime" Mode="In" />
+          <Parameter Name="EndTime" Type="datetime" Mode="In" />
           <Parameter Name="UserId" Type="int" Mode="In" />
           <Parameter Name="CustomerId" Type="int" Mode="In" />
           <Parameter Name="FuelId" Type="int" Mode="In" />
@@ -760,20 +764,6 @@
             <End Role="FingerPrintType" EntitySet="FingerPrintTypes" />
             <End Role="CustomerFingerPrint" EntitySet="CustomerFingerPrints" />
           </AssociationSet>
-          <FunctionImport Name="Fetch_CreditHistory" EntitySet="CreditHistories" ReturnType="Collection(FuelSupplySystemModel.CreditHistory)">
-            <Parameter Name="KeyCustomerId" Mode="In" Type="Int32" />
-            <Parameter Name="StartTime" Mode="In" Type="DateTime" />
-            <Parameter Name="EndTime" Mode="In" Type="DateTime" />
-            <Parameter Name="UserId" Mode="In" Type="Int32" />
-            <Parameter Name="CustomerId" Mode="In" Type="Int32" />
-            <Parameter Name="PaymentId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="Fetch_FuelHistory" EntitySet="FuelHistories" ReturnType="Collection(FuelSupplySystemModel.FuelHistory)">
-            <Parameter Name="KeyCustomerId" Mode="In" Type="Int32" />
-            <Parameter Name="UserId" Mode="In" Type="Int32" />
-            <Parameter Name="CustomerId" Mode="In" Type="Int32" />
-            <Parameter Name="FuelId" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="Shifts" EntityType="FuelSupplySystemModel.Shift" />
           <AssociationSet Name="FK_CreditHistory_Shift" Association="FuelSupplySystemModel.FK_CreditHistory_Shift">
             <End Role="Shift" EntitySet="Shifts" />
@@ -783,6 +773,22 @@
             <End Role="Shift" EntitySet="Shifts" />
             <End Role="FuelHistory" EntitySet="FuelHistories" />
           </AssociationSet>
+          <FunctionImport Name="Fetch_CreditHistory" ReturnType="Collection(FuelSupplySystemModel.Fetch_CreditHistory_Result)">
+            <Parameter Name="KeyCustomerId" Mode="In" Type="Int32" />
+            <Parameter Name="StartTime" Mode="In" Type="DateTime" />
+            <Parameter Name="EndTime" Mode="In" Type="DateTime" />
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+            <Parameter Name="PaymentId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Fetch_FuelHistory" ReturnType="Collection(FuelSupplySystemModel.Fetch_FuelHistory_Result)">
+            <Parameter Name="KeyCustomerId" Mode="In" Type="Int32" />
+            <Parameter Name="StartTime" Mode="In" Type="DateTime" />
+            <Parameter Name="EndTime" Mode="In" Type="DateTime" />
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+            <Parameter Name="FuelId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <Association Name="FK_Customer_Customer">
           <End Type="FuelSupplySystemModel.Customer" Role="Customer" Multiplicity="0..1" />
@@ -815,6 +821,8 @@
           <Property Name="ShiftId" Type="Int32" />
           <NavigationProperty Name="Shift" Relationship="FuelSupplySystemModel.FK_CreditHistory_Shift" FromRole="CreditHistory" ToRole="Shift" />
           <Property Name="ShiftName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KeyCustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsAdjustmentCredit" Type="Boolean" />
         </EntityType>
         <Association Name="FK_CreditHistory_Customer">
           <End Type="FuelSupplySystemModel.Customer" Role="Customer" Multiplicity="0..1" />
@@ -864,15 +872,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="Fetch_CreditHistoryBy_KeyCustomer_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="DateTime" Name="Time" Nullable="true" Precision="23" />
-          <Property Type="Int32" Name="FuelStationId" Nullable="true" />
-          <Property Type="Int32" Name="CustomerId" Nullable="true" />
-          <Property Type="Int32" Name="UserId" Nullable="true" />
-          <Property Type="Int32" Name="PaymentType" Nullable="true" />
-          <Property Type="Decimal" Name="CreditAmount" Nullable="true" Precision="18" Scale="2" />
-        </ComplexType>
         <EntityType Name="CustomerFingerPrint">
           <Key>
             <PropertyRef Name="ID" />
@@ -917,26 +916,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="Fetch_CreditHistory_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="DateTime" Name="Time" Nullable="true" Precision="23" />
-          <Property Type="Int32" Name="FuelStationId" Nullable="true" />
-          <Property Type="Int32" Name="CustomerId" Nullable="true" />
-          <Property Type="Int32" Name="UserId" Nullable="true" />
-          <Property Type="Int32" Name="PaymentType" Nullable="true" />
-          <Property Type="Decimal" Name="CreditAmount" Nullable="true" Precision="18" Scale="2" />
-        </ComplexType>
-        <ComplexType Name="Fetch_FuelHistory_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="DateTime" Name="Time" Nullable="true" Precision="23" />
-          <Property Type="Int32" Name="FuelStationId" Nullable="true" />
-          <Property Type="Int32" Name="CustomerId" Nullable="true" />
-          <Property Type="Int32" Name="UserId" Nullable="true" />
-          <Property Type="Int32" Name="FuelType" Nullable="true" />
-          <Property Type="Decimal" Name="FuelVolume" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="FuelAmount" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="Int32" Name="KeyCustomerId" Nullable="true" />
-        </ComplexType>
         <EntityType Name="Shift">
           <Key>
             <PropertyRef Name="ShiftId" />
@@ -972,6 +951,35 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="Fetch_CreditHistory_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="DateTime" Name="Time" Nullable="true" Precision="23" />
+          <Property Type="String" Name="CustomerName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CustomerId" Nullable="false" />
+          <Property Type="String" Name="PaymentType" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="CreditAmount" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="ShiftName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AttendantName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="KeyCustomerName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="KeyCustomerId" Nullable="true" />
+          <Property Type="Boolean" Name="IsAdjustmentCredit" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Fetch_FuelHistory_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="DateTime" Name="Time" Nullable="true" Precision="23" />
+          <Property Type="String" Name="CustomerName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CustomerId" Nullable="false" />
+          <Property Type="String" Name="FuelType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ShiftName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AttendantName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="KeyCustomerName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="KeyCustomerId" Nullable="true" />
+          <Property Type="Decimal" Name="FuelAmount" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="FuelVolume" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="InvoiceNo" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="ActualFuelAmount" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="ActualFuelVolume" Nullable="true" Precision="18" Scale="2" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1098,6 +1106,8 @@
           <EntitySetMapping Name="CreditHistories">
             <EntityTypeMapping TypeName="FuelSupplySystemModel.CreditHistory">
               <MappingFragment StoreEntitySet="CreditHistory">
+                <ScalarProperty Name="IsAdjustmentCredit" ColumnName="IsAdjustmentCredit" />
+                <ScalarProperty Name="KeyCustomerName" ColumnName="KeyCustomerName" />
                 <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
                 <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
                 <ScalarProperty Name="KeyCustomerId" ColumnName="KeyCustomerId" />
@@ -1130,10 +1140,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="Fetch_CreditHistory" FunctionName="FuelSupplySystemModel.Store.Fetch_CreditHistory">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Fetch_FuelHistory" FunctionName="FuelSupplySystemModel.Store.Fetch_FuelHistory">
-          </FunctionImportMapping>
           <EntitySetMapping Name="Shifts">
             <EntityTypeMapping TypeName="FuelSupplySystemModel.Shift">
               <MappingFragment StoreEntitySet="Shift">
@@ -1144,6 +1150,43 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Fetch_CreditHistory" FunctionName="FuelSupplySystemModel.Store.Fetch_CreditHistory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FuelSupplySystemModel.Fetch_CreditHistory_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+                <ScalarProperty Name="CreditAmount" ColumnName="CreditAmount" />
+                <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
+                <ScalarProperty Name="AttendantName" ColumnName="AttendantName" />
+                <ScalarProperty Name="KeyCustomerName" ColumnName="KeyCustomerName" />
+                <ScalarProperty Name="KeyCustomerId" ColumnName="KeyCustomerId" />
+                <ScalarProperty Name="IsAdjustmentCredit" ColumnName="IsAdjustmentCredit" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Fetch_FuelHistory" FunctionName="FuelSupplySystemModel.Store.Fetch_FuelHistory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FuelSupplySystemModel.Fetch_FuelHistory_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="FuelType" ColumnName="FuelType" />
+                <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
+                <ScalarProperty Name="AttendantName" ColumnName="AttendantName" />
+                <ScalarProperty Name="KeyCustomerName" ColumnName="KeyCustomerName" />
+                <ScalarProperty Name="KeyCustomerId" ColumnName="KeyCustomerId" />
+                <ScalarProperty Name="FuelAmount" ColumnName="FuelAmount" />
+                <ScalarProperty Name="FuelVolume" ColumnName="FuelVolume" />
+                <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
+                <ScalarProperty Name="ActualFuelAmount" ColumnName="ActualFuelAmount" />
+                <ScalarProperty Name="ActualFuelVolume" ColumnName="ActualFuelVolume" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -95,7 +95,14 @@ namespace FuelSupply.APP.Helper
                     oRowData.Add((y == null) ? "" : y.ToString());
                 }
 
-                AddExcelRows("A" + (j+2).ToString(), 1, header.Length, oRowData.ToArray(),j+1);
+                if (item.GetType() == typeof(FuelSupply.APP.ExportEntity.CreditHistoryExport) && ((FuelSupply.APP.ExportEntity.CreditHistoryExport)(object)item).IsAdjustmentCreditHistory == true)
+                {
+                    AddExcelRows("A" + (j + 2).ToString(), 1, header.Length, oRowData.ToArray(), j + 1,true);
+                }
+                else
+                {
+                    AddExcelRows("A" + (j + 2).ToString(), 1, header.Length, oRowData.ToArray(), j + 1, false);
+                }
             }
             
             AutoFitColumns("A1", dataToPrint.Count + 1, header.Length);
@@ -126,17 +133,19 @@ namespace FuelSupply.APP.Helper
 
             List<object> objDisplayHeaders = new List<object>();
             for (int index = 0; index < headerInfo.Length; index++)
-            {
-                objHeaders.Add(headerInfo[index].Name);
-
+            {                
                 object[] attrs = headerInfo[index].GetCustomAttributes(true);
-                string sColumnHeaderString = ((DescriptionAttribute)attrs[0]).Description;
+                if (attrs != null && attrs.Any())
+                {
+                    string sColumnHeaderString = ((DescriptionAttribute)attrs[0]).Description;
+                    objDisplayHeaders.Add(sColumnHeaderString);
 
-                objDisplayHeaders.Add(sColumnHeaderString);
+                    objHeaders.Add(headerInfo[index].Name);
+                }
             }
 
             var headerToAdd = objHeaders.ToArray();
-            AddExcelRows("A1", 1, headerToAdd.Length, objDisplayHeaders.ToArray(), -1);
+            AddExcelRows("A1", 1, headerToAdd.Length, objDisplayHeaders.ToArray(), -1,false);
             SetHeaderStyle();
 
             return headerToAdd;
@@ -157,7 +166,7 @@ namespace FuelSupply.APP.Helper
         /// <param name="rowCount"></param>
         /// <param name="colCount"></param>
         /// <param name="values"></param>
-        private void AddExcelRows(string startRange, int rowCount, int colCount, object values, int rowIndex)
+        private void AddExcelRows(string startRange, int rowCount, int colCount, object values, int rowIndex, bool IsAdjustmentColumn)
         {            
             _range = _sheet.get_Range(startRange, _optionalValue);
             _range = _range.get_Resize(rowCount, colCount);
@@ -172,6 +181,11 @@ namespace FuelSupply.APP.Helper
             }
 
             _range.set_Value(_optionalValue, values);
+
+            if(IsAdjustmentColumn == true)
+            {
+                _sheet.Cells[rowIndex + 1, 5].Interior.Color = System.Drawing.Color.FromArgb(0, 255, 255, 0);               
+            }
         }
         /// <summary>
         /// Create Excel applicaiton parameters instances

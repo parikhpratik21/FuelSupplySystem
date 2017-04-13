@@ -61,6 +61,26 @@ namespace FuelSupply.DAL.Provider
             return customerDbObject.Customers.Where(x => x.KeyCustomerId == pKeyCustomerId).ToList();
         }
 
+        public static string GetKeyCustomerNameByKeyCustomerId(int? pKeyCustomerId)
+        {
+            if (pKeyCustomerId == null || pKeyCustomerId.Value == 0)
+            {
+                return string.Empty;
+            }
+            else
+            {
+                Customer keyCustomer = customerDbObject.Customers.Where(x => x.Id == pKeyCustomerId).FirstOrDefault();
+                if (keyCustomer == null)
+                {
+                    return string.Empty;
+                }
+                else
+                {
+                    return keyCustomer.Name;
+                }
+            }
+        }
+
         public static List<Customer> GetAllKeyCustomer()
         {
             return customerDbObject.Customers.Where(x => x.KeyCustomerId == null || x.KeyCustomerId == 0).ToList();

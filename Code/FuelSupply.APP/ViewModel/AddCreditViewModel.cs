@@ -93,7 +93,14 @@ namespace FuelSupply.APP.ViewModel
             }
             else
             {
-                bool result = CustomerManager.IncreaseCredit(_SelectedCustomer.Id, Credit,(int)_SelectedCustomer.PaymentType);
+                string keyCustomerName = string.Empty;
+
+                if (SelectedCustomer.KeyCustomerId != null && SelectedCustomer.KeyCustomerId > 0)
+                {
+                    keyCustomerName = CustomerManager.GetKeyCustomerNameByKeyCustomerId(SelectedCustomer.KeyCustomerId);
+                }
+
+                bool result = CustomerManager.IncreaseCredit(_SelectedCustomer.Id, Credit, (int)_SelectedCustomer.PaymentType, _SelectedCustomer.KeyCustomerId, keyCustomerName);
                 if (result == false)
                 {
                     MessageManager.ShowErrorMessage("Error while adding the credit, Please try again", oMainWindow);

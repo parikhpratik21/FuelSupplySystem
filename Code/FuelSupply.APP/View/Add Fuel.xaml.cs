@@ -37,7 +37,7 @@ namespace FuelSupply.APP.View
         {
             InitializeComponent();
             oViewModel = pViewModel;
-            oViewModel.SelectedCustomer = pSelectedCustomer;
+            oViewModel.SetSelectedCustomer(pSelectedCustomer);
             this.DataContext = oViewModel;
 
             oMainWindow = (MainWindow)pOwnerWindow;

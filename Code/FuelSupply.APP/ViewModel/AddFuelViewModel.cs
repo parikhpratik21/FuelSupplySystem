@@ -14,12 +14,15 @@ namespace FuelSupply.APP.ViewModel
 {
     public class AddFuelViewModel : INotifyPropertyChanged
     {
-        #region "Declaration"
-        private Customer _SelectedCustomer;
+        #region "Declaration"        
         private List<FuelType> _FuelTypeList;
         private Decimal _FuelTaken;
         private Decimal _FuelAmount;
+        private List<Customer> _AllCustomerList;
         private List<Customer> _KeyCustomerList;
+        private List<Customer> _relativeCustomerList;
+        private Customer _selectedRelativeCustomer;
+        private Customer _selectedKeyCustomer;
         private MainWindow oMainWindow;
         private string _InvoiceNo;
         private int _FuelType;
@@ -47,12 +50,49 @@ namespace FuelSupply.APP.ViewModel
         {
             get
             {
-                return _SelectedCustomer;
+                if(SelectedRelativeCustomer == null)
+                {
+                    return SelectedKeyCustomer;
+                }
+                else
+                {
+                    return SelectedRelativeCustomer;
+                }
+            }
+            
+        }
+
+        public Customer SelectedKeyCustomer
+        {
+            get
+            {
+                return _selectedKeyCustomer;
             }
             set
             {
-                _SelectedCustomer = value;
-                OnPropertyChanged("SelectedCustomer");
+                _selectedKeyCustomer = value;
+                OnPropertyChanged("SelectedKeyCustomer");
+
+                if (_selectedKeyCustomer != null)
+                {
+                    RelativeCustomerList = _AllCustomerList.Where(data => data.KeyCustomerId == SelectedKeyCustomer.Id).ToList();
+                    SelectedRelativeCustomer = RelativeCustomerList.FirstOrDefault();
+
+                    OnPropertyChanged("IsRelativeCustomerListEnable");
+                }
+            }
+        }
+
+        public Customer SelectedRelativeCustomer
+        {
+            get
+            {
+                return _selectedRelativeCustomer;
+            }
+            set
+            {
+                _selectedRelativeCustomer = value;
+                OnPropertyChanged("SelectedRelativeCustomer");
             }
         }
 
@@ -60,7 +100,7 @@ namespace FuelSupply.APP.ViewModel
         {
             get
             {
-                if (_SelectedCustomer.CustomerType == (int)FuelSupply.DAL.Entity.Comman.Constants.eCustomerType.KeyCustomer)
+                if (SelectedCustomer.CustomerType == (int)FuelSupply.DAL.Entity.Comman.Constants.eCustomerType.KeyCustomer)
                 {
                     return SelectedCustomer.AvailablePay;
                 }
@@ -133,6 +173,19 @@ namespace FuelSupply.APP.ViewModel
             }
         }
 
+        public List<Customer> RelativeCustomerList
+        {
+            get
+            {
+                return _relativeCustomerList;
+            }
+            set
+            {
+                _relativeCustomerList = value;
+                OnPropertyChanged("RelativeCustomerList");
+            }
+        }
+
         public int FuelType
         {
             get
@@ -167,19 +220,14 @@ namespace FuelSupply.APP.ViewModel
                     return 0;
             }
         }
-        public bool IsKeyCustomerListEnable
+        public bool IsRelativeCustomerListEnable
         {
             get
             {
-                if (_KeyCustomerList == null || _KeyCustomerList.Count == 0)
+                if (_relativeCustomerList == null || _relativeCustomerList.Count == 0)
                     return false;
                 else
-                {
-                    if (_KeyCustomerList.Where(x => x.Id == _SelectedCustomer.KeyCustomerId).Count() > 0)
-                        return true;
-                    else
-                        return false;
-                }
+                    return true;
             }
         }
         #endregion
@@ -199,13 +247,43 @@ namespace FuelSupply.APP.ViewModel
         public AddFuelViewModel(Window pOwnerWindow)
         {
             _FuelTypeList = FuelManager.GetAllFuelTypeList();
-            _KeyCustomerList = CustomerManager.GetAllKeyCustomer();
+            _AllCustomerList = CustomerManager.GetAllCustomers();
+            if (_AllCustomerList != null && _AllCustomerList.Any())
+            {
+                _KeyCustomerList = _AllCustomerList.Where(x => x.KeyCustomerId == null || x.KeyCustomerId == 0).ToList();
+            }
 
             _FuelType = _FuelTypeList.FirstOrDefault().Id;
 
             oMainWindow = (MainWindow)pOwnerWindow;
         }
 
+        public void SetSelectedCustomer(Customer pCustomer)
+        {
+            if(pCustomer == null)
+            {
+                if(_AllCustomerList != null && _AllCustomerList.Any() && KeyCustomerList != null && KeyCustomerList.Any())
+                {
+                    SelectedKeyCustomer = KeyCustomerList.FirstOrDefault();                    
+                    RelativeCustomerList = _AllCustomerList.Where(data => data.KeyCustomerId == SelectedKeyCustomer.Id).ToList();
+                    SelectedRelativeCustomer = RelativeCustomerList.FirstOrDefault();
+                }
+            }
+            else
+            {
+                if(pCustomer.KeyCustomerId == null || pCustomer.KeyCustomerId.Value == 0)
+                {
+                    SelectedKeyCustomer = pCustomer;
+                    SelectedRelativeCustomer = null;
+                }
+                else
+                {                    
+                    SelectedKeyCustomer = KeyCustomerList.FirstOrDefault(data => data.Id == pCustomer.KeyCustomerId);
+                    RelativeCustomerList = _AllCustomerList.Where(data => data.KeyCustomerId == SelectedKeyCustomer.Id).ToList();
+                    SelectedRelativeCustomer = RelativeCustomerList.FirstOrDefault();
+                }
+            }
+        }
         public bool AddFuel(ref string pErrorString)
         {
             if (FuelAmount <= 0)
@@ -223,12 +301,12 @@ namespace FuelSupply.APP.ViewModel
             else
             {
                 int iCustomerId = 0;
-                if (_SelectedCustomer.CustomerType == (int)FuelSupply.DAL.Entity.Comman.Constants.eCustomerType.KeyCustomer)
-                    iCustomerId = _SelectedCustomer.Id;
+                if (SelectedCustomer.CustomerType == (int)FuelSupply.DAL.Entity.Comman.Constants.eCustomerType.KeyCustomer)
+                    iCustomerId = SelectedCustomer.Id;
                 else
                 {
-                    if (_SelectedCustomer.Customer2 != null)
-                        iCustomerId = _SelectedCustomer.Customer2.Id;
+                    if (SelectedCustomer.Customer2 != null)
+                        iCustomerId = SelectedCustomer.Customer2.Id;
                 }
 
                 //First check whether we can deduct money or not
@@ -280,12 +358,12 @@ namespace FuelSupply.APP.ViewModel
         public bool AddFuelByPassword(ref string pErrorMessage)
         {
             int iCustomerId = 0;
-            if (_SelectedCustomer.CustomerType == (int)FuelSupply.DAL.Entity.Comman.Constants.eCustomerType.KeyCustomer)
-                iCustomerId = _SelectedCustomer.Id;
+            if (SelectedCustomer.CustomerType == (int)FuelSupply.DAL.Entity.Comman.Constants.eCustomerType.KeyCustomer)
+                iCustomerId = SelectedCustomer.Id;
             else
             {
-                if (_SelectedCustomer.Customer2 != null)
-                    iCustomerId = _SelectedCustomer.Customer2.Id;
+                if (SelectedCustomer.Customer2 != null)
+                    iCustomerId = SelectedCustomer.Customer2.Id;
             }
 
             return SaveFuelDetail(iCustomerId, ref pErrorMessage);
@@ -301,17 +379,17 @@ namespace FuelSupply.APP.ViewModel
             }
 
             FuelHistory oFuelHistory = new FuelHistory();
-            oFuelHistory.CustomerId = _SelectedCustomer.Id;
-            oFuelHistory.CustomerName = _SelectedCustomer.Name;
+            oFuelHistory.CustomerId = SelectedCustomer.Id;
+            oFuelHistory.CustomerName = SelectedCustomer.Name;
             oFuelHistory.FuelAmount = FuelAmount;
             oFuelHistory.FuelStationId = SharedData.CurrentFuelStation.Id;
             oFuelHistory.FuelType = FuelType;
             oFuelHistory.FuelVolume = FuelTaken;
-            oFuelHistory.KeyCustomerId = _SelectedCustomer.KeyCustomerId;
+            oFuelHistory.KeyCustomerId = SelectedCustomer.KeyCustomerId;
             oFuelHistory.Id = 0;
-            if (_SelectedCustomer.KeyCustomerId != null && _SelectedCustomer.KeyCustomerId > 0)
+            if (SelectedCustomer.KeyCustomerId != null && SelectedCustomer.KeyCustomerId > 0)
             {
-                oFuelHistory.KeyCustomerName = _SelectedCustomer.Customer2.Name;
+                oFuelHistory.KeyCustomerName = CustomerManager.GetKeyCustomerNameByKeyCustomerId(SelectedCustomer.KeyCustomerId);
             }
             oFuelHistory.Time = DateTime.Now;
             oFuelHistory.UserId = SharedData.LoggedUser.Id;
@@ -340,9 +418,9 @@ namespace FuelSupply.APP.ViewModel
         {
             if (oMainWindow.Dispatcher.CheckAccess())
             {
-                if (_SelectedCustomer.CustomerFingerPrints != null && _SelectedCustomer.CustomerFingerPrints.Count > 0)
+                if (SelectedCustomer.CustomerFingerPrints != null && SelectedCustomer.CustomerFingerPrints.Count > 0)
                 {
-                    foreach (CustomerFingerPrint oFingerPrint in _SelectedCustomer.CustomerFingerPrints)
+                    foreach (CustomerFingerPrint oFingerPrint in SelectedCustomer.CustomerFingerPrints)
                     {
                         if (CustomerDisplayViewModel.ofisFingerPrintSensor.MatchFinger(oFingerPrint.FingerPrint, pFingerPrint) == true)
                         {
