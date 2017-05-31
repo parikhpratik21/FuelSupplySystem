@@ -42,8 +42,24 @@ namespace FuelSupply.APP.ViewModel
             set
             {
                 _InvoiceNo = value;
-                OnPropertyChanged("InvoiceNo");
+                OnPropertyChanged("InvoiceNo");                
             }
+        }
+
+        public string CustomerCode
+        {
+            get
+            {
+                if (SelectedCustomer != null)
+                {
+                    return SelectedCustomer.Code;
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+           
         }
 
         public Customer SelectedCustomer
@@ -80,6 +96,8 @@ namespace FuelSupply.APP.ViewModel
 
                     OnPropertyChanged("IsRelativeCustomerListEnable");
                 }
+
+                OnPropertyChanged("AvailableAmount");
             }
         }
 
@@ -93,6 +111,7 @@ namespace FuelSupply.APP.ViewModel
             {
                 _selectedRelativeCustomer = value;
                 OnPropertyChanged("SelectedRelativeCustomer");
+                OnPropertyChanged("CustomerCode");
             }
         }
 
@@ -100,17 +119,21 @@ namespace FuelSupply.APP.ViewModel
         {
             get
             {
-                if (SelectedCustomer.CustomerType == (int)FuelSupply.DAL.Entity.Comman.Constants.eCustomerType.KeyCustomer)
-                {
-                    return SelectedCustomer.AvailablePay;
-                }
+                //if (SelectedCustomer.CustomerType == (int)FuelSupply.DAL.Entity.Comman.Constants.eCustomerType.KeyCustomer)
+                //{
+                //    return SelectedCustomer.AvailablePay;
+                //}
+                //else
+                //{
+                //    if (_selectedRelativeCustomer != null)
+                //        return _selectedRelativeCustomer.AvailablePay;
+                //    else
+                //        return 0;
+                //}
+                if (_selectedKeyCustomer != null)
+                    return _selectedKeyCustomer.AvailablePay;
                 else
-                {
-                    if (SelectedCustomer.Customer2 != null)
-                        return SelectedCustomer.Customer2.AvailablePay;
-                    else
-                        return 0;
-                }
+                    return 0;
             }
         }
         public List<FuelType> FuelTypeList
@@ -280,7 +303,11 @@ namespace FuelSupply.APP.ViewModel
                 {                    
                     SelectedKeyCustomer = KeyCustomerList.FirstOrDefault(data => data.Id == pCustomer.KeyCustomerId);
                     RelativeCustomerList = _AllCustomerList.Where(data => data.KeyCustomerId == SelectedKeyCustomer.Id).ToList();
-                    SelectedRelativeCustomer = RelativeCustomerList.FirstOrDefault();
+                    SelectedRelativeCustomer = RelativeCustomerList.FirstOrDefault(data => data.Id == pCustomer.Id);
+                    if(SelectedRelativeCustomer == null)
+                    {
+                        SelectedRelativeCustomer = RelativeCustomerList.FirstOrDefault();
+                    }
                 }
             }
         }

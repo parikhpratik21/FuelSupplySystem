@@ -189,6 +189,7 @@ namespace FuelSupply.DAL.Provider
                catch(Exception ex)
                 {
                    string sErrorMsg = ex.ToString();
+                   return false;
                 }
 
                 return true;

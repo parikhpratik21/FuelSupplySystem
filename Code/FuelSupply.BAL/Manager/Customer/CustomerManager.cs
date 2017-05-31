@@ -87,10 +87,6 @@ namespace FuelSupply.BAL.Manager
             }
             else
             {
-                if(pCustomer.CustomerType == (int)FuelSupply.DAL.Entity.Comman.Constants.eCustomerType.Driver)
-                {
-                    pCustomer.KeyCustomerId = 0;
-                }
                 bool result = CustomerProvider.UpdateCustomer(pCustomer, pOldPaymentLimit);
                 if (result == false)
                 {

@@ -50,6 +50,10 @@ namespace FuelSupply.APP.ViewModel
             set
             {
                 _shiftTypeList = value;
+                if (_shiftTypeList != null && _shiftTypeList.Any())
+                {
+                    CurrentShift = _shiftTypeList.FirstOrDefault();
+                }
                 OnPropertyChanged("ShiftTypeList");
             }
         }

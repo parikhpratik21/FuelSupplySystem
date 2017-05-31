@@ -313,7 +313,7 @@
                 </Grid>
             </Button>
 
-            <Button Name="btnChangePassword" Grid.Row="0" Grid.Column="11" Click="btnChangePassword_Click" HorizontalContentAlignment="Stretch" IsEnabled="{Binding IsAddCreditVisible}">
+            <Button Name="btnChangePassword" Grid.Row="0" Grid.Column="11" IsEnabled="{Binding IsAdminUser}" Click="btnChangePassword_Click" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
