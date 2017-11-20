@@ -177,7 +177,10 @@ namespace FuelSupply.APP.ViewModel
                 if (_FuelAmount != value)
                 {
                     _FuelAmount = Math.Round(value, 3);
-                    FuelTaken = Math.Round(_FuelAmount / CurrentFuelRate.Value, 3);
+                    if (IsFuelAmountFieldEnable)
+                    {
+                        FuelTaken = Math.Round(_FuelAmount / CurrentFuelRate.Value, 3);
+                    }
                     OnPropertyChanged("FuelAmount");
                 }
             }
@@ -218,12 +221,13 @@ namespace FuelSupply.APP.ViewModel
             set
             {
                 _FuelType = value;
-                if(_FuelType > 0)
+                if (_FuelType > 0)
                 {
                     FuelAmount = Math.Round(CurrentFuelRate.Value * _FuelTaken, 3);
                 }
                 OnPropertyChanged("FuelType");
                 OnPropertyChanged("CurrentFuelRate");
+                OnPropertyChanged("IsFuelAmountFieldEnable");
             }
         }
 
@@ -253,6 +257,22 @@ namespace FuelSupply.APP.ViewModel
                     return true;
             }
         }
+
+        public bool IsFuelAmountFieldEnable
+        {
+            get
+            {
+                if(FuelType == 7)
+                {
+                    return false;
+                }
+                else 
+                {
+                    return true;
+                }
+            }
+        }
+
         #endregion
 
         #region EventHandlers (1)

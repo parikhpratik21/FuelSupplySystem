@@ -81,15 +81,16 @@
       <DependentUpon>FuelSupply.edmx</DependentUpon>
     </Compile>
     <Compile Include="Entity\Comman\Constant.cs" />
-    <Compile Include="Entity\Credit\Fetch_CreditHistory_Result.cs" />
-    <Compile Include="Entity\Credit\CreditHistory.cs" />
+    <Compile Include="Entity\History\CombineHistory.cs" />
+    <Compile Include="Entity\History\Fetch_CreditHistory_Result.cs" />
+    <Compile Include="Entity\History\CreditHistory.cs" />
     <Compile Include="Entity\Customer\Customer.cs" />
     <Compile Include="Entity\Customer\CustomerFingerPrint.cs" />
     <Compile Include="Entity\Customer\CustomerType.cs" />
     <Compile Include="Entity\Customer\FingerPrintType.cs" />
     <Compile Include="Entity\Customer\PaymentType.cs" />
-    <Compile Include="Entity\Fuel\Fetch_FuelHistory_Result.cs" />
-    <Compile Include="Entity\Fuel\FuelHistory.cs" />
+    <Compile Include="Entity\History\Fetch_FuelHistory_Result.cs" />
+    <Compile Include="Entity\History\FuelHistory.cs" />
     <Compile Include="Entity\Fuel\FuelLimitType.cs" />
     <Compile Include="Entity\Fuel\FuelStation.cs" />
     <Compile Include="Entity\Fuel\FuelType.cs" />
@@ -147,6 +148,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Database Changes Script\CR3_Changes.sql" />
     <Content Include="Database\FuelSupplySystem.mdf" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

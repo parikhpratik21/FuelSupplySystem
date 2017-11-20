@@ -100,10 +100,10 @@
             <Label Name="lblAvailableAmount"  Grid.Column="2" Grid.Row="6" Style="{StaticResource LableStyle}" Content="{Binding AvailableAmount}"></Label>
             
             <Label Name="lblFuleInLiter" Content="Fuel(In Liter):" Grid.Column="1" Grid.Row="7" Style="{StaticResource LabelHeaderStyle}"></Label>
-            <TextBox Name="txtFuelLiter" Grid.Column="2" Grid.Row="7" Style="{StaticResource TextBoxStyle}"  Text="{Binding FuelTaken, Mode=TwoWay}" Controls:TextBoxHelper.Watermark="In Liter"></TextBox>
+            <TextBox Name="txtFuelLiter" Grid.Column="2" Grid.Row="7" IsEnabled="{Binding IsFuelAmountFieldEnable}" Style="{StaticResource TextBoxStyle}"  Text="{Binding FuelTaken, Mode=TwoWay}" Controls:TextBoxHelper.Watermark="In Liter"></TextBox>
 
             <Label Name="lblFuleAmount" Content="Amount:" Grid.Column="1" Grid.Row="8" Style="{StaticResource LabelHeaderStyle}"></Label>
-            <TextBox Name="txtFuelAmount" Grid.Column="2" Grid.Row="8" Style="{StaticResource TextBoxStyle}"  Text="{Binding FuelAmount, Mode=TwoWay}" Controls:TextBoxHelper.Watermark="In Rupees"></TextBox>
+            <TextBox Name="txtFuelAmount" Grid.Column="2" Grid.Row="8" Style="{StaticResource TextBoxStyle}"  Text="{Binding FuelAmount, Mode=TwoWay}" Controls:TextBoxHelper.Watermark="In Rand"></TextBox>
 
         </Grid>
 

@@ -108,6 +108,7 @@
     </ApplicationDefinition>
     <Compile Include="Converter\VisibilityConverter.cs" />
     <Compile Include="Converter\NegativeConverter.cs" />
+    <Compile Include="ExportEntity\CombineHistoryExport.cs" />
     <Compile Include="ExportEntity\CreditHistoryExport.cs" />
     <Compile Include="ExportEntity\FuelHistoryExport.cs" />
     <Compile Include="Helper\ExportToExcel.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="ViewModel\AddEditUserViewModel.cs" />
     <Compile Include="ViewModel\AddFingerPrintViewModel.cs" />
     <Compile Include="ViewModel\AddFuelViewModel.cs" />
+    <Compile Include="ViewModel\CombineHistoryViewModel.cs" />
     <Compile Include="ViewModel\FuelRateViewModel.cs" />
     <Compile Include="ViewModel\PasswordViewModel.cs" />
     <Compile Include="ViewModel\ChangePasswordViewModel.cs" />
@@ -130,6 +132,9 @@
     <Compile Include="ViewModel\UpdateFuelHistoryViewModel.cs" />
     <Compile Include="ViewModel\UserDisplayViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\CombineHistory.xaml.cs">
+      <DependentUpon>CombineHistory.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UpdateFuelHistory.xaml.cs">
       <DependentUpon>UpdateFuelHistory.xaml</DependentUpon>
     </Compile>
@@ -181,6 +186,10 @@
     <Compile Include="View\UserDisplay.xaml.cs">
       <DependentUpon>UserDisplay.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\CombineHistory.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\UpdateFuelHistory.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

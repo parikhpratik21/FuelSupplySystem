@@ -1,0 +1,1 @@
+insert into FuelType(Name,Rate) values('Combo',0.0);
