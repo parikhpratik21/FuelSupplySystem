@@ -29,6 +29,7 @@ namespace FuelSupply.DAL.Entity.CreditEntity
         public string HistoryType { get; set; }
         public string AttendantName { get; set; }
         public string CustomerName { get; set; }
+        public Nullable<decimal> CustomerLastBalance { get; set; }
     }
 
     public class CombineHistoryList : List<CombineHistory> { }

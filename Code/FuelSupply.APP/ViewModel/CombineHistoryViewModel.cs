@@ -618,8 +618,8 @@ namespace FuelSupply.APP.ViewModel
                 history.Time = fuelHistory.Time;
                 history.AttendantName = fuelHistory.AttendantName;
                 history.HistoryType = _fuelType;
-                history.CustomerName = fuelHistory.CustomerName;
-                index = index + 1;
+                history.CustomerName = fuelHistory.CustomerName;                
+                history.CustomerLastBalance = fuelHistory.CustomerLastBalance;
                 CombineHistoryList.Add(history);
             }
 
@@ -635,11 +635,17 @@ namespace FuelSupply.APP.ViewModel
                 history.AttendantName = creditHistory.AttendantName;
                 history.HistoryType = _creditType;
                 history.CustomerName = creditHistory.CustomerName;
-                index = index + 1;
+                history.CustomerLastBalance = creditHistory.CustomerLastBalance;
                 CombineHistoryList.Add(history);
             }
 
-            CombineHistoryList = new List<CombineHistory>(CombineHistoryList);
+            CombineHistoryList = CombineHistoryList.OrderBy(data => data.Time).ToList();   
+         
+            foreach(var combineHistory in CombineHistoryList)
+            {
+                combineHistory.Id = index;
+                index++;
+            }
         }
 
         #endregion

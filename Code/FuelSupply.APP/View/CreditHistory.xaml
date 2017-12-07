@@ -24,9 +24,8 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="0.3*"/>
-            <RowDefinition Height="1*"/>
+        <Grid.RowDefinitions>            
+            <RowDefinition Height="0.5*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="0.3*"/>
             <RowDefinition Height="8*"/>
@@ -37,7 +36,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Name="grdTitle" Grid.Column="0" Grid.Row="1">
+        <Grid Name="grdTitle" Grid.Column="0" Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
@@ -45,9 +44,6 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-
-            <Label Name="txtTitle" Content="Credit History" Grid.Column="0" Grid.Row="0" Style="{StaticResource LabelHeaderStyle}"></Label>
-
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
                 <Label Name="lblLoggedUserNameHeader" Content="Welcome" Foreground="Black" Style="{StaticResource WelcomeLableStyle}"></Label>
                 <Label Name="lblLoggedUserNameValue" Content="{Binding LoggedUserName}" Foreground="Black" FontWeight="Bold" Style="{StaticResource LableStyle}" Margin="-5,0,-5,0"></Label>
@@ -56,7 +52,7 @@
             </StackPanel>
 
         </Grid>
-        <Grid Grid.Column="0" Grid.Row="2" Background="White" VerticalAlignment="Center">
+        <Grid Grid.Column="0" Grid.Row="1" Background="White" VerticalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
@@ -91,7 +87,7 @@
             <Button Name="btnApply" Content="Apply" Grid.Row="0" Grid.Column="12" Click="btnApply_Click" ></Button>
         </Grid>        
 
-        <Grid Grid.Column="0" Grid.Row="4" Background="White" >
+        <Grid Grid.Column="0" Grid.Row="3" Background="White" >
             <DataGrid Name="dgCreditHistoryList" ItemsSource="{Binding CreditHistoryList}" AutoGenerateColumns="False" 
                     VerticalGridLinesBrush="LightGray" GridLinesVisibility="Vertical" BorderThickness="0" AlternationCount="2"
                       CanUserAddRows="False" CanUserDeleteRows="False"  SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True">
@@ -198,7 +194,7 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        <Grid Name="grdOption" Grid.Column="0" Grid.Row="5" Background="White">
+        <Grid Name="grdOption" Grid.Column="0" Grid.Row="4" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
@@ -221,7 +217,7 @@
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
                     <Image Source="..\Images\XLSExport.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
-                    <TextBlock Text="Export To Excel"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                    <TextBlock Text="Export To Excel"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="10"/>
                 </Grid>
             </Button>
             <Button Name="btnExportToHTML" Grid.Row="0" Grid.Column="3"  Click="btnExportToHTML_Click" HorizontalContentAlignment="Stretch">
@@ -231,7 +227,7 @@
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
                     <Image Source="..\Images\ExportToHTML.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
-                    <TextBlock Text="Export To HTML"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                    <TextBlock Text="Export To HTML"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="10"/>
                 </Grid>
             </Button>
 
@@ -242,7 +238,7 @@
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
                     <Image Source="..\Images\CSVExport.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
-                    <TextBlock Text="Export To CSV"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                    <TextBlock Text="Export To CSV"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="10"/>
                 </Grid>
             </Button>
 
@@ -253,7 +249,7 @@
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
                     <Image Source="..\Images\PDFExport.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
-                    <TextBlock Text="Export To PDF"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                    <TextBlock Text="Export To PDF"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="10"/>
                 </Grid>
             </Button>
         </Grid>

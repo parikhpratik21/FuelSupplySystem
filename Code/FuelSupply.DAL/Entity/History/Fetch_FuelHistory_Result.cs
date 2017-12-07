@@ -24,5 +24,6 @@ namespace FuelSupply.DAL.Entity.FuelEntity
         public string InvoiceNo { get; set; }
         public Nullable<decimal> ActualFuelAmount { get; set; }
         public Nullable<decimal> ActualFuelVolume { get; set; }
+        public Nullable<decimal> CustomerLastBalance { get; set; }
     }   
 }

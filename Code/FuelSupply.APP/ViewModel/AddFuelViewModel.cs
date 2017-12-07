@@ -418,8 +418,8 @@ namespace FuelSupply.APP.ViewModel
 
         private bool SaveFuelDetail(int pCustomerId, ref string pErrorString)
         {
-            bool bDeductAmount = CustomerManager.DeductAmount(pCustomerId, FuelAmount);
-            if (bDeductAmount == false)
+            decimal? dCustomerLastAmount = CustomerManager.DeductAmount(pCustomerId, FuelAmount);
+            if (dCustomerLastAmount == null)
             {
                 pErrorString = "Error while adding the fuel, Please try again.";
                 return false;
@@ -450,6 +450,7 @@ namespace FuelSupply.APP.ViewModel
             oFuelHistory.InvoiceNo = InvoiceNo;
             oFuelHistory.ActualFuelAmount = 0;
             oFuelHistory.ActualFuelVolume = 0;
+            oFuelHistory.CustomerLastBalance = dCustomerLastAmount.Value;
 
             bool result = FuelManager.AddFuelHistory(oFuelHistory);
             if (result == false)

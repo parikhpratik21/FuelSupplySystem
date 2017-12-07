@@ -23,5 +23,6 @@ namespace FuelSupply.DAL.Entity.CreditEntity
         public string KeyCustomerName { get; set; }
         public Nullable<int> KeyCustomerId { get; set; }
         public Nullable<bool> IsAdjustmentCredit { get; set; }
+        public Nullable<decimal> CustomerLastBalance { get; set; }
     }
 }

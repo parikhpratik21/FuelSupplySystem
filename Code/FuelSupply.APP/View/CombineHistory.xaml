@@ -24,9 +24,8 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="0.3*"/>
-            <RowDefinition Height="1*"/>
+        <Grid.RowDefinitions>            
+            <RowDefinition Height="0.5*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="0.3*"/>
             <RowDefinition Height="8*"/>
@@ -37,16 +36,14 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Name="grdTitle" Grid.Column="0" Grid.Row="1">
+        <Grid Name="grdTitle" Grid.Column="0" Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <Label Name="txtTitle" Content="Combine History" Grid.Column="0" Grid.Row="0" Style="{StaticResource LabelHeaderStyle}"></Label>
+            </Grid.ColumnDefinitions>            
 
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
                 <Label Name="lblLoggedUserNameHeader" Content="Welcome" Foreground="Black" Style="{StaticResource WelcomeLableStyle}"></Label>
@@ -56,7 +53,7 @@
             </StackPanel>
 
         </Grid>
-        <Grid Grid.Column="0" Grid.Row="2" Background="White" VerticalAlignment="Center">
+        <Grid Grid.Column="0" Grid.Row="1" Background="White" VerticalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
@@ -91,7 +88,7 @@
             <Button Name="btnApply" Content="Apply" Grid.Row="0" Grid.Column="12" Click="btnApply_Click" ></Button>
         </Grid>        
 
-        <Grid Grid.Column="0" Grid.Row="4" Background="White" >
+        <Grid Grid.Column="0" Grid.Row="3" Background="White" >
             <DataGrid Name="dgCombineHistoryList" ItemsSource="{Binding CombineHistoryList}" AutoGenerateColumns="False" 
                     VerticalGridLinesBrush="LightGray" GridLinesVisibility="Vertical" BorderThickness="0" AlternationCount="2"
                       CanUserAddRows="False" CanUserDeleteRows="False"  SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True">
@@ -197,6 +194,18 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
+                    <DataGridTextColumn Header="Current Balance" Binding="{Binding CustomerLastBalance}" Width="1.5*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="Margin" Value="0,0,-1,0"></Setter>
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
                     <DataGridTextColumn Header="Date" Binding="{Binding Time}" Width="1.5*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
@@ -212,7 +221,7 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        <Grid Name="grdOption" Grid.Column="0" Grid.Row="5" Background="White">
+        <Grid Name="grdOption" Grid.Column="0" Grid.Row="4" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
@@ -235,7 +244,7 @@
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
                     <Image Source="..\Images\XLSExport.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
-                    <TextBlock Text="Export To Excel"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                    <TextBlock Text="Export To Excel"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="10"></TextBlock>
                 </Grid>
             </Button>
             <Button Name="btnExportToHTML" Grid.Row="0" Grid.Column="3"  Click="btnExportToHTML_Click" HorizontalContentAlignment="Stretch">
@@ -245,7 +254,7 @@
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
                     <Image Source="..\Images\ExportToHTML.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
-                    <TextBlock Text="Export To HTML"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                    <TextBlock Text="Export To HTML"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="10"></TextBlock>
                 </Grid>
             </Button>
 
@@ -256,7 +265,7 @@
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
                     <Image Source="..\Images\CSVExport.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
-                    <TextBlock Text="Export To CSV"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                    <TextBlock Text="Export To CSV"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="10"></TextBlock>
                 </Grid>
             </Button>
 
@@ -267,7 +276,7 @@
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
                     <Image Source="..\Images\PDFExport.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
-                    <TextBlock Text="Export To PDF"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                    <TextBlock Text="Export To PDF"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="10"></TextBlock>
                 </Grid>
             </Button>
         </Grid>

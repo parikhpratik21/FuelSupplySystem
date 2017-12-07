@@ -31,7 +31,6 @@ namespace FuelSupply.DAL.Database_Entity
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<CustomerType> CustomerTypes { get; set; }
         public virtual DbSet<FuelHistory> FuelHistories { get; set; }
         public virtual DbSet<FuelLimitType> FuelLimitTypes { get; set; }
@@ -44,6 +43,7 @@ namespace FuelSupply.DAL.Database_Entity
         public virtual DbSet<CustomerFingerPrint> CustomerFingerPrints { get; set; }
         public virtual DbSet<FingerPrintType> FingerPrintTypes { get; set; }
         public virtual DbSet<Shift> Shifts { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
     
         public virtual ObjectResult<Fetch_CreditHistory_Result> Fetch_CreditHistory(Nullable<int> keyCustomerId, Nullable<System.DateTime> startTime, Nullable<System.DateTime> endTime, Nullable<int> userId, Nullable<int> customerId, Nullable<int> paymentId)
         {

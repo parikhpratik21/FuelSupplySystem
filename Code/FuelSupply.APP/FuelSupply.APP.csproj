@@ -119,6 +119,7 @@
     <Compile Include="ViewModel\AddFingerPrintViewModel.cs" />
     <Compile Include="ViewModel\AddFuelViewModel.cs" />
     <Compile Include="ViewModel\CombineHistoryViewModel.cs" />
+    <Compile Include="ViewModel\HistoryHomeScreenViewModel.cs" />
     <Compile Include="ViewModel\FuelRateViewModel.cs" />
     <Compile Include="ViewModel\PasswordViewModel.cs" />
     <Compile Include="ViewModel\ChangePasswordViewModel.cs" />
@@ -134,6 +135,9 @@
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\CombineHistory.xaml.cs">
       <DependentUpon>CombineHistory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HistoryHomeScreen.xaml.cs">
+      <DependentUpon>HistoryHomeScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UpdateFuelHistory.xaml.cs">
       <DependentUpon>UpdateFuelHistory.xaml</DependentUpon>
@@ -187,6 +191,10 @@
       <DependentUpon>UserDisplay.xaml</DependentUpon>
     </Compile>
     <Page Include="View\CombineHistory.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\HistoryHomeScreen.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

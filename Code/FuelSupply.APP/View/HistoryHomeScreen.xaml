@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="FuelSupply.APP.View.HistoryHomeScreen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:views="clr-namespace:FuelSupply.APP.View"
+             mc:Ignorable="d"             
+             d:DesignHeight="300" d:DesignWidth="300"
+             Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center" />            
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="50" />
+        </Style>        
+    </UserControl.Resources>
+    
+    <TabControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,10,0,0" >
+        <TabControl.Resources>
+            <Style TargetType="TabItem">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TabItem">
+                            <Border Name="Border" BorderThickness="1,1,1,1" TextElement.FontSize="14"  BorderBrush="Gainsboro" CornerRadius="4,4,0,0" Margin="5">
+                                <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"                                        
+                                        Margin="10,2"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="#0073c4" />
+                                    <Setter TargetName="Border" Property="TextElement.FontWeight" Value="Bold" />
+                                    <Setter TargetName="Border" Property="TextElement.Foreground" Value="White" />
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="False">
+                                    <Setter TargetName="Border" Property="Background" Value="GhostWhite" />                                    
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </TabControl.Resources>
+        
+        <TabItem x:Name="tbFuelHistory" Header="Fuel History   " Margin="0" Padding="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+            <ContentControl Name="FuelHistoryContent" Content="{Binding FuelHistoryContentWindow}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="0,-20,0,0"/>
+        </TabItem>
+
+        <TabItem x:Name="tbCreditHistory" Header="Credit History   " Margin="0" Padding="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+            <ContentControl Name="CreditHistoryContent" Content="{Binding CreditHistoryContentWindow}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="0,-20,0,0"/>
+        </TabItem>
+
+        <TabItem x:Name="tbCombineHistory" Header="Combine History" Margin="0" Padding="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+            <ContentControl Name="CombineHistoryContent" Content="{Binding CombineHistoryContentWindow}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="0,-20,0,0"/>
+        </TabItem> 
+    </TabControl>
+    <!--<Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <TabControl>
+            <TabItem />
+            <TabItem />
+            <TabItem />
+        </TabControl>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="0.2*" />
+            <RowDefinition Height="1.2*" />
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="Welcome," Grid.Row="0" Visibility="{Binding IsLableVisible}"/>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top"  Text="{Binding LoggedUserName}" Grid.Row="2" Visibility="{Binding IsLableVisible}" />
+    </Grid>-->
+</UserControl>

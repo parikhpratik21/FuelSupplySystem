@@ -5,36 +5,36 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="042fb6d670fc4dfc8a61eab2159cd419" Name="Diagram1">
-        <EntityTypeShape EntityType="FuelSupplySystemModel.Customer" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="FuelSupplySystemModel.CustomerType" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="FuelSupplySystemModel.FuelHistory" Width="1.5" PointX="5.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="FuelSupplySystemModel.FuelHistory" Width="1.5" PointX="5.25" PointY="3.125" IsExpanded="true" />
         <EntityTypeShape EntityType="FuelSupplySystemModel.FuelLimitType" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FuelSupplySystemModel.FuelStation" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FuelSupplySystemModel.FuelType" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FuelSupplySystemModel.PaymentType" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
         <EntityTypeShape EntityType="FuelSupplySystemModel.User" Width="1.5" PointX="3" PointY="14.125" IsExpanded="true" />
         <EntityTypeShape EntityType="FuelSupplySystemModel.UserType" Width="1.5" PointX="0.75" PointY="15.125" IsExpanded="true" />
-        <AssociationConnector Association="FuelSupplySystemModel.FK_Customer_CustomerType" ManuallyRouted="false" />
-        <AssociationConnector Association="FuelSupplySystemModel.FK_Customer_FuelLimitType" ManuallyRouted="false" />
-        <AssociationConnector Association="FuelSupplySystemModel.FK_Customer_PaymentType" ManuallyRouted="false" />
-        <AssociationConnector Association="FuelSupplySystemModel.FK_FuelHistory_Customer" ManuallyRouted="false" />
         <AssociationConnector Association="FuelSupplySystemModel.FK_FuelHistory_FuelStation" ManuallyRouted="false" />
         <AssociationConnector Association="FuelSupplySystemModel.FK_FuelHistory_FuelType" ManuallyRouted="false" />
         <AssociationConnector Association="FuelSupplySystemModel.FK_FuelHistory_User" ManuallyRouted="false" />
         <AssociationConnector Association="FuelSupplySystemModel.FK_User_UserType" ManuallyRouted="false" />
-        <AssociationConnector Association="FuelSupplySystemModel.FK_Customer_Customer" />
         <EntityTypeShape EntityType="FuelSupplySystemModel.CreditHistory" Width="1.5" PointX="5.25" PointY="8.75" />
-        <AssociationConnector Association="FuelSupplySystemModel.FK_CreditHistory_Customer" />
         <AssociationConnector Association="FuelSupplySystemModel.FK_CreditHistory_FuelStation" />
         <AssociationConnector Association="FuelSupplySystemModel.FK_CreditHistory_PaymentType" />
         <AssociationConnector Association="FuelSupplySystemModel.FK_CreditHistory_User" />
-        <EntityTypeShape EntityType="FuelSupplySystemModel.CustomerFingerPrint" Width="1.5" PointX="5.25" PointY="0.75" />
-        <AssociationConnector Association="FuelSupplySystemModel.FK_CustomerFingerPrint_Customer" />
+        <EntityTypeShape EntityType="FuelSupplySystemModel.CustomerFingerPrint" Width="1.5" PointX="5.25" PointY="0.5" />
         <EntityTypeShape EntityType="FuelSupplySystemModel.FingerPrintType" Width="1.5" PointX="7.375" PointY="0.875" />
         <AssociationConnector Association="FuelSupplySystemModel.FK_CustomerFingerPrint_FingerPrintType" />
         <EntityTypeShape EntityType="FuelSupplySystemModel.Shift" Width="1.5" PointX="7.375" PointY="3.75" />
         <AssociationConnector Association="FuelSupplySystemModel.FK_CreditHistory_Shift" />
         <AssociationConnector Association="FuelSupplySystemModel.FK_FuelHistory_Shift" />
+        <EntityTypeShape EntityType="FuelSupplySystemModel.Customer" Width="1.5" PointX="3" PointY="1.125" />
+        <AssociationConnector Association="FuelSupplySystemModel.FK_CreditHistory_Customer" />
+        <AssociationConnector Association="FuelSupplySystemModel.FK_Customer_Customer" />
+        <AssociationConnector Association="FuelSupplySystemModel.FK_Customer_CustomerType" />
+        <AssociationConnector Association="FuelSupplySystemModel.FK_Customer_FuelLimitType" />
+        <AssociationConnector Association="FuelSupplySystemModel.FK_Customer_PaymentType" />
+        <AssociationConnector Association="FuelSupplySystemModel.FK_CustomerFingerPrint_Customer" />
+        <AssociationConnector Association="FuelSupplySystemModel.FK_FuelHistory_Customer" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

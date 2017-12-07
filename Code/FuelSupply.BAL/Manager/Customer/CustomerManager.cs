@@ -112,8 +112,8 @@ namespace FuelSupply.BAL.Manager
 
         public static bool IncreaseCredit(int pCustomerId, decimal pAmount, int pPaymentType, int? pKeyCustomerId, string pKeyCustomerName)
         {
-            bool result = CustomerProvider.IncreaseCredit(pCustomerId, pAmount);
-            if (result == true)
+            decimal? availableAmount = CustomerProvider.IncreaseCredit(pCustomerId, pAmount);
+            if (availableAmount != null)
             {
                 CreditHistory oHistory = new CreditHistory();
                 oHistory.CreditAmount = pAmount;
@@ -126,6 +126,7 @@ namespace FuelSupply.BAL.Manager
                 oHistory.KeyCustomerId = pKeyCustomerId;
                 oHistory.KeyCustomerName = pKeyCustomerName;
                 oHistory.IsAdjustmentCredit = false;
+                oHistory.CustomerLastBalance = availableAmount;
 
                 if (SharedData.CurrentShift != null)
                 {
@@ -140,15 +141,15 @@ namespace FuelSupply.BAL.Manager
                 return true;
         }
 
-        public static bool DeductAmount(int pCustomerId, decimal pAmount)
+        public static decimal? DeductAmount(int pCustomerId, decimal pAmount)
         {
             return CustomerProvider.DeductAmount(pCustomerId, pAmount);
         }
 
         public static bool AddAmountFromCustomerAccount(int pCustomerId, decimal pAmount, int? pKeyCustomerId, string pKeyCustomerName)
         {
-            bool result = CustomerProvider.AddAmountFromCustomerAccount(pCustomerId, pAmount);
-            if (result == true)
+            decimal? availableAmount = CustomerProvider.AddAmountFromCustomerAccount(pCustomerId, pAmount);
+            if (availableAmount != null)
             {
                 CreditHistory oHistory = new CreditHistory();
                 oHistory.CreditAmount = pAmount;
@@ -161,6 +162,7 @@ namespace FuelSupply.BAL.Manager
                 oHistory.KeyCustomerId = pKeyCustomerId;
                 oHistory.KeyCustomerName = pKeyCustomerName;
                 oHistory.IsAdjustmentCredit = true;
+                oHistory.CustomerLastBalance = availableAmount.Value;
 
                 if (SharedData.CurrentShift != null)
                 {

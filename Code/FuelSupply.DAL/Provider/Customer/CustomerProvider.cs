@@ -209,7 +209,7 @@ namespace FuelSupply.DAL.Provider
             return false;
         }
 
-        public static bool IncreaseCredit(int pCustomerId, decimal pAmount)
+        public static decimal? IncreaseCredit(int pCustomerId, decimal pAmount)
         {
             Customer oCustomer = customerDbObject.Customers.Where(x => x.Id == pCustomerId).FirstOrDefault();
             if (oCustomer != null)
@@ -219,12 +219,12 @@ namespace FuelSupply.DAL.Provider
 
                 oCustomer.AvailablePay = oCustomer.AvailablePay + pAmount;
                 customerDbObject.SaveChanges();
-                return true;
+                return oCustomer.AvailablePay;
             }
-            return false;
+            return null;
         }
 
-        public static bool DeductAmount(int pCustomerId, decimal pAmount)
+        public static decimal? DeductAmount(int pCustomerId, decimal pAmount)
         {
             Customer oCustomer = customerDbObject.Customers.Where(x => x.Id == pCustomerId).FirstOrDefault();
             if (oCustomer != null)
@@ -233,25 +233,25 @@ namespace FuelSupply.DAL.Provider
                     oCustomer.AvailablePay = 0;
 
                 if ((oCustomer.AvailablePay - pAmount) < 0)
-                    return false;
+                    return null;
 
                 oCustomer.AvailablePay = oCustomer.AvailablePay - pAmount;
                 customerDbObject.SaveChanges();
-                return true;
+                return oCustomer.AvailablePay;
             }
-            return false;
+            return null;
         }
 
-        public static bool AddAmountFromCustomerAccount(int pCustomerId, decimal pAmount)
+        public static decimal? AddAmountFromCustomerAccount(int pCustomerId, decimal pAmount)
         {
             Customer oCustomer = customerDbObject.Customers.Where(x => x.Id == pCustomerId).FirstOrDefault();
             if (oCustomer != null)
             {                
                 oCustomer.AvailablePay = oCustomer.AvailablePay + pAmount;
                 customerDbObject.SaveChanges();
-                return true;
+                return oCustomer.AvailablePay;
             }
-            return false;
+            return null;
         }       
 
         public static bool CheckDeductionAvailibility(int pCustomerId, decimal pAmount)

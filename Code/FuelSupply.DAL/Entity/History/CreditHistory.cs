@@ -24,6 +24,7 @@ namespace FuelSupply.DAL.Entity.CreditEntity
         public string ShiftName { get; set; }
         public string KeyCustomerName { get; set; }
         public Nullable<bool> IsAdjustmentCredit { get; set; }
+        public Nullable<decimal> CustomerLastBalance { get; set; }
 
         public virtual Customer Customer { get; set; }
         public virtual FuelStation FuelStation { get; set; }

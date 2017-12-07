@@ -59,18 +59,16 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="7*"/>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="5.7*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="2*"/>               
             </Grid.ColumnDefinitions>
 
             <Button Name="btnProfile" Grid.Column="1" Click="btnProfile_Click" Background="#00879c" Style="{StaticResource SelectedButtonStyle}" HorizontalContentAlignment="Stretch">
@@ -103,29 +101,18 @@
                     <TextBlock Text="Customer"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>              
             </Button>
-            <Button Name="btnFuelHistory" Grid.Column="7" IsEnabled="{Binding IsAdminUser}" Click="btnFuelHistory_Click" Background="#0073c4" Style="{StaticResource ButtonStyle}" HorizontalContentAlignment="Stretch">
+            <Button Name="btnCombineHistory" Grid.Column="7" IsEnabled="{Binding IsAdminUser}" Click="btnCombineHistory_Click" Background="#0073c4" Style="{StaticResource ButtonStyle}" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
                     <Image Source="..\Images\history.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
-                    <TextBlock Text="Fuel History"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                    <TextBlock Text="History"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
                 </Grid>              
-            </Button>
-
-            <Button Name="btnCreditHistory" Grid.Column="9" IsEnabled="{Binding IsAdminUser}" Click="btnCreditHistory_Click" Background="#C04000" Style="{StaticResource ButtonStyle}" HorizontalContentAlignment="Stretch">
-                <Grid  HorizontalAlignment="Stretch" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="1.5*"/>
-                    </Grid.ColumnDefinitions>
-                    <Image Source="..\Images\history.png" Grid.Column="0" HorizontalAlignment="Center"></Image>
-                    <TextBlock Text="Credit History"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
-                </Grid>
-            </Button>
+            </Button>          
             
-            <Button Name="btnLogOut" Grid.Column="11" Click="btnLogOut_Click" Background="#80838f" Style="{StaticResource ButtonStyle}" HorizontalContentAlignment="Stretch">
+            <Button Name="btnLogOut" Grid.Column="9" Click="btnLogOut_Click" Background="#80838f" Style="{StaticResource ButtonStyle}" HorizontalContentAlignment="Stretch">
                 <Grid  HorizontalAlignment="Stretch" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -138,9 +125,7 @@
         </Grid>
 
         <Grid Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" Margin="20,0,20,2">
-            <ContentControl Name="ServerContent" Content="{Binding ContentWindow}" >
-                
-            </ContentControl>
+            <ContentControl Name="ServerContent" Content="{Binding ContentWindow}" />
         </Grid>    
     </Grid>    
 </Controls:MetroWindow>
