@@ -324,7 +324,7 @@ namespace FuelSupply.APP.ViewModel
         {
             List<CombineHistoryExport> oCombineHistoryExportList = new List<CombineHistoryExport>();
 
-            if (CreditHistoryList != null && CreditHistoryList.Count > 0)
+            if (CombineHistoryList != null && CombineHistoryList.Count > 0)
             {
                 CombineHistoryExport oExportEntity;
                 foreach (var oHistory in CombineHistoryList)
@@ -341,7 +341,7 @@ namespace FuelSupply.APP.ViewModel
                     oExportEntity.Type = oHistory.HistoryType;
                     oExportEntity.KeyCustomer = oHistory.KeyCustomerName;
                     oExportEntity.UserName = oHistory.AttendantName;
-
+                    oExportEntity.CurrentBalance = oHistory.CustomerLastBalance;
                     oCombineHistoryExportList.Add(oExportEntity);
                 }
             }
@@ -417,13 +417,6 @@ namespace FuelSupply.APP.ViewModel
                     cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
                 pdfTable.AddCell(cellRow);
 
-                cellRow = new PdfPCell(new Phrase(oHistory.InvoiceNo));
-                cellRow.HorizontalAlignment = 1;
-                cellRow.VerticalAlignment = 1;
-                if (rowIndex % 2 == 0)
-                    cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
-                pdfTable.AddCell(cellRow);
-
                 cellRow = new PdfPCell(new Phrase(oHistory.FuelAmount));
                 cellRow.HorizontalAlignment = 1;
                 cellRow.VerticalAlignment = 1;
@@ -431,12 +424,12 @@ namespace FuelSupply.APP.ViewModel
                     cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
                 pdfTable.AddCell(cellRow);
 
-                cellRow = new PdfPCell(new Phrase(oHistory.Type));
+                cellRow = new PdfPCell(new Phrase(oHistory.InvoiceNo));
                 cellRow.HorizontalAlignment = 1;
                 cellRow.VerticalAlignment = 1;
                 if (rowIndex % 2 == 0)
                     cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
-                pdfTable.AddCell(cellRow);
+                pdfTable.AddCell(cellRow);                           
 
                 //cellRow = new PdfPCell(new Phrase(oHistory.PaymentType));
                 //cellRow.HorizontalAlignment = 1;
@@ -457,6 +450,13 @@ namespace FuelSupply.APP.ViewModel
                 cellRow.VerticalAlignment = 1;
                 if (rowIndex % 2 == 0)
                     cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
+                pdfTable.AddCell(cellRow);
+
+                cellRow = new PdfPCell(new Phrase(oHistory.CurrentBalance.ToString()));
+                cellRow.HorizontalAlignment = 1;
+                cellRow.VerticalAlignment = 1;
+                if (rowIndex % 2 == 0)
+                    cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
                 pdfTable.AddCell(cellRow);               
 
                 cellRow = new PdfPCell(new Phrase(oHistory.Date));
@@ -467,6 +467,13 @@ namespace FuelSupply.APP.ViewModel
                 pdfTable.AddCell(cellRow);
 
                 cellRow = new PdfPCell(new Phrase(oHistory.Shift));
+                cellRow.HorizontalAlignment = 1;
+                cellRow.VerticalAlignment = 1;
+                if (rowIndex % 2 == 0)
+                    cellRow.BackgroundColor = new iTextSharp.text.Color(224, 255, 255);
+                pdfTable.AddCell(cellRow);
+
+                cellRow = new PdfPCell(new Phrase(oHistory.Type));
                 cellRow.HorizontalAlignment = 1;
                 cellRow.VerticalAlignment = 1;
                 if (rowIndex % 2 == 0)
@@ -636,6 +643,7 @@ namespace FuelSupply.APP.ViewModel
                 history.HistoryType = _creditType;
                 history.CustomerName = creditHistory.CustomerName;
                 history.CustomerLastBalance = creditHistory.CustomerLastBalance;
+                history.CreditAmount = creditHistory.CreditAmount;
                 CombineHistoryList.Add(history);
             }
 

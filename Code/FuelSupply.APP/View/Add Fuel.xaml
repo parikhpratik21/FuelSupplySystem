@@ -103,7 +103,7 @@
             <TextBox Name="txtFuelLiter" Grid.Column="2" Grid.Row="7" IsEnabled="{Binding IsFuelAmountFieldEnable}" Style="{StaticResource TextBoxStyle}"  Text="{Binding FuelTaken, Mode=TwoWay}" Controls:TextBoxHelper.Watermark="In Liter"></TextBox>
 
             <Label Name="lblFuleAmount" Content="Amount:" Grid.Column="1" Grid.Row="8" Style="{StaticResource LabelHeaderStyle}"></Label>
-            <TextBox Name="txtFuelAmount" Grid.Column="2" Grid.Row="8" Style="{StaticResource TextBoxStyle}"  Text="{Binding FuelAmount, Mode=TwoWay}" Controls:TextBoxHelper.Watermark="In Rand"></TextBox>
+            <TextBox Name="txtFuelAmount" Grid.Column="2" Grid.Row="8" Style="{StaticResource TextBoxStyle}"  Text="{Binding FuelAmount, Mode=TwoWay}" Controls:TextBoxHelper.Watermark="In Kwacha"></TextBox>
 
         </Grid>
 

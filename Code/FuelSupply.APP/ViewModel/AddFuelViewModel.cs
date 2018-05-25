@@ -157,7 +157,7 @@ namespace FuelSupply.APP.ViewModel
             }
             set
             {
-                if (_FuelTaken != value)
+                if (CurrentFuelRate != null && _FuelTaken != value)
                 {
                     _FuelTaken = Math.Round(value, 3);
                     FuelAmount = Math.Round(CurrentFuelRate.Value * _FuelTaken, 3);
@@ -177,7 +177,7 @@ namespace FuelSupply.APP.ViewModel
                 if (_FuelAmount != value)
                 {
                     _FuelAmount = Math.Round(value, 3);
-                    if (IsFuelAmountFieldEnable)
+                    if (CurrentFuelRate != null && IsFuelAmountFieldEnable)
                     {
                         FuelTaken = Math.Round(_FuelAmount / CurrentFuelRate.Value, 3);
                     }
@@ -221,10 +221,16 @@ namespace FuelSupply.APP.ViewModel
             set
             {
                 _FuelType = value;
-                if (_FuelType > 0)
+                if (CurrentFuelRate != null && _FuelType > 0)
                 {
                     FuelAmount = Math.Round(CurrentFuelRate.Value * _FuelTaken, 3);
                 }
+
+                if(_FuelType == 7)
+                {
+                    FuelTaken = 0;
+                }
+
                 OnPropertyChanged("FuelType");
                 OnPropertyChanged("CurrentFuelRate");
                 OnPropertyChanged("IsFuelAmountFieldEnable");
@@ -337,7 +343,7 @@ namespace FuelSupply.APP.ViewModel
             {
                 pErrorString = "Please enter valid fuel amount.";
             }
-            else if (FuelTaken <= 0)
+            else if (IsFuelAmountFieldEnable && FuelTaken <= 0)
             {
                 pErrorString = "Please enter valid fuel taken.";
             }

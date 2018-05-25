@@ -30,6 +30,9 @@ namespace FuelSupply.APP.ExportEntity
         [Description("Credit Amount")]
         public decimal? CreditAmount { get; set; }
 
+        [Description("Current Balance")]
+        public decimal? CurrentBalance { get; set; }
+
         [Description("Date")]
         public string Date { get; set; }
 

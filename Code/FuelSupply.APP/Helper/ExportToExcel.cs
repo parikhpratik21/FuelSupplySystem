@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FuelSupply.DAL.Provider.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -47,9 +48,9 @@ namespace FuelSupply.APP.Helper
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                MessageBox.Show("Error while generating Excel report");
+                LogManager.logExceptionMessage("ExportToExcel", "ReleaseObject", ex);                   
             }
             finally
             {
@@ -212,7 +213,7 @@ namespace FuelSupply.APP.Helper
             catch (Exception ex)
             {
                 obj = null;
-                MessageBox.Show(ex.Message.ToString());
+                LogManager.logExceptionMessage("ExportToExcel", "ReleaseObject", ex);                
             }
             finally
             {
